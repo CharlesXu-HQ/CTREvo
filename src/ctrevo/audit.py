@@ -1,6 +1,7 @@
 """Host observations of declared component execution, separate from attribution."""
 
 import hashlib
+import math
 from functools import wraps
 
 
@@ -109,7 +110,8 @@ class ComponentProbe:
 
     def _target(self, record, path, parameters):
         result = {'path': path, 'calls': 0, 'nonzero_output_gradient': False,
-                  'trainable_parameters': parameters, 'output_shapes': []}
+                  'trainable_parameters': parameters, 'output_shapes': [],
+                  'output_summaries': []}
         record['targets'].append(result)
         return result
 
@@ -137,6 +139,20 @@ class ComponentProbe:
                 shape = list(value.shape)
                 if shape not in observation['output_shapes']:
                     observation['output_shapes'].append(shape)
+                if len(observation['output_summaries']) < 3:
+                    with torch.no_grad():
+                        sample = value.detach().double()
+                        finite = bool(torch.isfinite(sample).all())
+                        statistics = {'mean': None, 'std': None, 'max_abs': None}
+                        if finite and sample.numel():
+                            statistics = {'mean': sample.mean().item(),
+                                          'std': sample.std(unbiased=False).item(),
+                                          'max_abs': sample.abs().max().item()}
+                            if not all(math.isfinite(number) for number in statistics.values()):
+                                finite = False
+                                statistics = {key: None for key in statistics}
+                        observation['output_summaries'].append(
+                            {'shape': shape, **statistics, 'finite': finite})
                 if value.requires_grad:
                     def backward(gradient):
                         if bool(torch.isfinite(gradient).all()) and bool(torch.any(gradient != 0)):

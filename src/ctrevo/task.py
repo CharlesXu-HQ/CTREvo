@@ -1,5 +1,6 @@
 """CTR adapter: frozen data, independent metrics and full-data CUDA evaluation."""
 
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -31,12 +32,21 @@ class CTRTask:
         return {'task_id': 'criteo-ctr', 'dataset_digest': self.manifest['dataset_digest'],
             'stage': 'ranking', 'framework': 'pytorch', 'fields': FIELDS,
             'model_design_required': True, 'horizontal_expansion_required': True,
-            'capabilities': ['tabular_features', 'observed_outcome_labels'],
+            'interaction_plan_required': True,
+            'interaction_views': [
+                {'id': 'numeric', 'kind': 'numeric', 'fields': FIELDS[:13],
+                 'representation': 'dense[:, :13]: train-standardized signed-log1p; observed mask is ~dense[:, 13:].bool()'},
+                {'id': 'categorical', 'kind': 'categorical', 'fields': FIELDS[13:],
+                 'representation': '26 field-specific hash IDs; embedding vectors preserve field identity'},
+                {'id': 'missing', 'kind': 'binary', 'fields': FIELDS[:13],
+                 'representation': 'dense[:, 13:]: missing indicators derived from the same 13 numeric fields'}],
+            'capabilities': ['tabular_features', 'observed_outcome_labels', 'categorical_field_identities'],
             'objective': {'name': 'validation_logloss', 'direction': 'min'},
             'evaluation_protocol': {'unit': 'impression', 'split': self.manifest['split'],
                 'metric': 'binary_logloss', 'host_code_sha256': code.hexdigest(),
                 'seed': self.seed, 'max_epochs': self.max_epochs, 'batch_size': self.batch_size,
                 'implementation_audit': 'declared_component_execution_v1',
+                'interaction_controls_per_trial': 1,
                 'require_verified_implementation': self.require_verified_implementation,
                 'image': self.settings['image'], 'timeout': self.settings['timeout']},
             'max_epochs': self.max_epochs, 'baseline_candidate': self.seed_candidate,
@@ -59,9 +69,24 @@ class CTRTask:
 
     def evaluate(self, proposal, path):
         components = proposal.get('research', {}).get('model_design', {}).get('components', [])
-        return self._evaluate(proposal['candidate'], Path(path), components=components)
+        plan = proposal.get('research', {}).get('interaction_plan', {})
+        control = None
+        if plan.get('decision') == 'test':
+            spec = plan.get('control', {})
+            patch = spec.get('config_patch', {})
+            if (not isinstance(patch, dict) or set(patch) != {'model'} or
+                    not isinstance(patch['model'], dict) or not patch['model']):
+                raise ValueError('control requires a nonempty model-only config patch')
+            control_candidate = deepcopy(proposal['candidate'])
+            config = validate_candidate(control_candidate, max_epochs=self.max_epochs)
+            control_candidate['config'] = deepcopy(config)
+            control_candidate['config']['model'].update(deepcopy(patch['model']))
+            if validate_candidate(control_candidate, max_epochs=self.max_epochs) == config:
+                raise ValueError('interaction control must change the resolved model configuration')
+            control = (control_candidate, spec)
+        return self._evaluate(proposal['candidate'], Path(path), components=components, control=control)
 
-    def _evaluate(self, candidate, path, *, components):
+    def _evaluate(self, candidate, path, *, components, control=None):
         prediction, runtime = execute(candidate, self.data, path, components=components, **self.settings)
         labels = np.load(self.data / 'validation/labels.npy', mmap_mode='r')
         metrics = evaluate(labels, prediction)
@@ -80,6 +105,41 @@ class CTRTask:
                 'statement': 'Independent host validation metrics from complete fixed split',
                 'source': f'{path.name}/evaluation.json', 'status': 'observed', 'scope': 'task' if path.name == 'baseline' else 'trial',
                 'value': metrics}]}
+        probe = runtime.get('implementation_probe', {})
+        summaries = [{'component_id': component['id'], 'targets': [
+            {'path': target['path'], 'output_summaries': target.get('output_summaries', [])}
+            for target in component.get('targets', []) if target.get('output_summaries')]}
+            for component in probe.get('components', [])
+            if any(target.get('output_summaries') for target in component.get('targets', []))]
+        if probe.get('batches') and summaries:
+            result['evidence'].append({'id': f'{path.name}.output_scales',
+                **({} if path.name == 'baseline' else {'trial_id': path.name}),
+                'statement': 'Bounded actual training-output scales; not field importance or gain attribution',
+                'source': f'{path.name}/output/runtime.json', 'status': 'observed',
+                'scope': 'task' if path.name == 'baseline' else 'trial',
+                'value': {'probe_batches': probe['batches'], 'components': summaries}})
+        if control is not None:
+            control_candidate, spec = control
+            observation = {'status': 'failed', 'config_patch': spec['config_patch'],
+                'expected_effect': spec['expected_effect'],
+                'source_sha256': hashlib.sha256(candidate['source'].encode()).hexdigest(),
+                'comparison': 'Same source/seed/protocol; model configuration patched, weights retrained'}
+            try:
+                control_prediction, control_runtime = execute(control_candidate, self.data,
+                    path / 'control', components=[], **self.settings)
+                paired = paired_logloss(labels, control_prediction, prediction)
+                paired['direction'] = 'candidate minus control; negative favors candidate'
+                observation.update(status='completed', metrics=evaluate(labels, control_prediction),
+                                   paired_logloss=paired, runtime=control_runtime)
+                result['evidence'].append({'id': f'{path.name}.interaction_control',
+                    'trial_id': path.name, 'statement': 'Executed same-source full-data interaction control',
+                    'source': f'{path.name}/evaluation.json', 'status': 'observed', 'scope': 'trial',
+                    'value': {'control_metrics': observation['metrics'], 'paired_logloss': paired}})
+            except (RuntimeError, ValueError, OSError) as error:
+                observation['error_type'] = type(error).__name__
+                observation['diagnostic'] = f'{path.name}/control/worker.log'
+                result['review_required'] = True
+            result['interaction_control'] = observation
         (path / 'evaluation.json').write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
         return result
 

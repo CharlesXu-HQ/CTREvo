@@ -40,6 +40,14 @@ A helper name such as CTRModel.fm_logit alone is insufficient. Also provide inst
 as a nonempty string. Keep these invariants in every repair; do not convert strings to objects.
 instance_path must resolve on the built model: e.g. CTRModel.embedding, CTRModel.cross_layers,
 or CTRModel.fm_logit for a bound method; use candidate.training_loss for a custom loss component.
+For research.interaction_plan, host numeric/categorical/missing views describe available inputs.
+A test reserves one extra full training with the same source, seed, split, batch size and epochs.
+control.config_patch.model shallowly replaces named model-config values; no training-setting changes.
+Declare a meaningful toggle that actually removes the selected interaction. Construct modules in
+both configurations and gate outputs to keep initialization comparable. Do not claim this proves
+isolated attribution: shared weights are retrained. Identical host-config dictionaries are rejected before training; different config values alone do not prove the toggle changed execution.
+Output summaries in the first three probed batches help check branch/fusion scale; they are bounded
+observations, not dataset-wide importance estimates. Do not force more capacity when diagnosis is better.
 Register all trainable parameters in __init__, before the host constructs its optimizer.
 Host probes the first three real training batches:
 each declared component must execute and its tensor output receive finite nonzero loss gradient;
@@ -71,6 +79,10 @@ Use actual metrics/code/runtime. CUDA execution and gradient presence do not pro
 caused improvement. Joint changes, shared-weight retraining and adaptive selection limit attribution.
 implementation_check is only a bounded execution check. Even when verified, change_audit and
 component benefit attribution remain unverified until an appropriate comparison is executed.
+Compare actual interaction_control.metrics and paired_logloss with the stated expected_effect.
+A failed or absent control supplies no measured gain evidence; a completed control compares recipes.
+Distinguish absent explicit coverage, poor scale/fusion, and truly missing information. Never promote
+planned ablations into observed evidence. Interaction findings remain specific to these field views.
 Failed trials cannot establish promising/harmful component outcomes. Explain the next discriminating
 experiment within current data and budget. Preserve uncertainty and dataset-specific applicability.
 """

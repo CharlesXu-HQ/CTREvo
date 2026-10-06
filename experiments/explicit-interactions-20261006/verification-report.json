@@ -1,0 +1,4214 @@
+{
+  "kind": "fixed_plan_contract_verification_not_new_agent_search",
+  "status": "completed",
+  "best_id": "trial_001",
+  "identity": {
+    "task_id": "criteo-ctr",
+    "dataset_digest": "23e3e1a142d56d80f69b0dbd43620d4b53a0b577391061c7807785ef6efa40ea",
+    "task_sha256": "0b0f78698b04bdbe27cee159747037b4063d780ad2e186651ce8621b993ca072",
+    "catalog_sha256": "37c43d126aecbf1bc0b69012f2942b9bcd225a86df3e5472b4ccb4bf1864cf18",
+    "package_version": "0.2.0",
+    "implementation_sha256": "0f2ce4c4d985f18634d4baaa6922eb1c78eadf9f994baeb1146bd90b5c2ec09f",
+    "promotion_policy": {
+      "require_verified_implementation": true
+    },
+    "evaluation_protocol_sha256": "79bc7b14a8e60c3bfc11906cdd65b4268d1abff28ed540511ee770e1decd0889"
+  },
+  "dataset_digest": "23e3e1a142d56d80f69b0dbd43620d4b53a0b577391061c7807785ef6efa40ea",
+  "split_rows": {
+    "train": 36672493,
+    "validation": 4584062,
+    "test": 4584062
+  },
+  "baseline": {
+    "score": 0.4453363541595976,
+    "metrics": {
+      "rows": 4584062,
+      "logloss": 0.4453363541595976,
+      "auc": 0.8049364964027197,
+      "brier": 0.1440832074333245,
+      "observed_ctr": 0.2537528942671369,
+      "mean_prediction": 0.26459780119391824,
+      "calibration": [
+        {
+          "bin": 0,
+          "rows": 1174887,
+          "predicted": 0.05410827736707471,
+          "observed": 0.045176259504105504
+        },
+        {
+          "bin": 1,
+          "rows": 1052510,
+          "predicted": 0.14744787383840338,
+          "observed": 0.13041016237375416
+        },
+        {
+          "bin": 2,
+          "rows": 761700,
+          "predicted": 0.24721370325781658,
+          "observed": 0.23129578574241827
+        },
+        {
+          "bin": 3,
+          "rows": 528828,
+          "predicted": 0.3466494401096369,
+          "observed": 0.33735165308947335
+        },
+        {
+          "bin": 4,
+          "rows": 366011,
+          "predicted": 0.4473915778974157,
+          "observed": 0.43864528661706886
+        },
+        {
+          "bin": 5,
+          "rows": 277713,
+          "predicted": 0.547748003743379,
+          "observed": 0.5432370828877294
+        },
+        {
+          "bin": 6,
+          "rows": 198199,
+          "predicted": 0.6467574480643323,
+          "observed": 0.6459164778833395
+        },
+        {
+          "bin": 7,
+          "rows": 130616,
+          "predicted": 0.746320776115671,
+          "observed": 0.7484687940221718
+        },
+        {
+          "bin": 8,
+          "rows": 72054,
+          "predicted": 0.843186635871571,
+          "observed": 0.8450606489577261
+        },
+        {
+          "bin": 9,
+          "rows": 21544,
+          "predicted": 0.9404279846674529,
+          "observed": 0.9385443743037505
+        }
+      ]
+    },
+    "runtime": {
+      "device": "cuda",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "torch": "2.14.1+cu130",
+      "rows_seen": 36672493,
+      "steps": 4477,
+      "prediction_rows": 4584062,
+      "last_loss": 0.4543507397174835,
+      "seconds": 16.403696372000923,
+      "peak_cuda_bytes": 697824256,
+      "parameters": 27328001,
+      "config": {
+        "lr": 0.002,
+        "weight_decay": 1e-06,
+        "epochs": 1,
+        "model": {}
+      },
+      "first_batch_gradient_norms": {
+        "embedding.weight": 0.005348997190594673,
+        "network.0.weight": 0.0431787334382534,
+        "network.0.bias": 0.022837089374661446,
+        "network.3.weight": 0.049539078027009964,
+        "network.3.bias": 0.0895693451166153,
+        "network.6.weight": 0.08747342973947525,
+        "network.6.bias": 0.2691096365451813
+      },
+      "implementation_probe": {
+        "batches": 3,
+        "components": [
+          {
+            "id": "seed_model",
+            "instance_path": "CTRModel",
+            "targets": [
+              {
+                "path": "CTRModel",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "embedding.weight",
+                  "network.0.weight",
+                  "network.0.bias",
+                  "network.3.weight",
+                  "network.3.bias",
+                  "network.6.weight",
+                  "network.6.bias"
+                ],
+                "output_shapes": [
+                  [
+                    8192
+                  ]
+                ],
+                "output_summaries": [
+                  {
+                    "shape": [
+                      8192
+                    ],
+                    "mean": 0.09213229104989296,
+                    "std": 0.012584516611685286,
+                    "max_abs": 0.14947563409805298,
+                    "finite": true
+                  },
+                  {
+                    "shape": [
+                      8192
+                    ],
+                    "mean": 0.052328886488339776,
+                    "std": 0.017564732142610437,
+                    "max_abs": 0.1076669692993164,
+                    "finite": true
+                  },
+                  {
+                    "shape": [
+                      8192
+                    ],
+                    "mean": 0.012774317595358298,
+                    "std": 0.025672915848965167,
+                    "max_abs": 0.08382183313369751,
+                    "finite": true
+                  }
+                ],
+                "parameters_with_gradient": [
+                  "embedding.weight",
+                  "network.0.weight",
+                  "network.0.bias",
+                  "network.3.weight",
+                  "network.3.bias",
+                  "network.6.weight",
+                  "network.6.bias"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          }
+        ],
+        "optimizer_parameter_set_stable": true,
+        "source_sha256": "e729fa840614923b376def4817deb6ed7e548753b3de7d05ad2e0ab500304196",
+        "training_loss": "binary_cross_entropy_with_logits"
+      },
+      "modules": [
+        {
+          "path": "",
+          "class": "CTRModel"
+        },
+        {
+          "path": "embedding",
+          "class": "Embedding"
+        },
+        {
+          "path": "network",
+          "class": "Sequential"
+        },
+        {
+          "path": "network.0",
+          "class": "Linear"
+        },
+        {
+          "path": "network.1",
+          "class": "ReLU"
+        },
+        {
+          "path": "network.2",
+          "class": "Dropout"
+        },
+        {
+          "path": "network.3",
+          "class": "Linear"
+        },
+        {
+          "path": "network.4",
+          "class": "ReLU"
+        },
+        {
+          "path": "network.5",
+          "class": "Dropout"
+        },
+        {
+          "path": "network.6",
+          "class": "Linear"
+        }
+      ]
+    },
+    "implementation_check": {
+      "status": "verified",
+      "scope": "declared_component_execution_v1",
+      "findings": [],
+      "components": [
+        {
+          "id": "seed_model",
+          "instance_path": "CTRModel",
+          "targets": [
+            {
+              "path": "CTRModel",
+              "calls": 3,
+              "nonzero_output_gradient": true,
+              "trainable_parameters": [
+                "embedding.weight",
+                "network.0.weight",
+                "network.0.bias",
+                "network.3.weight",
+                "network.3.bias",
+                "network.6.weight",
+                "network.6.bias"
+              ],
+              "output_shapes": [
+                [
+                  8192
+                ]
+              ],
+              "output_summaries": [
+                {
+                  "shape": [
+                    8192
+                  ],
+                  "mean": 0.09213229104989296,
+                  "std": 0.012584516611685286,
+                  "max_abs": 0.14947563409805298,
+                  "finite": true
+                },
+                {
+                  "shape": [
+                    8192
+                  ],
+                  "mean": 0.052328886488339776,
+                  "std": 0.017564732142610437,
+                  "max_abs": 0.1076669692993164,
+                  "finite": true
+                },
+                {
+                  "shape": [
+                    8192
+                  ],
+                  "mean": 0.012774317595358298,
+                  "std": 0.025672915848965167,
+                  "max_abs": 0.08382183313369751,
+                  "finite": true
+                }
+              ],
+              "parameters_with_gradient": [
+                "embedding.weight",
+                "network.0.weight",
+                "network.0.bias",
+                "network.3.weight",
+                "network.3.bias",
+                "network.6.weight",
+                "network.6.bias"
+              ],
+              "status": "verified"
+            }
+          ],
+          "status": "verified"
+        }
+      ],
+      "probe_batches": 3,
+      "limitations": "Bounded execution/gradient observations do not prove mathematical equivalence to a named method, declared parameter sharing, exact fusion topology, all input paths, or gain attribution."
+    },
+    "change_audit": {
+      "status": "unverified"
+    },
+    "review_required": false,
+    "evidence": [
+      {
+        "id": "baseline.metrics",
+        "statement": "Independent host validation metrics from complete fixed split",
+        "source": "baseline/evaluation.json",
+        "status": "observed",
+        "scope": "task",
+        "value": {
+          "rows": 4584062,
+          "logloss": 0.4453363541595976,
+          "auc": 0.8049364964027197,
+          "brier": 0.1440832074333245,
+          "observed_ctr": 0.2537528942671369,
+          "mean_prediction": 0.26459780119391824,
+          "calibration": [
+            {
+              "bin": 0,
+              "rows": 1174887,
+              "predicted": 0.05410827736707471,
+              "observed": 0.045176259504105504
+            },
+            {
+              "bin": 1,
+              "rows": 1052510,
+              "predicted": 0.14744787383840338,
+              "observed": 0.13041016237375416
+            },
+            {
+              "bin": 2,
+              "rows": 761700,
+              "predicted": 0.24721370325781658,
+              "observed": 0.23129578574241827
+            },
+            {
+              "bin": 3,
+              "rows": 528828,
+              "predicted": 0.3466494401096369,
+              "observed": 0.33735165308947335
+            },
+            {
+              "bin": 4,
+              "rows": 366011,
+              "predicted": 0.4473915778974157,
+              "observed": 0.43864528661706886
+            },
+            {
+              "bin": 5,
+              "rows": 277713,
+              "predicted": 0.547748003743379,
+              "observed": 0.5432370828877294
+            },
+            {
+              "bin": 6,
+              "rows": 198199,
+              "predicted": 0.6467574480643323,
+              "observed": 0.6459164778833395
+            },
+            {
+              "bin": 7,
+              "rows": 130616,
+              "predicted": 0.746320776115671,
+              "observed": 0.7484687940221718
+            },
+            {
+              "bin": 8,
+              "rows": 72054,
+              "predicted": 0.843186635871571,
+              "observed": 0.8450606489577261
+            },
+            {
+              "bin": 9,
+              "rows": 21544,
+              "predicted": 0.9404279846674529,
+              "observed": 0.9385443743037505
+            }
+          ]
+        }
+      },
+      {
+        "id": "baseline.output_scales",
+        "statement": "Bounded actual training-output scales; not field importance or gain attribution",
+        "source": "baseline/output/runtime.json",
+        "status": "observed",
+        "scope": "task",
+        "value": {
+          "probe_batches": 3,
+          "components": [
+            {
+              "component_id": "seed_model",
+              "targets": [
+                {
+                  "path": "CTRModel",
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.09213229104989296,
+                      "std": 0.012584516611685286,
+                      "max_abs": 0.14947563409805298,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.052328886488339776,
+                      "std": 0.017564732142610437,
+                      "max_abs": 0.1076669692993164,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.012774317595358298,
+                      "std": 0.025672915848965167,
+                      "max_abs": 0.08382183313369751,
+                      "finite": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "trial_001",
+      "proposal": {
+        "action": "experiment",
+        "research": {
+          "direction": "Explicit interaction scope",
+          "mechanism": "Enable mixed terms at fixed scale",
+          "why_now": "Exercise available typed inputs and the new controlled-training contract; no claim of optimal priority",
+          "data_rationale": "39 anonymous original fields, no invented business or sequence semantics",
+          "comparison": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+          "expected_result": "Executable full-data comparison; lower candidate logloss would favor this recipe",
+          "falsification": "Nonnegative paired difference rejects a useful gain under this protocol",
+          "input_fields": [
+            "I1",
+            "I2",
+            "I3",
+            "I4",
+            "I5",
+            "I6",
+            "I7",
+            "I8",
+            "I9",
+            "I10",
+            "I11",
+            "I12",
+            "I13",
+            "C1",
+            "C2",
+            "C3",
+            "C4",
+            "C5",
+            "C6",
+            "C7",
+            "C8",
+            "C9",
+            "C10",
+            "C11",
+            "C12",
+            "C13",
+            "C14",
+            "C15",
+            "C16",
+            "C17",
+            "C18",
+            "C19",
+            "C20",
+            "C21",
+            "C22",
+            "C23",
+            "C24",
+            "C25",
+            "C26"
+          ],
+          "interaction_plan": {
+            "decision": "test",
+            "rationale": "Fixed integration plan, not an Agent priority judgment",
+            "coverage": [
+              {
+                "left": "numeric",
+                "right": "numeric",
+                "status": "implicit",
+                "basis": "Seed concatenates standardized values, missing flags and embeddings into its MLP"
+              },
+              {
+                "left": "numeric",
+                "right": "categorical",
+                "status": "implicit",
+                "basis": "Seed concatenates standardized values, missing flags and embeddings into its MLP"
+              },
+              {
+                "left": "numeric",
+                "right": "missing",
+                "status": "implicit",
+                "basis": "Seed concatenates standardized values, missing flags and embeddings into its MLP"
+              },
+              {
+                "left": "categorical",
+                "right": "categorical",
+                "status": "implicit",
+                "basis": "Seed concatenates standardized values, missing flags and embeddings into its MLP"
+              },
+              {
+                "left": "categorical",
+                "right": "missing",
+                "status": "implicit",
+                "basis": "Seed concatenates standardized values, missing flags and embeddings into its MLP"
+              },
+              {
+                "left": "missing",
+                "right": "missing",
+                "status": "implicit",
+                "basis": "Seed concatenates standardized values, missing flags and embeddings into its MLP"
+              }
+            ],
+            "candidates": [
+              {
+                "id": "mixed",
+                "views": [
+                  "numeric",
+                  "categorical"
+                ],
+                "order": 2,
+                "mechanism": "grouped field-vector dot products",
+                "priority": 1,
+                "reason": "Host declares these available typed fields; test scope with an actual control",
+                "cost": "One full training and one full control",
+                "risks": "Shared-gradient effects, scale and anonymous sparse-field support",
+                "evidence_ids": [
+                  "dataset.train",
+                  "baseline.metrics"
+                ]
+              }
+            ],
+            "selected_id": "mixed",
+            "control": {
+              "config_patch": {
+                "model": {
+                  "enabled_pairs": [
+                    "cc"
+                  ]
+                }
+              },
+              "expected_effect": "Remove only the newly enabled term from the residual sum"
+            }
+          },
+          "model_design": {
+            "estimator": "Pointwise binary logit with host BCE",
+            "backbone": "Embedding MLP with grouped second-order residuals",
+            "rationale": "Bounded integration verification using an editable mixed-field example",
+            "data_fit": "Existing typed anonymous inputs only; numeric missing values masked before FM",
+            "comparison_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+            "estimator_id": "pointwise_bce",
+            "backbone_id": "embedding_mlp",
+            "horizontal_expansion": {
+              "decision": "expand",
+              "rationale": "Parallel MLP and explicit pair terms; later trial changes term gating only",
+              "comparison_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+              "groups": [
+                {
+                  "id": "mixed_interactions",
+                  "fusion_id": "fusion",
+                  "branch_ids": [
+                    "network",
+                    "grouped_fm"
+                  ],
+                  "parameter_sharing": [
+                    {
+                      "component_ids": [
+                        "network",
+                        "grouped_fm"
+                      ],
+                      "code_sections": [
+                        "CTRModel.embedding"
+                      ],
+                      "rationale": "Same field embedding vectors feed the MLP and grouped pair branch"
+                    }
+                  ]
+                }
+              ]
+            },
+            "change_scope": "initialize",
+            "parent_trial_id": null,
+            "components": [
+              {
+                "id": "embedding",
+                "mechanism": "Shared categorical field embedding table",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.embedding",
+                "output_contract": "float32 [B,26,16], unbounded"
+              },
+              {
+                "id": "network",
+                "mechanism": "Original embedding MLP including numeric values and missing indicators",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.network",
+                "output_contract": "float32 [B,1], unbounded"
+              },
+              {
+                "id": "numeric_embedding",
+                "mechanism": "Observed standardized x_i times a learned per-field vector",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.numeric_embedding",
+                "output_contract": "float32 [B,13,16], unbounded"
+              },
+              {
+                "id": "grouped_fm",
+                "mechanism": "Three second-order group sums cc, nc, nn over field vectors",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.grouped_fm",
+                "output_contract": "float32 [B,3], unbounded"
+              },
+              {
+                "id": "fusion",
+                "mechanism": "Deep logit plus .05 times configured cc/nc/nn terms",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.fusion",
+                "output_contract": "float32 [B], unbounded"
+              }
+            ],
+            "inheritance": []
+          },
+          "alternatives": [
+            {
+              "direction": "fusion diagnosis",
+              "mechanism": "inspect scales before increasing capacity",
+              "reason": "Bounded probe supplies scale observations; defer extra structure"
+            }
+          ],
+          "evidence_ids": [
+            "dataset.train",
+            "baseline.metrics"
+          ],
+          "change_factors": [
+            "enabled interaction scope"
+          ]
+        },
+        "candidate": {
+          "source": "\"\"\"Optional mixed-field FM extension of the embedding MLP, not an Agent default.\n\nThe Criteo dense input contains 13 standardized numeric fields followed by their\n13 missing indicators. Missing indicators remain in the MLP; this example adds\nno explicit missingness interactions. Category embeddings are shared with the\nMLP. Three FM terms represent category-category (cc), numeric-category (nc), and\nnumeric-numeric (nn) relations. ``enabled_pairs`` selects which terms reach the\nscore; setting it to [] provides a same-source control.\n\nAll modules are constructed and called for every configuration. Only fusion\ngates change, preserving shared initial parameters under the same random seed.\nRetraining a gated control can still change shared embeddings and MLP weights;\nits measured difference is a controlled recipe comparison, not proof that every\nindividual pair caused the gain.\n\"\"\"\n\nimport math\n\nimport torch\nfrom torch import nn\n\nfrom model_evo_harness.models.pytorch.explicit import GroupedFM, NumericFieldEmbedding\n\n\nclass InteractionFusion(nn.Module):\n    \"\"\"Expose term selection and additive fusion as one observable module.\"\"\"\n\n    def __init__(self, enabled_pairs, scale):\n        super().__init__()\n        names = ('cc', 'nc', 'nn')\n        if (not isinstance(enabled_pairs, list)\n                or any(not isinstance(name, str) or name not in names for name in enabled_pairs)\n                or len(set(enabled_pairs)) != len(enabled_pairs)):\n            raise ValueError('enabled_pairs must contain distinct cc, nc or nn names')\n        if type(scale) not in (int, float) or not math.isfinite(scale):\n            raise ValueError('fm_scale must be finite')\n        self.register_buffer('enabled', torch.tensor([float(name in enabled_pairs) for name in names]))\n        self.scale = scale\n\n    def forward(self, deep_logit, terms):\n        return deep_logit + self.scale * (terms * self.enabled).sum(dim=1)\n\n\nclass CTRModel(nn.Module):\n    def __init__(self, schema, config):\n        super().__init__()\n        if schema['dense_width'] != 26:\n            raise ValueError('this example expects 13 numeric values followed by 13 missing indicators')\n        dimension = config.get('embedding_dim', 16)\n        count, buckets = schema['categorical_width'], schema['buckets']\n        self.embedding = nn.Embedding(count * buckets, dimension)\n        nn.init.normal_(self.embedding.weight, std=.01)\n        self.register_buffer('offsets', torch.arange(count) * buckets)\n        width = count * dimension + schema['dense_width']\n        layers = []\n        for hidden in config.get('hidden_dims', [128, 64]):\n            layers.extend([nn.Linear(width, hidden), nn.ReLU(), nn.Dropout(config.get('dropout', .1))])\n            width = hidden\n        layers.append(nn.Linear(width, 1))\n        self.network = nn.Sequential(*layers)\n        # Construct after the original MLP, independent of enabled_pairs.\n        self.numeric_embedding = NumericFieldEmbedding(13, dimension)\n        self.grouped_fm = GroupedFM(count + 13,\n            {'categorical': list(range(count)), 'numeric': list(range(count, count + 13))},\n            [('categorical', 'categorical'), ('numeric', 'categorical'), ('numeric', 'numeric')])\n        self.fusion = InteractionFusion(config.get('enabled_pairs', ['cc', 'nc']),\n                                         config.get('fm_scale', .05))\n\n    def forward(self, dense, categorical):\n        embedded = self.embedding(categorical + self.offsets)\n        deep_logit = self.network(torch.cat([dense, embedded.flatten(1)], dim=1)).squeeze(-1)\n        numeric = self.numeric_embedding(dense[:, :13], present=~dense[:, 13:].bool())\n        terms = self.grouped_fm(torch.cat([embedded, numeric], dim=1))\n        return self.fusion(deep_logit, terms)\n\n\ndef build_model(schema, config):\n    return CTRModel(schema, config)\n",
+          "config": {
+            "model": {
+              "enabled_pairs": [
+                "cc",
+                "nc"
+              ],
+              "fm_scale": 0.05
+            }
+          }
+        },
+        "reference_reads": {
+          "models/pytorch/explicit.py": "a0a3652bd367711f49ed781e947eae20e3a0769ecf483a9df46e32aab38e4df5"
+        },
+        "reference_events": [
+          {
+            "event": "read",
+            "files": {
+              "models/pytorch/explicit.py": "a0a3652bd367711f49ed781e947eae20e3a0769ecf483a9df46e32aab38e4df5"
+            }
+          },
+          {
+            "event": "delivered",
+            "files": {
+              "models/pytorch/explicit.py": "a0a3652bd367711f49ed781e947eae20e3a0769ecf483a9df46e32aab38e4df5"
+            }
+          }
+        ]
+      },
+      "status": "evaluated",
+      "evaluation": {
+        "score": 0.4448392344529578,
+        "metrics": {
+          "rows": 4584062,
+          "logloss": 0.4448392344529578,
+          "auc": 0.805645089747504,
+          "brier": 0.1438997123935615,
+          "observed_ctr": 0.2537528942671369,
+          "mean_prediction": 0.2655683239057234,
+          "calibration": [
+            {
+              "bin": 0,
+              "rows": 1173121,
+              "predicted": 0.054548745937125845,
+              "observed": 0.04478480906914121
+            },
+            {
+              "bin": 1,
+              "rows": 1045729,
+              "predicted": 0.1473899575123325,
+              "observed": 0.12916922070632067
+            },
+            {
+              "bin": 2,
+              "rows": 752522,
+              "predicted": 0.247237629975558,
+              "observed": 0.22934478991976315
+            },
+            {
+              "bin": 3,
+              "rows": 531059,
+              "predicted": 0.3470211959714021,
+              "observed": 0.3346163044030889
+            },
+            {
+              "bin": 4,
+              "rows": 380987,
+              "predicted": 0.4474094897171398,
+              "observed": 0.4377498444828826
+            },
+            {
+              "bin": 5,
+              "rows": 279191,
+              "predicted": 0.5472835620135749,
+              "observed": 0.5424780884770641
+            },
+            {
+              "bin": 6,
+              "rows": 198558,
+              "predicted": 0.6468152110362103,
+              "observed": 0.648475508415677
+            },
+            {
+              "bin": 7,
+              "rows": 131046,
+              "predicted": 0.7460768741728478,
+              "observed": 0.7522396715657097
+            },
+            {
+              "bin": 8,
+              "rows": 71007,
+              "predicted": 0.8432250041632416,
+              "observed": 0.8475079921697861
+            },
+            {
+              "bin": 9,
+              "rows": 20842,
+              "predicted": 0.9399048961114888,
+              "observed": 0.9388734286536801
+            }
+          ],
+          "paired_vs_baseline": {
+            "mean": -0.0004971197066397409,
+            "lower": -0.0005601720250281818,
+            "upper": -0.00043406738825130004,
+            "confidence": 0.95,
+            "direction": "candidate minus baseline; negative favors candidate",
+            "method": "paired per-impression normal interval",
+            "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+          }
+        },
+        "runtime": {
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "torch": "2.14.1+cu130",
+          "rows_seen": 36672493,
+          "steps": 4477,
+          "prediction_rows": 4584062,
+          "last_loss": 0.4536503851413727,
+          "seconds": 20.241789305000566,
+          "peak_cuda_bytes": 697828864,
+          "parameters": 27328209,
+          "config": {
+            "lr": 0.002,
+            "weight_decay": 1e-06,
+            "epochs": 1,
+            "model": {
+              "enabled_pairs": [
+                "cc",
+                "nc"
+              ],
+              "fm_scale": 0.05
+            }
+          },
+          "first_batch_gradient_norms": {
+            "embedding.weight": 0.005800141952931881,
+            "network.0.weight": 0.04317831993103027,
+            "network.0.bias": 0.022836849093437195,
+            "network.3.weight": 0.04953806847333908,
+            "network.3.bias": 0.08956839144229889,
+            "network.6.weight": 0.08747204393148422,
+            "network.6.bias": 0.26910650730133057,
+            "numeric_embedding.weight": 0.001280920929275453
+          },
+          "implementation_probe": {
+            "batches": 3,
+            "components": [
+              {
+                "id": "embedding",
+                "instance_path": "CTRModel.embedding",
+                "targets": [
+                  {
+                    "path": "CTRModel.embedding",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [
+                      "embedding.weight"
+                    ],
+                    "output_shapes": [
+                      [
+                        8192,
+                        26,
+                        16
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          26,
+                          16
+                        ],
+                        "mean": 0.00030783800400980323,
+                        "std": 0.009880385079806434,
+                        "max_abs": 0.05164976418018341,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          26,
+                          16
+                        ],
+                        "mean": 0.0003357172779001637,
+                        "std": 0.010092417848204855,
+                        "max_abs": 0.05172808840870857,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          26,
+                          16
+                        ],
+                        "mean": 0.00038185825838761654,
+                        "std": 0.010561872073500216,
+                        "max_abs": 0.053368307650089264,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [
+                      "embedding.weight"
+                    ],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "network",
+                "instance_path": "CTRModel.network",
+                "targets": [
+                  {
+                    "path": "CTRModel.network",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [
+                      "network.0.weight",
+                      "network.0.bias",
+                      "network.3.weight",
+                      "network.3.bias",
+                      "network.6.weight",
+                      "network.6.bias"
+                    ],
+                    "output_shapes": [
+                      [
+                        8192,
+                        1
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          1
+                        ],
+                        "mean": 0.09213229104989296,
+                        "std": 0.012584516611685286,
+                        "max_abs": 0.14947563409805298,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          1
+                        ],
+                        "mean": 0.05244368688317991,
+                        "std": 0.01755449232404151,
+                        "max_abs": 0.10782822221517563,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          1
+                        ],
+                        "mean": 0.01293450991397549,
+                        "std": 0.025666865794739584,
+                        "max_abs": 0.08378338068723679,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [
+                      "network.0.weight",
+                      "network.0.bias",
+                      "network.3.weight",
+                      "network.3.bias",
+                      "network.6.weight",
+                      "network.6.bias"
+                    ],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "numeric_embedding",
+                "instance_path": "CTRModel.numeric_embedding",
+                "targets": [
+                  {
+                    "path": "CTRModel.numeric_embedding",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [
+                      "numeric_embedding.weight"
+                    ],
+                    "output_shapes": [
+                      [
+                        8192,
+                        13,
+                        16
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          13,
+                          16
+                        ],
+                        "mean": -8.845581562187878e-05,
+                        "std": 0.008655003044644576,
+                        "max_abs": 0.22484122216701508,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          13,
+                          16
+                        ],
+                        "mean": -0.00012681156990132286,
+                        "std": 0.008870262269698167,
+                        "max_abs": 0.24840737879276276,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          13,
+                          16
+                        ],
+                        "mean": -8.526334450763532e-05,
+                        "std": 0.009036596939270126,
+                        "max_abs": 0.30102184414863586,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [
+                      "numeric_embedding.weight"
+                    ],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "grouped_fm",
+                "instance_path": "CTRModel.grouped_fm",
+                "targets": [
+                  {
+                    "path": "CTRModel.grouped_fm",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [],
+                    "output_shapes": [
+                      [
+                        8192,
+                        3
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          3
+                        ],
+                        "mean": -0.0002711276897099657,
+                        "std": 0.005526315902848694,
+                        "max_abs": 0.059263478964567184,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          3
+                        ],
+                        "mean": -0.0017911961457539455,
+                        "std": 0.005516417899237851,
+                        "max_abs": 0.04519258067011833,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          3
+                        ],
+                        "mean": -0.002210263113982869,
+                        "std": 0.006379619449302919,
+                        "max_abs": 0.052973195910453796,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "fusion",
+                "instance_path": "CTRModel.fusion",
+                "targets": [
+                  {
+                    "path": "CTRModel.fusion",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [],
+                    "output_shapes": [
+                      [
+                        8192
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192
+                        ],
+                        "mean": 0.09211974034133164,
+                        "std": 0.012588260485008601,
+                        "max_abs": 0.1475497931241989,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192
+                        ],
+                        "mean": 0.05219752583546011,
+                        "std": 0.017555793954433258,
+                        "max_abs": 0.10790479183197021,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192
+                        ],
+                        "mean": 0.012586222564354266,
+                        "std": 0.025702571497847503,
+                        "max_abs": 0.08420606702566147,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              }
+            ],
+            "optimizer_parameter_set_stable": true,
+            "source_sha256": "bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73",
+            "training_loss": "binary_cross_entropy_with_logits"
+          },
+          "modules": [
+            {
+              "path": "",
+              "class": "CTRModel"
+            },
+            {
+              "path": "embedding",
+              "class": "Embedding"
+            },
+            {
+              "path": "network",
+              "class": "Sequential"
+            },
+            {
+              "path": "network.0",
+              "class": "Linear"
+            },
+            {
+              "path": "network.1",
+              "class": "ReLU"
+            },
+            {
+              "path": "network.2",
+              "class": "Dropout"
+            },
+            {
+              "path": "network.3",
+              "class": "Linear"
+            },
+            {
+              "path": "network.4",
+              "class": "ReLU"
+            },
+            {
+              "path": "network.5",
+              "class": "Dropout"
+            },
+            {
+              "path": "network.6",
+              "class": "Linear"
+            },
+            {
+              "path": "numeric_embedding",
+              "class": "NumericFieldEmbedding"
+            },
+            {
+              "path": "grouped_fm",
+              "class": "GroupedFM"
+            },
+            {
+              "path": "fusion",
+              "class": "InteractionFusion"
+            }
+          ]
+        },
+        "implementation_check": {
+          "status": "verified",
+          "scope": "declared_component_execution_v1",
+          "findings": [],
+          "components": [
+            {
+              "id": "embedding",
+              "instance_path": "CTRModel.embedding",
+              "targets": [
+                {
+                  "path": "CTRModel.embedding",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [
+                    "embedding.weight"
+                  ],
+                  "output_shapes": [
+                    [
+                      8192,
+                      26,
+                      16
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        26,
+                        16
+                      ],
+                      "mean": 0.00030783800400980323,
+                      "std": 0.009880385079806434,
+                      "max_abs": 0.05164976418018341,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        26,
+                        16
+                      ],
+                      "mean": 0.0003357172779001637,
+                      "std": 0.010092417848204855,
+                      "max_abs": 0.05172808840870857,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        26,
+                        16
+                      ],
+                      "mean": 0.00038185825838761654,
+                      "std": 0.010561872073500216,
+                      "max_abs": 0.053368307650089264,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [
+                    "embedding.weight"
+                  ],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "network",
+              "instance_path": "CTRModel.network",
+              "targets": [
+                {
+                  "path": "CTRModel.network",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [
+                    "network.0.weight",
+                    "network.0.bias",
+                    "network.3.weight",
+                    "network.3.bias",
+                    "network.6.weight",
+                    "network.6.bias"
+                  ],
+                  "output_shapes": [
+                    [
+                      8192,
+                      1
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        1
+                      ],
+                      "mean": 0.09213229104989296,
+                      "std": 0.012584516611685286,
+                      "max_abs": 0.14947563409805298,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        1
+                      ],
+                      "mean": 0.05244368688317991,
+                      "std": 0.01755449232404151,
+                      "max_abs": 0.10782822221517563,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        1
+                      ],
+                      "mean": 0.01293450991397549,
+                      "std": 0.025666865794739584,
+                      "max_abs": 0.08378338068723679,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [
+                    "network.0.weight",
+                    "network.0.bias",
+                    "network.3.weight",
+                    "network.3.bias",
+                    "network.6.weight",
+                    "network.6.bias"
+                  ],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "numeric_embedding",
+              "instance_path": "CTRModel.numeric_embedding",
+              "targets": [
+                {
+                  "path": "CTRModel.numeric_embedding",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [
+                    "numeric_embedding.weight"
+                  ],
+                  "output_shapes": [
+                    [
+                      8192,
+                      13,
+                      16
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        13,
+                        16
+                      ],
+                      "mean": -8.845581562187878e-05,
+                      "std": 0.008655003044644576,
+                      "max_abs": 0.22484122216701508,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        13,
+                        16
+                      ],
+                      "mean": -0.00012681156990132286,
+                      "std": 0.008870262269698167,
+                      "max_abs": 0.24840737879276276,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        13,
+                        16
+                      ],
+                      "mean": -8.526334450763532e-05,
+                      "std": 0.009036596939270126,
+                      "max_abs": 0.30102184414863586,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [
+                    "numeric_embedding.weight"
+                  ],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "grouped_fm",
+              "instance_path": "CTRModel.grouped_fm",
+              "targets": [
+                {
+                  "path": "CTRModel.grouped_fm",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [],
+                  "output_shapes": [
+                    [
+                      8192,
+                      3
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        3
+                      ],
+                      "mean": -0.0002711276897099657,
+                      "std": 0.005526315902848694,
+                      "max_abs": 0.059263478964567184,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        3
+                      ],
+                      "mean": -0.0017911961457539455,
+                      "std": 0.005516417899237851,
+                      "max_abs": 0.04519258067011833,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        3
+                      ],
+                      "mean": -0.002210263113982869,
+                      "std": 0.006379619449302919,
+                      "max_abs": 0.052973195910453796,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "fusion",
+              "instance_path": "CTRModel.fusion",
+              "targets": [
+                {
+                  "path": "CTRModel.fusion",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [],
+                  "output_shapes": [
+                    [
+                      8192
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.09211974034133164,
+                      "std": 0.012588260485008601,
+                      "max_abs": 0.1475497931241989,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.05219752583546011,
+                      "std": 0.017555793954433258,
+                      "max_abs": 0.10790479183197021,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.012586222564354266,
+                      "std": 0.025702571497847503,
+                      "max_abs": 0.08420606702566147,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            }
+          ],
+          "probe_batches": 3,
+          "limitations": "Bounded execution/gradient observations do not prove mathematical equivalence to a named method, declared parameter sharing, exact fusion topology, all input paths, or gain attribution."
+        },
+        "change_audit": {
+          "status": "unverified"
+        },
+        "review_required": false,
+        "evidence": [
+          {
+            "id": "trial_001.metrics",
+            "trial_id": "trial_001",
+            "statement": "Independent host validation metrics from complete fixed split",
+            "source": "trial_001/evaluation.json",
+            "status": "observed",
+            "scope": "trial",
+            "value": {
+              "rows": 4584062,
+              "logloss": 0.4448392344529578,
+              "auc": 0.805645089747504,
+              "brier": 0.1438997123935615,
+              "observed_ctr": 0.2537528942671369,
+              "mean_prediction": 0.2655683239057234,
+              "calibration": [
+                {
+                  "bin": 0,
+                  "rows": 1173121,
+                  "predicted": 0.054548745937125845,
+                  "observed": 0.04478480906914121
+                },
+                {
+                  "bin": 1,
+                  "rows": 1045729,
+                  "predicted": 0.1473899575123325,
+                  "observed": 0.12916922070632067
+                },
+                {
+                  "bin": 2,
+                  "rows": 752522,
+                  "predicted": 0.247237629975558,
+                  "observed": 0.22934478991976315
+                },
+                {
+                  "bin": 3,
+                  "rows": 531059,
+                  "predicted": 0.3470211959714021,
+                  "observed": 0.3346163044030889
+                },
+                {
+                  "bin": 4,
+                  "rows": 380987,
+                  "predicted": 0.4474094897171398,
+                  "observed": 0.4377498444828826
+                },
+                {
+                  "bin": 5,
+                  "rows": 279191,
+                  "predicted": 0.5472835620135749,
+                  "observed": 0.5424780884770641
+                },
+                {
+                  "bin": 6,
+                  "rows": 198558,
+                  "predicted": 0.6468152110362103,
+                  "observed": 0.648475508415677
+                },
+                {
+                  "bin": 7,
+                  "rows": 131046,
+                  "predicted": 0.7460768741728478,
+                  "observed": 0.7522396715657097
+                },
+                {
+                  "bin": 8,
+                  "rows": 71007,
+                  "predicted": 0.8432250041632416,
+                  "observed": 0.8475079921697861
+                },
+                {
+                  "bin": 9,
+                  "rows": 20842,
+                  "predicted": 0.9399048961114888,
+                  "observed": 0.9388734286536801
+                }
+              ],
+              "paired_vs_baseline": {
+                "mean": -0.0004971197066397409,
+                "lower": -0.0005601720250281818,
+                "upper": -0.00043406738825130004,
+                "confidence": 0.95,
+                "direction": "candidate minus baseline; negative favors candidate",
+                "method": "paired per-impression normal interval",
+                "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+              }
+            }
+          },
+          {
+            "id": "trial_001.output_scales",
+            "trial_id": "trial_001",
+            "statement": "Bounded actual training-output scales; not field importance or gain attribution",
+            "source": "trial_001/output/runtime.json",
+            "status": "observed",
+            "scope": "trial",
+            "value": {
+              "probe_batches": 3,
+              "components": [
+                {
+                  "component_id": "embedding",
+                  "targets": [
+                    {
+                      "path": "CTRModel.embedding",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            26,
+                            16
+                          ],
+                          "mean": 0.00030783800400980323,
+                          "std": 0.009880385079806434,
+                          "max_abs": 0.05164976418018341,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            26,
+                            16
+                          ],
+                          "mean": 0.0003357172779001637,
+                          "std": 0.010092417848204855,
+                          "max_abs": 0.05172808840870857,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            26,
+                            16
+                          ],
+                          "mean": 0.00038185825838761654,
+                          "std": 0.010561872073500216,
+                          "max_abs": 0.053368307650089264,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "network",
+                  "targets": [
+                    {
+                      "path": "CTRModel.network",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            1
+                          ],
+                          "mean": 0.09213229104989296,
+                          "std": 0.012584516611685286,
+                          "max_abs": 0.14947563409805298,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            1
+                          ],
+                          "mean": 0.05244368688317991,
+                          "std": 0.01755449232404151,
+                          "max_abs": 0.10782822221517563,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            1
+                          ],
+                          "mean": 0.01293450991397549,
+                          "std": 0.025666865794739584,
+                          "max_abs": 0.08378338068723679,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "numeric_embedding",
+                  "targets": [
+                    {
+                      "path": "CTRModel.numeric_embedding",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            13,
+                            16
+                          ],
+                          "mean": -8.845581562187878e-05,
+                          "std": 0.008655003044644576,
+                          "max_abs": 0.22484122216701508,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            13,
+                            16
+                          ],
+                          "mean": -0.00012681156990132286,
+                          "std": 0.008870262269698167,
+                          "max_abs": 0.24840737879276276,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            13,
+                            16
+                          ],
+                          "mean": -8.526334450763532e-05,
+                          "std": 0.009036596939270126,
+                          "max_abs": 0.30102184414863586,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "grouped_fm",
+                  "targets": [
+                    {
+                      "path": "CTRModel.grouped_fm",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            3
+                          ],
+                          "mean": -0.0002711276897099657,
+                          "std": 0.005526315902848694,
+                          "max_abs": 0.059263478964567184,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            3
+                          ],
+                          "mean": -0.0017911961457539455,
+                          "std": 0.005516417899237851,
+                          "max_abs": 0.04519258067011833,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            3
+                          ],
+                          "mean": -0.002210263113982869,
+                          "std": 0.006379619449302919,
+                          "max_abs": 0.052973195910453796,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "fusion",
+                  "targets": [
+                    {
+                      "path": "CTRModel.fusion",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192
+                          ],
+                          "mean": 0.09211974034133164,
+                          "std": 0.012588260485008601,
+                          "max_abs": 0.1475497931241989,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192
+                          ],
+                          "mean": 0.05219752583546011,
+                          "std": 0.017555793954433258,
+                          "max_abs": 0.10790479183197021,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192
+                          ],
+                          "mean": 0.012586222564354266,
+                          "std": 0.025702571497847503,
+                          "max_abs": 0.08420606702566147,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "trial_001.interaction_control",
+            "trial_id": "trial_001",
+            "statement": "Executed same-source full-data interaction control",
+            "source": "trial_001/evaluation.json",
+            "status": "observed",
+            "scope": "trial",
+            "value": {
+              "control_metrics": {
+                "rows": 4584062,
+                "logloss": 0.44510814074270316,
+                "auc": 0.8054459122978406,
+                "brier": 0.1439783584961471,
+                "observed_ctr": 0.2537528942671369,
+                "mean_prediction": 0.2657790083294375,
+                "calibration": [
+                  {
+                    "bin": 0,
+                    "rows": 1155407,
+                    "predicted": 0.05468819390331065,
+                    "observed": 0.04428655876241013
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 1053008,
+                    "predicted": 0.1475690630413987,
+                    "observed": 0.12788696762037896
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 767936,
+                    "predicted": 0.2471566003180799,
+                    "observed": 0.2293420285023752
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 531160,
+                    "predicted": 0.3468777992098377,
+                    "observed": 0.33524738308607577
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 375024,
+                    "predicted": 0.44740146382968626,
+                    "observed": 0.4387532531251333
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 281320,
+                    "predicted": 0.5476288933105121,
+                    "observed": 0.5423290203327172
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 202239,
+                    "predicted": 0.6467335955759214,
+                    "observed": 0.649899376480303
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 129381,
+                    "predicted": 0.7457463711767599,
+                    "observed": 0.7533409078612779
+                  },
+                  {
+                    "bin": 8,
+                    "rows": 69013,
+                    "predicted": 0.8429005833890105,
+                    "observed": 0.8511729674119369
+                  },
+                  {
+                    "bin": 9,
+                    "rows": 19574,
+                    "predicted": 0.9412665759912974,
+                    "observed": 0.9419638295698375
+                  }
+                ]
+              },
+              "paired_logloss": {
+                "mean": -0.00026890628974534747,
+                "lower": -0.00033004855533029997,
+                "upper": -0.00020776402416039497,
+                "confidence": 0.95,
+                "direction": "candidate minus control; negative favors candidate",
+                "method": "paired per-impression normal interval",
+                "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+              }
+            }
+          }
+        ],
+        "interaction_control": {
+          "status": "completed",
+          "config_patch": {
+            "model": {
+              "enabled_pairs": [
+                "cc"
+              ]
+            }
+          },
+          "expected_effect": "Remove only the newly enabled term from the residual sum",
+          "source_sha256": "bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73",
+          "comparison": "Same source/seed/protocol; model configuration patched, weights retrained",
+          "metrics": {
+            "rows": 4584062,
+            "logloss": 0.44510814074270316,
+            "auc": 0.8054459122978406,
+            "brier": 0.1439783584961471,
+            "observed_ctr": 0.2537528942671369,
+            "mean_prediction": 0.2657790083294375,
+            "calibration": [
+              {
+                "bin": 0,
+                "rows": 1155407,
+                "predicted": 0.05468819390331065,
+                "observed": 0.04428655876241013
+              },
+              {
+                "bin": 1,
+                "rows": 1053008,
+                "predicted": 0.1475690630413987,
+                "observed": 0.12788696762037896
+              },
+              {
+                "bin": 2,
+                "rows": 767936,
+                "predicted": 0.2471566003180799,
+                "observed": 0.2293420285023752
+              },
+              {
+                "bin": 3,
+                "rows": 531160,
+                "predicted": 0.3468777992098377,
+                "observed": 0.33524738308607577
+              },
+              {
+                "bin": 4,
+                "rows": 375024,
+                "predicted": 0.44740146382968626,
+                "observed": 0.4387532531251333
+              },
+              {
+                "bin": 5,
+                "rows": 281320,
+                "predicted": 0.5476288933105121,
+                "observed": 0.5423290203327172
+              },
+              {
+                "bin": 6,
+                "rows": 202239,
+                "predicted": 0.6467335955759214,
+                "observed": 0.649899376480303
+              },
+              {
+                "bin": 7,
+                "rows": 129381,
+                "predicted": 0.7457463711767599,
+                "observed": 0.7533409078612779
+              },
+              {
+                "bin": 8,
+                "rows": 69013,
+                "predicted": 0.8429005833890105,
+                "observed": 0.8511729674119369
+              },
+              {
+                "bin": 9,
+                "rows": 19574,
+                "predicted": 0.9412665759912974,
+                "observed": 0.9419638295698375
+              }
+            ]
+          },
+          "paired_logloss": {
+            "mean": -0.00026890628974534747,
+            "lower": -0.00033004855533029997,
+            "upper": -0.00020776402416039497,
+            "confidence": 0.95,
+            "direction": "candidate minus control; negative favors candidate",
+            "method": "paired per-impression normal interval",
+            "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+          },
+          "runtime": {
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 5090",
+            "torch": "2.14.1+cu130",
+            "rows_seen": 36672493,
+            "steps": 4477,
+            "prediction_rows": 4584062,
+            "last_loss": 0.4534083306789398,
+            "seconds": 19.485789031999957,
+            "peak_cuda_bytes": 697828864,
+            "parameters": 27328209,
+            "config": {
+              "lr": 0.002,
+              "weight_decay": 1e-06,
+              "epochs": 1,
+              "model": {
+                "enabled_pairs": [
+                  "cc"
+                ],
+                "fm_scale": 0.05
+              }
+            },
+            "first_batch_gradient_norms": {
+              "embedding.weight": 0.005725813563913107,
+              "network.0.weight": 0.043179430067539215,
+              "network.0.bias": 0.0228373184800148,
+              "network.3.weight": 0.049539558589458466,
+              "network.3.bias": 0.08957020193338394,
+              "network.6.weight": 0.08747436851263046,
+              "network.6.bias": 0.2691122889518738,
+              "numeric_embedding.weight": 0.0
+            },
+            "implementation_probe": {
+              "batches": 3,
+              "components": [],
+              "optimizer_parameter_set_stable": true,
+              "source_sha256": "bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73",
+              "training_loss": "binary_cross_entropy_with_logits"
+            },
+            "modules": [
+              {
+                "path": "",
+                "class": "CTRModel"
+              },
+              {
+                "path": "embedding",
+                "class": "Embedding"
+              },
+              {
+                "path": "network",
+                "class": "Sequential"
+              },
+              {
+                "path": "network.0",
+                "class": "Linear"
+              },
+              {
+                "path": "network.1",
+                "class": "ReLU"
+              },
+              {
+                "path": "network.2",
+                "class": "Dropout"
+              },
+              {
+                "path": "network.3",
+                "class": "Linear"
+              },
+              {
+                "path": "network.4",
+                "class": "ReLU"
+              },
+              {
+                "path": "network.5",
+                "class": "Dropout"
+              },
+              {
+                "path": "network.6",
+                "class": "Linear"
+              },
+              {
+                "path": "numeric_embedding",
+                "class": "NumericFieldEmbedding"
+              },
+              {
+                "path": "grouped_fm",
+                "class": "GroupedFM"
+              },
+              {
+                "path": "fusion",
+                "class": "InteractionFusion"
+              }
+            ]
+          }
+        }
+      },
+      "promotion": {
+        "eligible": true,
+        "promoted": true,
+        "reason": "promoted",
+        "previous_best_id": "baseline"
+      },
+      "reflection": {
+        "technical_experience": {
+          "lesson": "Fixed-plan contract verification with measured recipe comparisons",
+          "evidence": "{\"score\": 0.4448392344529578, \"control\": {\"comparison\": \"Same source/seed/protocol; model configuration patched, weights retrained\", \"config_patch\": {\"model\": {\"enabled_pairs\": [\"cc\"]}}, \"expected_effect\": \"Remove only the newly enabled term from the residual sum\", \"metrics\": {\"auc\": 0.8054459122978406, \"brier\": 0.1439783584961471, \"calibration\": [{\"bin\": 0, \"observed\": 0.04428655876241013, \"predicted\": 0.05468819390331065, \"rows\": 1155407}, {\"bin\": 1, \"observed\": 0.12788696762037896, \"predicted\": 0.1475690630413987, \"rows\": 1053008}, {\"bin\": 2, \"observed\": 0.2293420285023752, \"predicted\": 0.2471566003180799, \"rows\": 767936}, {\"bin\": 3, \"observed\": 0.33524738308607577, \"predicted\": 0.3468777992098377, \"rows\": 531160}, {\"bin\": 4, \"observed\": 0.4387532531251333, \"predicted\": 0.44740146382968626, \"rows\": 375024}, {\"bin\": 5, \"observed\": 0.5423290203327172, \"predicted\": 0.5476288933105121, \"rows\": 281320}, {\"bin\": 6, \"observed\": 0.649899376480303, \"predicted\": 0.6467335955759214, \"rows\": 202239}, {\"bin\": 7, \"observed\": 0.7533409078612779, \"predicted\": 0.7457463711767599, \"rows\": 129381}, {\"bin\": 8, \"observed\": 0.8511729674119369, \"predicted\": 0.8429005833890105, \"rows\": 69013}, {\"bin\": 9, \"observed\": 0.9419638295698375, \"predicted\": 0.9412665759912974, \"rows\": 19574}], \"logloss\": 0.44510814074270316, \"mean_prediction\": 0.2657790083294375, \"observed_ctr\": 0.2537528942671369, \"rows\": 4584062}, \"paired_logloss\": {\"confidence\": 0.95, \"direction\": \"candidate minus control; negative favors candidate\", \"limitations\": \"exploratory; no adaptive-selection correction; anonymous rows prevent user clustering\", \"lower\": -0.00033004855533029997, \"mean\": -0.00026890628974534747, \"method\": \"paired per-impression normal interval\", \"upper\": -0.00020776402416039497}, \"runtime\": {\"config\": {\"epochs\": 1, \"lr\": 0.002, \"model\": {\"enabled_pairs\": [\"cc\"], \"fm_scale\": 0.05}, \"weight_decay\": 1e-06}, \"device\": \"cuda\", \"first_batch_gradient_norms\": {\"embedding.weight\": 0.005725813563913107, \"network.0.bias\": 0.0228373184800148, \"network.0.weight\": 0.043179430067539215, \"network.3.bias\": 0.08957020193338394, \"network.3.weight\": 0.049539558589458466, \"network.6.bias\": 0.2691122889518738, \"network.6.weight\": 0.08747436851263046, \"numeric_embedding.weight\": 0.0}, \"gpu\": \"NVIDIA GeForce RTX 5090\", \"implementation_probe\": {\"batches\": 3, \"components\": [], \"optimizer_parameter_set_stable\": true, \"source_sha256\": \"bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73\", \"training_loss\": \"binary_cross_entropy_with_logits\"}, \"last_loss\": 0.4534083306789398, \"modules\": [{\"class\": \"CTRModel\", \"path\": \"\"}, {\"class\": \"Embedding\", \"path\": \"embedding\"}, {\"class\": \"Sequential\", \"path\": \"network\"}, {\"class\": \"Linear\", \"path\": \"network.0\"}, {\"class\": \"ReLU\", \"path\": \"network.1\"}, {\"class\": \"Dropout\", \"path\": \"network.2\"}, {\"class\": \"Linear\", \"path\": \"network.3\"}, {\"class\": \"ReLU\", \"path\": \"network.4\"}, {\"class\": \"Dropout\", \"path\": \"network.5\"}, {\"class\": \"Linear\", \"path\": \"network.6\"}, {\"class\": \"NumericFieldEmbedding\", \"path\": \"numeric_embedding\"}, {\"class\": \"GroupedFM\", \"path\": \"grouped_fm\"}, {\"class\": \"InteractionFusion\", \"path\": \"fusion\"}], \"parameters\": 27328209, \"peak_cuda_bytes\": 697828864, \"prediction_rows\": 4584062, \"rows_seen\": 36672493, \"seconds\": 19.485789031999957, \"steps\": 4477, \"torch\": \"2.14.1+cu130\"}, \"source_sha256\": \"bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73\", \"status\": \"completed\"}, \"status\": \"evaluated\"}",
+          "uncertainty": "No new LLM decisions, multiple seeds, isolated component attribution or final holdout",
+          "next_test": "Let the Agent compare observed scope outcomes and branch scales before new structure",
+          "attribution": "unverified",
+          "component_assessments": [
+            {
+              "component_id": "embedding",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "network",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "numeric_embedding",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "grouped_fm",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "fusion",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            }
+          ],
+          "implementation_status": "verified"
+        },
+        "business_experience": {
+          "status": "not_observable",
+          "reason": "Anonymous field semantics"
+        }
+      }
+    },
+    {
+      "id": "trial_002",
+      "proposal": {
+        "action": "experiment",
+        "research": {
+          "direction": "Explicit interaction scope",
+          "mechanism": "Enable numeric terms at fixed scale",
+          "why_now": "Exercise available typed inputs and the new controlled-training contract; no claim of optimal priority",
+          "data_rationale": "39 anonymous original fields, no invented business or sequence semantics",
+          "comparison": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+          "expected_result": "Executable full-data comparison; lower candidate logloss would favor this recipe",
+          "falsification": "Nonnegative paired difference rejects a useful gain under this protocol",
+          "input_fields": [
+            "I1",
+            "I2",
+            "I3",
+            "I4",
+            "I5",
+            "I6",
+            "I7",
+            "I8",
+            "I9",
+            "I10",
+            "I11",
+            "I12",
+            "I13",
+            "C1",
+            "C2",
+            "C3",
+            "C4",
+            "C5",
+            "C6",
+            "C7",
+            "C8",
+            "C9",
+            "C10",
+            "C11",
+            "C12",
+            "C13",
+            "C14",
+            "C15",
+            "C16",
+            "C17",
+            "C18",
+            "C19",
+            "C20",
+            "C21",
+            "C22",
+            "C23",
+            "C24",
+            "C25",
+            "C26"
+          ],
+          "interaction_plan": {
+            "decision": "test",
+            "rationale": "Fixed integration plan, not an Agent priority judgment",
+            "coverage": [
+              {
+                "left": "numeric",
+                "right": "numeric",
+                "status": "implicit",
+                "basis": "Current MLP consumes all views; previous example explicitly enables cc/nc only"
+              },
+              {
+                "left": "numeric",
+                "right": "categorical",
+                "status": "mixed",
+                "basis": "Current MLP consumes all views; previous example explicitly enables cc/nc only"
+              },
+              {
+                "left": "numeric",
+                "right": "missing",
+                "status": "implicit",
+                "basis": "Current MLP consumes all views; previous example explicitly enables cc/nc only"
+              },
+              {
+                "left": "categorical",
+                "right": "categorical",
+                "status": "mixed",
+                "basis": "Current MLP consumes all views; previous example explicitly enables cc/nc only"
+              },
+              {
+                "left": "categorical",
+                "right": "missing",
+                "status": "implicit",
+                "basis": "Current MLP consumes all views; previous example explicitly enables cc/nc only"
+              },
+              {
+                "left": "missing",
+                "right": "missing",
+                "status": "implicit",
+                "basis": "Current MLP consumes all views; previous example explicitly enables cc/nc only"
+              }
+            ],
+            "candidates": [
+              {
+                "id": "numeric",
+                "views": [
+                  "numeric"
+                ],
+                "order": 2,
+                "mechanism": "grouped field-vector dot products",
+                "priority": 1,
+                "reason": "Host declares these available typed fields; test scope with an actual control",
+                "cost": "One full training and one full control",
+                "risks": "Shared-gradient effects, scale and anonymous sparse-field support",
+                "evidence_ids": [
+                  "dataset.train",
+                  "baseline.metrics"
+                ]
+              }
+            ],
+            "selected_id": "numeric",
+            "control": {
+              "config_patch": {
+                "model": {
+                  "enabled_pairs": [
+                    "cc",
+                    "nc"
+                  ]
+                }
+              },
+              "expected_effect": "Remove only the newly enabled term from the residual sum"
+            }
+          },
+          "model_design": {
+            "estimator": "Pointwise binary logit with host BCE",
+            "backbone": "Embedding MLP with grouped second-order residuals",
+            "rationale": "Bounded integration verification using an editable mixed-field example",
+            "data_fit": "Existing typed anonymous inputs only; numeric missing values masked before FM",
+            "comparison_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+            "estimator_id": "pointwise_bce",
+            "backbone_id": "embedding_mlp",
+            "horizontal_expansion": {
+              "decision": "defer",
+              "rationale": "Parallel MLP and explicit pair terms; later trial changes term gating only",
+              "comparison_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+              "groups": [
+                {
+                  "id": "mixed_interactions",
+                  "fusion_id": "fusion",
+                  "branch_ids": [
+                    "network",
+                    "grouped_fm"
+                  ],
+                  "parameter_sharing": [
+                    {
+                      "component_ids": [
+                        "network",
+                        "grouped_fm"
+                      ],
+                      "code_sections": [
+                        "CTRModel.embedding"
+                      ],
+                      "rationale": "Same field embedding vectors feed the MLP and grouped pair branch"
+                    }
+                  ]
+                }
+              ]
+            },
+            "change_scope": "local",
+            "parent_trial_id": "trial_001",
+            "components": [
+              {
+                "id": "embedding",
+                "mechanism": "Shared categorical field embedding table",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.embedding",
+                "output_contract": "float32 [B,26,16], unbounded"
+              },
+              {
+                "id": "network",
+                "mechanism": "Original embedding MLP including numeric values and missing indicators",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.network",
+                "output_contract": "float32 [B,1], unbounded"
+              },
+              {
+                "id": "numeric_embedding",
+                "mechanism": "Observed standardized x_i times a learned per-field vector",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.numeric_embedding",
+                "output_contract": "float32 [B,13,16], unbounded"
+              },
+              {
+                "id": "grouped_fm",
+                "mechanism": "Three second-order group sums cc, nc, nn over field vectors",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.grouped_fm",
+                "output_contract": "float32 [B,3], unbounded"
+              },
+              {
+                "id": "fusion",
+                "mechanism": "Deep logit plus .05 times configured cc/nc/nn terms",
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.forward"
+                ],
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "required_capabilities": [
+                  "tabular_features"
+                ],
+                "instance_path": "CTRModel.fusion",
+                "output_contract": "float32 [B], unbounded"
+              }
+            ],
+            "inheritance": [
+              {
+                "source_trial_id": "trial_001",
+                "component_id": "embedding",
+                "reason": "Repeat under a changed fusion gate; no assumed benefit",
+                "compatibility": "Same field schema, masks and backbone",
+                "validation_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+                "decision": "retest",
+                "target_component_id": "embedding"
+              },
+              {
+                "source_trial_id": "trial_001",
+                "component_id": "network",
+                "reason": "Repeat under a changed fusion gate; no assumed benefit",
+                "compatibility": "Same field schema, masks and backbone",
+                "validation_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+                "decision": "retest",
+                "target_component_id": "network"
+              },
+              {
+                "source_trial_id": "trial_001",
+                "component_id": "numeric_embedding",
+                "reason": "Repeat under a changed fusion gate; no assumed benefit",
+                "compatibility": "Same field schema, masks and backbone",
+                "validation_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+                "decision": "retest",
+                "target_component_id": "numeric_embedding"
+              },
+              {
+                "source_trial_id": "trial_001",
+                "component_id": "grouped_fm",
+                "reason": "Repeat under a changed fusion gate; no assumed benefit",
+                "compatibility": "Same field schema, masks and backbone",
+                "validation_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+                "decision": "retest",
+                "target_component_id": "grouped_fm"
+              },
+              {
+                "source_trial_id": "trial_001",
+                "component_id": "fusion",
+                "reason": "Repeat under a changed fusion gate; no assumed benefit",
+                "compatibility": "Same field schema, masks and backbone",
+                "validation_plan": "Same source, seed, optimizer and full-data protocol; gate the selected term at fusion.",
+                "decision": "retest",
+                "target_component_id": "fusion"
+              }
+            ]
+          },
+          "alternatives": [
+            {
+              "direction": "fusion diagnosis",
+              "mechanism": "inspect scales before increasing capacity",
+              "reason": "Bounded probe supplies scale observations; defer extra structure"
+            }
+          ],
+          "evidence_ids": [
+            "dataset.train",
+            "baseline.metrics"
+          ],
+          "change_factors": [
+            "enabled interaction scope"
+          ]
+        },
+        "candidate": {
+          "source": "\"\"\"Optional mixed-field FM extension of the embedding MLP, not an Agent default.\n\nThe Criteo dense input contains 13 standardized numeric fields followed by their\n13 missing indicators. Missing indicators remain in the MLP; this example adds\nno explicit missingness interactions. Category embeddings are shared with the\nMLP. Three FM terms represent category-category (cc), numeric-category (nc), and\nnumeric-numeric (nn) relations. ``enabled_pairs`` selects which terms reach the\nscore; setting it to [] provides a same-source control.\n\nAll modules are constructed and called for every configuration. Only fusion\ngates change, preserving shared initial parameters under the same random seed.\nRetraining a gated control can still change shared embeddings and MLP weights;\nits measured difference is a controlled recipe comparison, not proof that every\nindividual pair caused the gain.\n\"\"\"\n\nimport math\n\nimport torch\nfrom torch import nn\n\nfrom model_evo_harness.models.pytorch.explicit import GroupedFM, NumericFieldEmbedding\n\n\nclass InteractionFusion(nn.Module):\n    \"\"\"Expose term selection and additive fusion as one observable module.\"\"\"\n\n    def __init__(self, enabled_pairs, scale):\n        super().__init__()\n        names = ('cc', 'nc', 'nn')\n        if (not isinstance(enabled_pairs, list)\n                or any(not isinstance(name, str) or name not in names for name in enabled_pairs)\n                or len(set(enabled_pairs)) != len(enabled_pairs)):\n            raise ValueError('enabled_pairs must contain distinct cc, nc or nn names')\n        if type(scale) not in (int, float) or not math.isfinite(scale):\n            raise ValueError('fm_scale must be finite')\n        self.register_buffer('enabled', torch.tensor([float(name in enabled_pairs) for name in names]))\n        self.scale = scale\n\n    def forward(self, deep_logit, terms):\n        return deep_logit + self.scale * (terms * self.enabled).sum(dim=1)\n\n\nclass CTRModel(nn.Module):\n    def __init__(self, schema, config):\n        super().__init__()\n        if schema['dense_width'] != 26:\n            raise ValueError('this example expects 13 numeric values followed by 13 missing indicators')\n        dimension = config.get('embedding_dim', 16)\n        count, buckets = schema['categorical_width'], schema['buckets']\n        self.embedding = nn.Embedding(count * buckets, dimension)\n        nn.init.normal_(self.embedding.weight, std=.01)\n        self.register_buffer('offsets', torch.arange(count) * buckets)\n        width = count * dimension + schema['dense_width']\n        layers = []\n        for hidden in config.get('hidden_dims', [128, 64]):\n            layers.extend([nn.Linear(width, hidden), nn.ReLU(), nn.Dropout(config.get('dropout', .1))])\n            width = hidden\n        layers.append(nn.Linear(width, 1))\n        self.network = nn.Sequential(*layers)\n        # Construct after the original MLP, independent of enabled_pairs.\n        self.numeric_embedding = NumericFieldEmbedding(13, dimension)\n        self.grouped_fm = GroupedFM(count + 13,\n            {'categorical': list(range(count)), 'numeric': list(range(count, count + 13))},\n            [('categorical', 'categorical'), ('numeric', 'categorical'), ('numeric', 'numeric')])\n        self.fusion = InteractionFusion(config.get('enabled_pairs', ['cc', 'nc']),\n                                         config.get('fm_scale', .05))\n\n    def forward(self, dense, categorical):\n        embedded = self.embedding(categorical + self.offsets)\n        deep_logit = self.network(torch.cat([dense, embedded.flatten(1)], dim=1)).squeeze(-1)\n        numeric = self.numeric_embedding(dense[:, :13], present=~dense[:, 13:].bool())\n        terms = self.grouped_fm(torch.cat([embedded, numeric], dim=1))\n        return self.fusion(deep_logit, terms)\n\n\ndef build_model(schema, config):\n    return CTRModel(schema, config)\n",
+          "config": {
+            "model": {
+              "enabled_pairs": [
+                "cc",
+                "nc",
+                "nn"
+              ],
+              "fm_scale": 0.05
+            }
+          }
+        },
+        "reference_reads": {
+          "models/pytorch/explicit.py": "a0a3652bd367711f49ed781e947eae20e3a0769ecf483a9df46e32aab38e4df5"
+        },
+        "reference_events": [
+          {
+            "event": "read",
+            "files": {
+              "models/pytorch/explicit.py": "a0a3652bd367711f49ed781e947eae20e3a0769ecf483a9df46e32aab38e4df5"
+            }
+          },
+          {
+            "event": "delivered",
+            "files": {
+              "models/pytorch/explicit.py": "a0a3652bd367711f49ed781e947eae20e3a0769ecf483a9df46e32aab38e4df5"
+            }
+          }
+        ]
+      },
+      "status": "evaluated",
+      "evaluation": {
+        "score": 0.44497477848154676,
+        "metrics": {
+          "rows": 4584062,
+          "logloss": 0.44497477848154676,
+          "auc": 0.8054866761835513,
+          "brier": 0.1439457733837257,
+          "observed_ctr": 0.2537528942671369,
+          "mean_prediction": 0.2653827385790201,
+          "calibration": [
+            {
+              "bin": 0,
+              "rows": 1171547,
+              "predicted": 0.05450644653829427,
+              "observed": 0.04475108553049942
+            },
+            {
+              "bin": 1,
+              "rows": 1044138,
+              "predicted": 0.1473473395369287,
+              "observed": 0.12898390825733763
+            },
+            {
+              "bin": 2,
+              "rows": 755039,
+              "predicted": 0.24721186868786568,
+              "observed": 0.22952456760511708
+            },
+            {
+              "bin": 3,
+              "rows": 533411,
+              "predicted": 0.34703063245228044,
+              "observed": 0.3340257325027043
+            },
+            {
+              "bin": 4,
+              "rows": 380267,
+              "predicted": 0.44731229287448343,
+              "observed": 0.4385944612601146
+            },
+            {
+              "bin": 5,
+              "rows": 280933,
+              "predicted": 0.5473743968478192,
+              "observed": 0.5431935728447708
+            },
+            {
+              "bin": 6,
+              "rows": 199767,
+              "predicted": 0.6468896097390664,
+              "observed": 0.6501324042509523
+            },
+            {
+              "bin": 7,
+              "rows": 129957,
+              "predicted": 0.7459320728512108,
+              "observed": 0.7531722031133374
+            },
+            {
+              "bin": 8,
+              "rows": 68710,
+              "predicted": 0.8431054499485559,
+              "observed": 0.8501091544171154
+            },
+            {
+              "bin": 9,
+              "rows": 20293,
+              "predicted": 0.9406616372348511,
+              "observed": 0.9407677524269452
+            }
+          ],
+          "paired_vs_baseline": {
+            "mean": -0.00036157567805080717,
+            "lower": -0.0004237461580309429,
+            "upper": -0.00029940519807067145,
+            "confidence": 0.95,
+            "direction": "candidate minus baseline; negative favors candidate",
+            "method": "paired per-impression normal interval",
+            "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+          }
+        },
+        "runtime": {
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "torch": "2.14.1+cu130",
+          "rows_seen": 36672493,
+          "steps": 4477,
+          "prediction_rows": 4584062,
+          "last_loss": 0.45263242721557617,
+          "seconds": 19.585100385998885,
+          "peak_cuda_bytes": 697828864,
+          "parameters": 27328209,
+          "config": {
+            "lr": 0.002,
+            "weight_decay": 1e-06,
+            "epochs": 1,
+            "model": {
+              "enabled_pairs": [
+                "cc",
+                "nc",
+                "nn"
+              ],
+              "fm_scale": 0.05
+            }
+          },
+          "first_batch_gradient_norms": {
+            "embedding.weight": 0.0058000171557068825,
+            "network.0.weight": 0.043177586048841476,
+            "network.0.bias": 0.02283632569015026,
+            "network.3.weight": 0.049536630511283875,
+            "network.3.bias": 0.08956611901521683,
+            "network.6.weight": 0.08746948093175888,
+            "network.6.bias": 0.26909947395324707,
+            "numeric_embedding.weight": 0.001731367432512343
+          },
+          "implementation_probe": {
+            "batches": 3,
+            "components": [
+              {
+                "id": "embedding",
+                "instance_path": "CTRModel.embedding",
+                "targets": [
+                  {
+                    "path": "CTRModel.embedding",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [
+                      "embedding.weight"
+                    ],
+                    "output_shapes": [
+                      [
+                        8192,
+                        26,
+                        16
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          26,
+                          16
+                        ],
+                        "mean": 0.00030783800400980323,
+                        "std": 0.009880385079806434,
+                        "max_abs": 0.05164976418018341,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          26,
+                          16
+                        ],
+                        "mean": 0.000335718934480829,
+                        "std": 0.01009241719390397,
+                        "max_abs": 0.05172809213399887,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          26,
+                          16
+                        ],
+                        "mean": 0.0003793986868113965,
+                        "std": 0.010561457482062024,
+                        "max_abs": 0.053367141634225845,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [
+                      "embedding.weight"
+                    ],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "network",
+                "instance_path": "CTRModel.network",
+                "targets": [
+                  {
+                    "path": "CTRModel.network",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [
+                      "network.0.weight",
+                      "network.0.bias",
+                      "network.3.weight",
+                      "network.3.bias",
+                      "network.6.weight",
+                      "network.6.bias"
+                    ],
+                    "output_shapes": [
+                      [
+                        8192,
+                        1
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          1
+                        ],
+                        "mean": 0.09213229104989296,
+                        "std": 0.012584516611685286,
+                        "max_abs": 0.14947563409805298,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          1
+                        ],
+                        "mean": 0.05244372667220887,
+                        "std": 0.017554509364507795,
+                        "max_abs": 0.1078283041715622,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          1
+                        ],
+                        "mean": 0.012934581110130239,
+                        "std": 0.02566599147590045,
+                        "max_abs": 0.08378179371356964,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [
+                      "network.0.weight",
+                      "network.0.bias",
+                      "network.3.weight",
+                      "network.3.bias",
+                      "network.6.weight",
+                      "network.6.bias"
+                    ],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "numeric_embedding",
+                "instance_path": "CTRModel.numeric_embedding",
+                "targets": [
+                  {
+                    "path": "CTRModel.numeric_embedding",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [
+                      "numeric_embedding.weight"
+                    ],
+                    "output_shapes": [
+                      [
+                        8192,
+                        13,
+                        16
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          13,
+                          16
+                        ],
+                        "mean": -8.845581562187878e-05,
+                        "std": 0.008655003044644576,
+                        "max_abs": 0.22484122216701508,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          13,
+                          16
+                        ],
+                        "mean": -0.0001321393338124374,
+                        "std": 0.008907422349829084,
+                        "max_abs": 0.24839334189891815,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          13,
+                          16
+                        ],
+                        "mean": -9.602490902105036e-05,
+                        "std": 0.009221967843604788,
+                        "max_abs": 0.27641478180885315,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [
+                      "numeric_embedding.weight"
+                    ],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "grouped_fm",
+                "instance_path": "CTRModel.grouped_fm",
+                "targets": [
+                  {
+                    "path": "CTRModel.grouped_fm",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [],
+                    "output_shapes": [
+                      [
+                        8192,
+                        3
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192,
+                          3
+                        ],
+                        "mean": -0.0002711276897099657,
+                        "std": 0.005526315902848694,
+                        "max_abs": 0.059263478964567184,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          3
+                        ],
+                        "mean": -0.0021107198117756854,
+                        "std": 0.00529705939881664,
+                        "max_abs": 0.03988995403051376,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192,
+                          3
+                        ],
+                        "mean": -0.0029805267592580655,
+                        "std": 0.00588416716975861,
+                        "max_abs": 0.06317754089832306,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              },
+              {
+                "id": "fusion",
+                "instance_path": "CTRModel.fusion",
+                "targets": [
+                  {
+                    "path": "CTRModel.fusion",
+                    "calls": 3,
+                    "nonzero_output_gradient": true,
+                    "trainable_parameters": [],
+                    "output_shapes": [
+                      [
+                        8192
+                      ]
+                    ],
+                    "output_summaries": [
+                      {
+                        "shape": [
+                          8192
+                        ],
+                        "mean": 0.09209162192519216,
+                        "std": 0.012571422466551106,
+                        "max_abs": 0.14723095297813416,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192
+                        ],
+                        "mean": 0.052127118703347186,
+                        "std": 0.017547813410572977,
+                        "max_abs": 0.10792040079832077,
+                        "finite": true
+                      },
+                      {
+                        "shape": [
+                          8192
+                        ],
+                        "mean": 0.012487502107457082,
+                        "std": 0.02569759888289207,
+                        "max_abs": 0.08410944789648056,
+                        "finite": true
+                      }
+                    ],
+                    "parameters_with_gradient": [],
+                    "status": "verified"
+                  }
+                ],
+                "status": "verified"
+              }
+            ],
+            "optimizer_parameter_set_stable": true,
+            "source_sha256": "bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73",
+            "training_loss": "binary_cross_entropy_with_logits"
+          },
+          "modules": [
+            {
+              "path": "",
+              "class": "CTRModel"
+            },
+            {
+              "path": "embedding",
+              "class": "Embedding"
+            },
+            {
+              "path": "network",
+              "class": "Sequential"
+            },
+            {
+              "path": "network.0",
+              "class": "Linear"
+            },
+            {
+              "path": "network.1",
+              "class": "ReLU"
+            },
+            {
+              "path": "network.2",
+              "class": "Dropout"
+            },
+            {
+              "path": "network.3",
+              "class": "Linear"
+            },
+            {
+              "path": "network.4",
+              "class": "ReLU"
+            },
+            {
+              "path": "network.5",
+              "class": "Dropout"
+            },
+            {
+              "path": "network.6",
+              "class": "Linear"
+            },
+            {
+              "path": "numeric_embedding",
+              "class": "NumericFieldEmbedding"
+            },
+            {
+              "path": "grouped_fm",
+              "class": "GroupedFM"
+            },
+            {
+              "path": "fusion",
+              "class": "InteractionFusion"
+            }
+          ]
+        },
+        "implementation_check": {
+          "status": "verified",
+          "scope": "declared_component_execution_v1",
+          "findings": [],
+          "components": [
+            {
+              "id": "embedding",
+              "instance_path": "CTRModel.embedding",
+              "targets": [
+                {
+                  "path": "CTRModel.embedding",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [
+                    "embedding.weight"
+                  ],
+                  "output_shapes": [
+                    [
+                      8192,
+                      26,
+                      16
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        26,
+                        16
+                      ],
+                      "mean": 0.00030783800400980323,
+                      "std": 0.009880385079806434,
+                      "max_abs": 0.05164976418018341,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        26,
+                        16
+                      ],
+                      "mean": 0.000335718934480829,
+                      "std": 0.01009241719390397,
+                      "max_abs": 0.05172809213399887,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        26,
+                        16
+                      ],
+                      "mean": 0.0003793986868113965,
+                      "std": 0.010561457482062024,
+                      "max_abs": 0.053367141634225845,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [
+                    "embedding.weight"
+                  ],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "network",
+              "instance_path": "CTRModel.network",
+              "targets": [
+                {
+                  "path": "CTRModel.network",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [
+                    "network.0.weight",
+                    "network.0.bias",
+                    "network.3.weight",
+                    "network.3.bias",
+                    "network.6.weight",
+                    "network.6.bias"
+                  ],
+                  "output_shapes": [
+                    [
+                      8192,
+                      1
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        1
+                      ],
+                      "mean": 0.09213229104989296,
+                      "std": 0.012584516611685286,
+                      "max_abs": 0.14947563409805298,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        1
+                      ],
+                      "mean": 0.05244372667220887,
+                      "std": 0.017554509364507795,
+                      "max_abs": 0.1078283041715622,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        1
+                      ],
+                      "mean": 0.012934581110130239,
+                      "std": 0.02566599147590045,
+                      "max_abs": 0.08378179371356964,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [
+                    "network.0.weight",
+                    "network.0.bias",
+                    "network.3.weight",
+                    "network.3.bias",
+                    "network.6.weight",
+                    "network.6.bias"
+                  ],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "numeric_embedding",
+              "instance_path": "CTRModel.numeric_embedding",
+              "targets": [
+                {
+                  "path": "CTRModel.numeric_embedding",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [
+                    "numeric_embedding.weight"
+                  ],
+                  "output_shapes": [
+                    [
+                      8192,
+                      13,
+                      16
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        13,
+                        16
+                      ],
+                      "mean": -8.845581562187878e-05,
+                      "std": 0.008655003044644576,
+                      "max_abs": 0.22484122216701508,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        13,
+                        16
+                      ],
+                      "mean": -0.0001321393338124374,
+                      "std": 0.008907422349829084,
+                      "max_abs": 0.24839334189891815,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        13,
+                        16
+                      ],
+                      "mean": -9.602490902105036e-05,
+                      "std": 0.009221967843604788,
+                      "max_abs": 0.27641478180885315,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [
+                    "numeric_embedding.weight"
+                  ],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "grouped_fm",
+              "instance_path": "CTRModel.grouped_fm",
+              "targets": [
+                {
+                  "path": "CTRModel.grouped_fm",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [],
+                  "output_shapes": [
+                    [
+                      8192,
+                      3
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192,
+                        3
+                      ],
+                      "mean": -0.0002711276897099657,
+                      "std": 0.005526315902848694,
+                      "max_abs": 0.059263478964567184,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        3
+                      ],
+                      "mean": -0.0021107198117756854,
+                      "std": 0.00529705939881664,
+                      "max_abs": 0.03988995403051376,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192,
+                        3
+                      ],
+                      "mean": -0.0029805267592580655,
+                      "std": 0.00588416716975861,
+                      "max_abs": 0.06317754089832306,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            },
+            {
+              "id": "fusion",
+              "instance_path": "CTRModel.fusion",
+              "targets": [
+                {
+                  "path": "CTRModel.fusion",
+                  "calls": 3,
+                  "nonzero_output_gradient": true,
+                  "trainable_parameters": [],
+                  "output_shapes": [
+                    [
+                      8192
+                    ]
+                  ],
+                  "output_summaries": [
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.09209162192519216,
+                      "std": 0.012571422466551106,
+                      "max_abs": 0.14723095297813416,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.052127118703347186,
+                      "std": 0.017547813410572977,
+                      "max_abs": 0.10792040079832077,
+                      "finite": true
+                    },
+                    {
+                      "shape": [
+                        8192
+                      ],
+                      "mean": 0.012487502107457082,
+                      "std": 0.02569759888289207,
+                      "max_abs": 0.08410944789648056,
+                      "finite": true
+                    }
+                  ],
+                  "parameters_with_gradient": [],
+                  "status": "verified"
+                }
+              ],
+              "status": "verified"
+            }
+          ],
+          "probe_batches": 3,
+          "limitations": "Bounded execution/gradient observations do not prove mathematical equivalence to a named method, declared parameter sharing, exact fusion topology, all input paths, or gain attribution."
+        },
+        "change_audit": {
+          "status": "unverified"
+        },
+        "review_required": false,
+        "evidence": [
+          {
+            "id": "trial_002.metrics",
+            "trial_id": "trial_002",
+            "statement": "Independent host validation metrics from complete fixed split",
+            "source": "trial_002/evaluation.json",
+            "status": "observed",
+            "scope": "trial",
+            "value": {
+              "rows": 4584062,
+              "logloss": 0.44497477848154676,
+              "auc": 0.8054866761835513,
+              "brier": 0.1439457733837257,
+              "observed_ctr": 0.2537528942671369,
+              "mean_prediction": 0.2653827385790201,
+              "calibration": [
+                {
+                  "bin": 0,
+                  "rows": 1171547,
+                  "predicted": 0.05450644653829427,
+                  "observed": 0.04475108553049942
+                },
+                {
+                  "bin": 1,
+                  "rows": 1044138,
+                  "predicted": 0.1473473395369287,
+                  "observed": 0.12898390825733763
+                },
+                {
+                  "bin": 2,
+                  "rows": 755039,
+                  "predicted": 0.24721186868786568,
+                  "observed": 0.22952456760511708
+                },
+                {
+                  "bin": 3,
+                  "rows": 533411,
+                  "predicted": 0.34703063245228044,
+                  "observed": 0.3340257325027043
+                },
+                {
+                  "bin": 4,
+                  "rows": 380267,
+                  "predicted": 0.44731229287448343,
+                  "observed": 0.4385944612601146
+                },
+                {
+                  "bin": 5,
+                  "rows": 280933,
+                  "predicted": 0.5473743968478192,
+                  "observed": 0.5431935728447708
+                },
+                {
+                  "bin": 6,
+                  "rows": 199767,
+                  "predicted": 0.6468896097390664,
+                  "observed": 0.6501324042509523
+                },
+                {
+                  "bin": 7,
+                  "rows": 129957,
+                  "predicted": 0.7459320728512108,
+                  "observed": 0.7531722031133374
+                },
+                {
+                  "bin": 8,
+                  "rows": 68710,
+                  "predicted": 0.8431054499485559,
+                  "observed": 0.8501091544171154
+                },
+                {
+                  "bin": 9,
+                  "rows": 20293,
+                  "predicted": 0.9406616372348511,
+                  "observed": 0.9407677524269452
+                }
+              ],
+              "paired_vs_baseline": {
+                "mean": -0.00036157567805080717,
+                "lower": -0.0004237461580309429,
+                "upper": -0.00029940519807067145,
+                "confidence": 0.95,
+                "direction": "candidate minus baseline; negative favors candidate",
+                "method": "paired per-impression normal interval",
+                "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+              }
+            }
+          },
+          {
+            "id": "trial_002.output_scales",
+            "trial_id": "trial_002",
+            "statement": "Bounded actual training-output scales; not field importance or gain attribution",
+            "source": "trial_002/output/runtime.json",
+            "status": "observed",
+            "scope": "trial",
+            "value": {
+              "probe_batches": 3,
+              "components": [
+                {
+                  "component_id": "embedding",
+                  "targets": [
+                    {
+                      "path": "CTRModel.embedding",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            26,
+                            16
+                          ],
+                          "mean": 0.00030783800400980323,
+                          "std": 0.009880385079806434,
+                          "max_abs": 0.05164976418018341,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            26,
+                            16
+                          ],
+                          "mean": 0.000335718934480829,
+                          "std": 0.01009241719390397,
+                          "max_abs": 0.05172809213399887,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            26,
+                            16
+                          ],
+                          "mean": 0.0003793986868113965,
+                          "std": 0.010561457482062024,
+                          "max_abs": 0.053367141634225845,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "network",
+                  "targets": [
+                    {
+                      "path": "CTRModel.network",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            1
+                          ],
+                          "mean": 0.09213229104989296,
+                          "std": 0.012584516611685286,
+                          "max_abs": 0.14947563409805298,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            1
+                          ],
+                          "mean": 0.05244372667220887,
+                          "std": 0.017554509364507795,
+                          "max_abs": 0.1078283041715622,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            1
+                          ],
+                          "mean": 0.012934581110130239,
+                          "std": 0.02566599147590045,
+                          "max_abs": 0.08378179371356964,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "numeric_embedding",
+                  "targets": [
+                    {
+                      "path": "CTRModel.numeric_embedding",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            13,
+                            16
+                          ],
+                          "mean": -8.845581562187878e-05,
+                          "std": 0.008655003044644576,
+                          "max_abs": 0.22484122216701508,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            13,
+                            16
+                          ],
+                          "mean": -0.0001321393338124374,
+                          "std": 0.008907422349829084,
+                          "max_abs": 0.24839334189891815,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            13,
+                            16
+                          ],
+                          "mean": -9.602490902105036e-05,
+                          "std": 0.009221967843604788,
+                          "max_abs": 0.27641478180885315,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "grouped_fm",
+                  "targets": [
+                    {
+                      "path": "CTRModel.grouped_fm",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192,
+                            3
+                          ],
+                          "mean": -0.0002711276897099657,
+                          "std": 0.005526315902848694,
+                          "max_abs": 0.059263478964567184,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            3
+                          ],
+                          "mean": -0.0021107198117756854,
+                          "std": 0.00529705939881664,
+                          "max_abs": 0.03988995403051376,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192,
+                            3
+                          ],
+                          "mean": -0.0029805267592580655,
+                          "std": 0.00588416716975861,
+                          "max_abs": 0.06317754089832306,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "component_id": "fusion",
+                  "targets": [
+                    {
+                      "path": "CTRModel.fusion",
+                      "output_summaries": [
+                        {
+                          "shape": [
+                            8192
+                          ],
+                          "mean": 0.09209162192519216,
+                          "std": 0.012571422466551106,
+                          "max_abs": 0.14723095297813416,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192
+                          ],
+                          "mean": 0.052127118703347186,
+                          "std": 0.017547813410572977,
+                          "max_abs": 0.10792040079832077,
+                          "finite": true
+                        },
+                        {
+                          "shape": [
+                            8192
+                          ],
+                          "mean": 0.012487502107457082,
+                          "std": 0.02569759888289207,
+                          "max_abs": 0.08410944789648056,
+                          "finite": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "trial_002.interaction_control",
+            "trial_id": "trial_002",
+            "statement": "Executed same-source full-data interaction control",
+            "source": "trial_002/evaluation.json",
+            "status": "observed",
+            "scope": "trial",
+            "value": {
+              "control_metrics": {
+                "rows": 4584062,
+                "logloss": 0.4448392344529578,
+                "auc": 0.805645089747504,
+                "brier": 0.1438997123935615,
+                "observed_ctr": 0.2537528942671369,
+                "mean_prediction": 0.2655683239057234,
+                "calibration": [
+                  {
+                    "bin": 0,
+                    "rows": 1173121,
+                    "predicted": 0.054548745937125845,
+                    "observed": 0.04478480906914121
+                  },
+                  {
+                    "bin": 1,
+                    "rows": 1045729,
+                    "predicted": 0.1473899575123325,
+                    "observed": 0.12916922070632067
+                  },
+                  {
+                    "bin": 2,
+                    "rows": 752522,
+                    "predicted": 0.247237629975558,
+                    "observed": 0.22934478991976315
+                  },
+                  {
+                    "bin": 3,
+                    "rows": 531059,
+                    "predicted": 0.3470211959714021,
+                    "observed": 0.3346163044030889
+                  },
+                  {
+                    "bin": 4,
+                    "rows": 380987,
+                    "predicted": 0.4474094897171398,
+                    "observed": 0.4377498444828826
+                  },
+                  {
+                    "bin": 5,
+                    "rows": 279191,
+                    "predicted": 0.5472835620135749,
+                    "observed": 0.5424780884770641
+                  },
+                  {
+                    "bin": 6,
+                    "rows": 198558,
+                    "predicted": 0.6468152110362103,
+                    "observed": 0.648475508415677
+                  },
+                  {
+                    "bin": 7,
+                    "rows": 131046,
+                    "predicted": 0.7460768741728478,
+                    "observed": 0.7522396715657097
+                  },
+                  {
+                    "bin": 8,
+                    "rows": 71007,
+                    "predicted": 0.8432250041632416,
+                    "observed": 0.8475079921697861
+                  },
+                  {
+                    "bin": 9,
+                    "rows": 20842,
+                    "predicted": 0.9399048961114888,
+                    "observed": 0.9388734286536801
+                  }
+                ]
+              },
+              "paired_logloss": {
+                "mean": 0.00013554402858893388,
+                "lower": 8.042038859318955e-05,
+                "upper": 0.0001906676685846782,
+                "confidence": 0.95,
+                "direction": "candidate minus control; negative favors candidate",
+                "method": "paired per-impression normal interval",
+                "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+              }
+            }
+          }
+        ],
+        "interaction_control": {
+          "status": "completed",
+          "config_patch": {
+            "model": {
+              "enabled_pairs": [
+                "cc",
+                "nc"
+              ]
+            }
+          },
+          "expected_effect": "Remove only the newly enabled term from the residual sum",
+          "source_sha256": "bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73",
+          "comparison": "Same source/seed/protocol; model configuration patched, weights retrained",
+          "metrics": {
+            "rows": 4584062,
+            "logloss": 0.4448392344529578,
+            "auc": 0.805645089747504,
+            "brier": 0.1438997123935615,
+            "observed_ctr": 0.2537528942671369,
+            "mean_prediction": 0.2655683239057234,
+            "calibration": [
+              {
+                "bin": 0,
+                "rows": 1173121,
+                "predicted": 0.054548745937125845,
+                "observed": 0.04478480906914121
+              },
+              {
+                "bin": 1,
+                "rows": 1045729,
+                "predicted": 0.1473899575123325,
+                "observed": 0.12916922070632067
+              },
+              {
+                "bin": 2,
+                "rows": 752522,
+                "predicted": 0.247237629975558,
+                "observed": 0.22934478991976315
+              },
+              {
+                "bin": 3,
+                "rows": 531059,
+                "predicted": 0.3470211959714021,
+                "observed": 0.3346163044030889
+              },
+              {
+                "bin": 4,
+                "rows": 380987,
+                "predicted": 0.4474094897171398,
+                "observed": 0.4377498444828826
+              },
+              {
+                "bin": 5,
+                "rows": 279191,
+                "predicted": 0.5472835620135749,
+                "observed": 0.5424780884770641
+              },
+              {
+                "bin": 6,
+                "rows": 198558,
+                "predicted": 0.6468152110362103,
+                "observed": 0.648475508415677
+              },
+              {
+                "bin": 7,
+                "rows": 131046,
+                "predicted": 0.7460768741728478,
+                "observed": 0.7522396715657097
+              },
+              {
+                "bin": 8,
+                "rows": 71007,
+                "predicted": 0.8432250041632416,
+                "observed": 0.8475079921697861
+              },
+              {
+                "bin": 9,
+                "rows": 20842,
+                "predicted": 0.9399048961114888,
+                "observed": 0.9388734286536801
+              }
+            ]
+          },
+          "paired_logloss": {
+            "mean": 0.00013554402858893388,
+            "lower": 8.042038859318955e-05,
+            "upper": 0.0001906676685846782,
+            "confidence": 0.95,
+            "direction": "candidate minus control; negative favors candidate",
+            "method": "paired per-impression normal interval",
+            "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+          },
+          "runtime": {
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 5090",
+            "torch": "2.14.1+cu130",
+            "rows_seen": 36672493,
+            "steps": 4477,
+            "prediction_rows": 4584062,
+            "last_loss": 0.4536503851413727,
+            "seconds": 19.564055591001306,
+            "peak_cuda_bytes": 697828864,
+            "parameters": 27328209,
+            "config": {
+              "lr": 0.002,
+              "weight_decay": 1e-06,
+              "epochs": 1,
+              "model": {
+                "enabled_pairs": [
+                  "cc",
+                  "nc"
+                ],
+                "fm_scale": 0.05
+              }
+            },
+            "first_batch_gradient_norms": {
+              "embedding.weight": 0.005800141952931881,
+              "network.0.weight": 0.04317831993103027,
+              "network.0.bias": 0.022836849093437195,
+              "network.3.weight": 0.04953806847333908,
+              "network.3.bias": 0.08956839144229889,
+              "network.6.weight": 0.08747204393148422,
+              "network.6.bias": 0.26910650730133057,
+              "numeric_embedding.weight": 0.001280920929275453
+            },
+            "implementation_probe": {
+              "batches": 3,
+              "components": [],
+              "optimizer_parameter_set_stable": true,
+              "source_sha256": "bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73",
+              "training_loss": "binary_cross_entropy_with_logits"
+            },
+            "modules": [
+              {
+                "path": "",
+                "class": "CTRModel"
+              },
+              {
+                "path": "embedding",
+                "class": "Embedding"
+              },
+              {
+                "path": "network",
+                "class": "Sequential"
+              },
+              {
+                "path": "network.0",
+                "class": "Linear"
+              },
+              {
+                "path": "network.1",
+                "class": "ReLU"
+              },
+              {
+                "path": "network.2",
+                "class": "Dropout"
+              },
+              {
+                "path": "network.3",
+                "class": "Linear"
+              },
+              {
+                "path": "network.4",
+                "class": "ReLU"
+              },
+              {
+                "path": "network.5",
+                "class": "Dropout"
+              },
+              {
+                "path": "network.6",
+                "class": "Linear"
+              },
+              {
+                "path": "numeric_embedding",
+                "class": "NumericFieldEmbedding"
+              },
+              {
+                "path": "grouped_fm",
+                "class": "GroupedFM"
+              },
+              {
+                "path": "fusion",
+                "class": "InteractionFusion"
+              }
+            ]
+          }
+        }
+      },
+      "promotion": {
+        "eligible": true,
+        "promoted": false,
+        "reason": "no_gain",
+        "previous_best_id": "trial_001"
+      },
+      "reflection": {
+        "technical_experience": {
+          "lesson": "Fixed-plan contract verification with measured recipe comparisons",
+          "evidence": "{\"score\": 0.44497477848154676, \"control\": {\"comparison\": \"Same source/seed/protocol; model configuration patched, weights retrained\", \"config_patch\": {\"model\": {\"enabled_pairs\": [\"cc\", \"nc\"]}}, \"expected_effect\": \"Remove only the newly enabled term from the residual sum\", \"metrics\": {\"auc\": 0.805645089747504, \"brier\": 0.1438997123935615, \"calibration\": [{\"bin\": 0, \"observed\": 0.04478480906914121, \"predicted\": 0.054548745937125845, \"rows\": 1173121}, {\"bin\": 1, \"observed\": 0.12916922070632067, \"predicted\": 0.1473899575123325, \"rows\": 1045729}, {\"bin\": 2, \"observed\": 0.22934478991976315, \"predicted\": 0.247237629975558, \"rows\": 752522}, {\"bin\": 3, \"observed\": 0.3346163044030889, \"predicted\": 0.3470211959714021, \"rows\": 531059}, {\"bin\": 4, \"observed\": 0.4377498444828826, \"predicted\": 0.4474094897171398, \"rows\": 380987}, {\"bin\": 5, \"observed\": 0.5424780884770641, \"predicted\": 0.5472835620135749, \"rows\": 279191}, {\"bin\": 6, \"observed\": 0.648475508415677, \"predicted\": 0.6468152110362103, \"rows\": 198558}, {\"bin\": 7, \"observed\": 0.7522396715657097, \"predicted\": 0.7460768741728478, \"rows\": 131046}, {\"bin\": 8, \"observed\": 0.8475079921697861, \"predicted\": 0.8432250041632416, \"rows\": 71007}, {\"bin\": 9, \"observed\": 0.9388734286536801, \"predicted\": 0.9399048961114888, \"rows\": 20842}], \"logloss\": 0.4448392344529578, \"mean_prediction\": 0.2655683239057234, \"observed_ctr\": 0.2537528942671369, \"rows\": 4584062}, \"paired_logloss\": {\"confidence\": 0.95, \"direction\": \"candidate minus control; negative favors candidate\", \"limitations\": \"exploratory; no adaptive-selection correction; anonymous rows prevent user clustering\", \"lower\": 8.042038859318955e-05, \"mean\": 0.00013554402858893388, \"method\": \"paired per-impression normal interval\", \"upper\": 0.0001906676685846782}, \"runtime\": {\"config\": {\"epochs\": 1, \"lr\": 0.002, \"model\": {\"enabled_pairs\": [\"cc\", \"nc\"], \"fm_scale\": 0.05}, \"weight_decay\": 1e-06}, \"device\": \"cuda\", \"first_batch_gradient_norms\": {\"embedding.weight\": 0.005800141952931881, \"network.0.bias\": 0.022836849093437195, \"network.0.weight\": 0.04317831993103027, \"network.3.bias\": 0.08956839144229889, \"network.3.weight\": 0.04953806847333908, \"network.6.bias\": 0.26910650730133057, \"network.6.weight\": 0.08747204393148422, \"numeric_embedding.weight\": 0.001280920929275453}, \"gpu\": \"NVIDIA GeForce RTX 5090\", \"implementation_probe\": {\"batches\": 3, \"components\": [], \"optimizer_parameter_set_stable\": true, \"source_sha256\": \"bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73\", \"training_loss\": \"binary_cross_entropy_with_logits\"}, \"last_loss\": 0.4536503851413727, \"modules\": [{\"class\": \"CTRModel\", \"path\": \"\"}, {\"class\": \"Embedding\", \"path\": \"embedding\"}, {\"class\": \"Sequential\", \"path\": \"network\"}, {\"class\": \"Linear\", \"path\": \"network.0\"}, {\"class\": \"ReLU\", \"path\": \"network.1\"}, {\"class\": \"Dropout\", \"path\": \"network.2\"}, {\"class\": \"Linear\", \"path\": \"network.3\"}, {\"class\": \"ReLU\", \"path\": \"network.4\"}, {\"class\": \"Dropout\", \"path\": \"network.5\"}, {\"class\": \"Linear\", \"path\": \"network.6\"}, {\"class\": \"NumericFieldEmbedding\", \"path\": \"numeric_embedding\"}, {\"class\": \"GroupedFM\", \"path\": \"grouped_fm\"}, {\"class\": \"InteractionFusion\", \"path\": \"fusion\"}], \"parameters\": 27328209, \"peak_cuda_bytes\": 697828864, \"prediction_rows\": 4584062, \"rows_seen\": 36672493, \"seconds\": 19.564055591001306, \"steps\": 4477, \"torch\": \"2.14.1+cu130\"}, \"source_sha256\": \"bc738676b675d192d774aa7a8db71d4bac1c684957eb403452dc4a4dbcc6dc73\", \"status\": \"completed\"}, \"status\": \"evaluated\"}",
+          "uncertainty": "No new LLM decisions, multiple seeds, isolated component attribution or final holdout",
+          "next_test": "Let the Agent compare observed scope outcomes and branch scales before new structure",
+          "attribution": "unverified",
+          "component_assessments": [
+            {
+              "component_id": "embedding",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "network",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "numeric_embedding",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "grouped_fm",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            },
+            {
+              "component_id": "fusion",
+              "outcome": "inconclusive",
+              "evidence": "Bounded probe and controlled whole-recipe results; no individual field-pair effect estimate",
+              "compatibility_limits": "Current anonymous Criteo views and fixed training protocol",
+              "next_test": "Use the executed control and diagnosis to design the next comparison",
+              "attribution": "unverified"
+            }
+          ],
+          "implementation_status": "verified"
+        },
+        "business_experience": {
+          "status": "not_observable",
+          "reason": "Anonymous field semantics"
+        }
+      }
+    }
+  ]
+}

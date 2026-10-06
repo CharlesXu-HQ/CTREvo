@@ -1,0 +1,23 @@
+prepared 20/20 rows
+.prepared 20/20 rows
+.prepared 20/20 rows
+...prepared 20/20 rows
+.................prepared 3/20 rows
+prepared 6/20 rows
+prepared 9/20 rows
+prepared 12/20 rows
+prepared 15/20 rows
+prepared 18/20 rows
+prepared 20/20 rows
+.prepared 1/100 rows
+.......prepared 20/20 rows
+.prepared 20/20 rows
+.prepared 20/20 rows
+.prepared 20/20 rows
+.prepared 20/20 rows
+.prepared 20/20 rows
+....
+----------------------------------------------------------------------
+Ran 39 tests in 1.966s
+
+OK

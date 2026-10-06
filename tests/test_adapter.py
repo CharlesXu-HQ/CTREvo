@@ -59,7 +59,9 @@ class AdapterTests(unittest.TestCase):
                 'implementation_probe': {'batches': 1,
                     'optimizer_parameter_set_stable': True,
                     'source_sha256': hashlib.sha256(candidate['source'].encode()).hexdigest(),
-                    'components': [{**components[0], 'status': 'verified'}]}}
+                    'components': [{**components[0], 'status': 'verified', 'targets': [
+                        {'path': 'CTRModel.embedding', 'output_summaries': [
+                            {'shape': [2, 26, 16], 'mean': 0., 'std': .01, 'max_abs': .04, 'finite': True}]}]}]}}
             with patch('ctrevo.task.execute', return_value=(np.array([.1, .1]), runtime)) as execute:
                 trial = root / 'trial_001'
                 trial.mkdir()
@@ -68,6 +70,8 @@ class AdapterTests(unittest.TestCase):
             self.assertEqual(execute.call_args.kwargs['components'], components)
             self.assertEqual(result['implementation_check']['status'], 'verified')
             self.assertEqual(result['change_audit']['status'], 'unverified')
+            self.assertEqual(result['evidence'][-1]['id'], 'trial_001.output_scales')
+            self.assertEqual(result['evidence'][-1]['value']['probe_batches'], 1)
 
     def test_finalization_refuses_unverified_selection_in_strict_mode(self):
         import numpy as np
@@ -107,6 +111,8 @@ class AdapterTests(unittest.TestCase):
             with patch('ctrevo.task.execute', return_value=(np.array([.1, .1]), {'device': 'cuda'})):
                 state = run_search(task, agent, output=root / 'run', catalog=load_catalog(), max_steps=1)
             self.assertEqual(state['status'], 'stopped')
+            self.assertEqual(len(agent.context['interaction_context']['coverage_pairs']), 6)
+            self.assertEqual(agent.context['interaction_context']['history'], [])
             self.assertEqual(state['baseline']['evidence'][0]['scope'], 'task')
             task.batch_size = 1
             with self.assertRaisesRegex(ValueError, 'protocol'):

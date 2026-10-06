@@ -54,6 +54,12 @@ This does not prove a named architecture's mathematics, declared parameter shari
 
 [Full-data GPU replay and verification coverage](docs/implementation-verification.md): the saved FM candidate remains rejected, the saved Cross candidate passes strict promotion, and the original validation scores are reproduced.
 
+### Evidence-led explicit crosses
+
+The Agent now audits numeric, categorical and missingness views before choosing an interaction. It can extend the current backbone with selected field-group terms, or defer structure work for diagnosis. No field type or FM branch is automatically first. Bounded output-scale evidence supports fusion diagnosis; dataset-bound history retains which scope was actually tested.
+
+An interaction trial executes **one additional same-source control** and records paired validation metrics. This doubles the training arms for that trial; it is part of the frozen budget. The optional [mixed-field example](examples/mixed_fm.py) uses native Harness primitives and actual configuration gates. The host keeps completed main results if a control fails. See [design, control boundaries and full-data evidence](docs/explicit-interactions.md).
+
 ## Run
 
 Linux with NVIDIA GPU, NVIDIA Container Toolkit, a CUDA-compatible Docker image, and a Python environment compatible with that image is required. CPU-only machines can run contract tests; model experiments refuse CPU fallback.
@@ -80,7 +86,7 @@ export CTR_AGENT_API_KEY='...'
 
 The Docker image must resolve the mounted venv's Python executable and native dependencies. The tested host environment, when available, is recorded with experiment results. Model availability and supported reasoning settings depend on your provider. Requests use enabled thinking, `high` for normal decisions and `max` for flagged review; `--thinking omit` supports providers without that extension.
 
-`--resume` continues an interrupted search only when its task, protocol and Harness identity match. The default budget is one full training epoch per candidate and two attempted Agent trials, plus the seed baseline. A trial timeout is recorded as failure, never scored as partial training.
+`--resume` continues an interrupted search only when its task, protocol and Harness identity match. The default budget is one full training epoch per candidate and two attempted Agent trials, plus the seed baseline and up to one extra full-data control per interaction trial. A trial timeout is recorded as failure, never scored as partial training.
 
 If a provider exhausts its format-repair attempts, preserve the terminal log and resume with its rejected response:
 

@@ -57,6 +57,14 @@ class AuditTests(unittest.TestCase):
         runtime['implementation_probe']['optimizer_parameter_set_stable'] = False
         self.assertEqual(self.check(runtime)['status'], 'contradicted')
 
+    def test_component_target_starts_with_no_observed_output_summaries(self):
+        from ctrevo.audit import ComponentProbe
+        probe = object.__new__(ComponentProbe)
+        record = {'targets': []}
+        observation = probe._target(record, 'Model.branch', [])
+        self.assertIn('output_summaries', observation)
+        self.assertEqual(observation['output_summaries'], [])
+
 
 class ComponentProbeTests(unittest.TestCase):
     def setUp(self):
@@ -174,6 +182,11 @@ class ComponentProbeTests(unittest.TestCase):
             optimizer.step()
             if value is model:
                 probe.after_step()
+        summary = probe.result()['components'][0]['targets'][0]['output_summaries'][0]
+        self.assertTrue(summary['finite'])
+        self.assertEqual(summary['shape'], [4, 1])
+        self.assertAlmostEqual(summary['mean'], observations[0][0].double().mean().item())
+        self.assertAlmostEqual(summary['std'], observations[0][0].double().std(unbiased=False).item())
         probe.close()
         self.assertTrue(torch.equal(observations[0][0], observations[1][0]))
         self.assertTrue(torch.equal(observations[0][2], observations[1][2]))
@@ -181,6 +194,37 @@ class ComponentProbeTests(unittest.TestCase):
             self.assertTrue(torch.equal(observed, expected))
         for observed, expected in zip(model.parameters(), control.parameters()):
             self.assertTrue(torch.equal(observed, expected))
+
+    def test_output_scale_summary_is_bounded_and_uses_population_std(self):
+        from ctrevo.audit import ComponentProbe
+        torch = self.torch
+        model = torch.nn.Linear(2, 1, bias=False).cuda()
+        with torch.no_grad():
+            model.weight.copy_(torch.tensor([[1., 2.]], device='cuda'))
+        probe = ComponentProbe(model, [{'id': 'model', 'instance_path': 'Linear'}])
+        for _ in range(4):
+            model(torch.tensor([[1., 1.], [2., 2.]], device='cuda'))
+        target = probe.result()['components'][0]['targets'][0]
+        self.assertEqual(target['calls'], 4)
+        self.assertEqual(len(target['output_summaries']), 3)
+        for summary in target['output_summaries']:
+            self.assertEqual(summary, {'shape': [2, 1], 'mean': 4.5,
+                                      'std': 1.5, 'max_abs': 6., 'finite': True})
+        probe.close()
+
+    def test_nonfinite_output_summary_remains_valid_json(self):
+        from ctrevo.audit import ComponentProbe
+        import json
+        torch = self.torch
+        model = torch.nn.Identity().cuda()
+        probe = ComponentProbe(model, [{'id': 'model', 'instance_path': 'Identity'}])
+        model(torch.tensor([[float('nan'), float('inf')]], device='cuda'))
+        result = probe.result()
+        summary = result['components'][0]['targets'][0]['output_summaries'][0]
+        self.assertEqual(summary, {'shape': [1, 2], 'mean': None, 'std': None,
+                                  'max_abs': None, 'finite': False})
+        json.dumps(result, allow_nan=False)
+        probe.close()
 
     def test_closed_probe_stops_observing_cached_loss_callable(self):
         from ctrevo.audit import ComponentProbe

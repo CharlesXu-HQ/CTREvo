@@ -54,6 +54,12 @@ CTREvo 默认启用严格晋级：候选指标更好，而且通过宿主的**�
 
 [全量 GPU 复验与核验范围](docs/implementation-verification.md)：已保存的 FM 候选仍因指标变差被拒绝，Cross 候选通过严格晋级，三组验证指标与原记录一致。
 
+## 基于证据选择显式交叉
+
+Agent 先检查数值、类别、缺失指示等视图在当前 backbone 中的覆盖，再决定交叉范围和实验优先级；也可以暂缓加结构，先检查分支尺度、融合或训练问题。没有“数值必须先于类别”或“必须先 FM”的硬编码顺序。宿主提供可引用的有限批次输出尺度，经验记录绑定具体数据集。
+
+交叉实验会额外执行 **一次同源码对照训练**，保持数据、随机种子、批次和 epoch 预算一致，仅覆盖模型配置，并报告配对验证指标。每个此类 trial 因此最多包含两次完整训练。对照失败仍保留主实验结果。可编辑的 [混合字段示例](examples/mixed_fm.py) 使用 Harness 原生交叉算子；它不会替换默认种子模型。[设计、边界与全量验证](docs/explicit-interactions.md)。
+
 ## 运行
 
 需要 Linux NVIDIA GPU、NVIDIA Container Toolkit、CUDA Docker 镜像，以及与镜像兼容的 Python 环境。模型实验禁止退回 CPU。仅接口测试可以在 CPU 上运行。

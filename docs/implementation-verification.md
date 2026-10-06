@@ -51,3 +51,5 @@ python experiments/implementation-audit-20261006/replay.py \
 ```
 
 Use a new output directory; existing trial evidence is not overwritten. The report records task, data, evaluator, Harness implementation and promotion-policy identities. Original benchmark artifacts remain unchanged.
+
+Historical reproduction note: the replay above belongs to CTREvo commit `809c39c4a053e04b53d205b7a6ab15bcd454e4b6` and its recorded Harness submodule. Check out that revision to replay its original proposal contract; current CTREvo additionally requires explicit-interaction plans.

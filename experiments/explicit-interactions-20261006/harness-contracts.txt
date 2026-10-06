@@ -1,0 +1,57 @@
+..........................................................................model-evo-harness: journal already exists: /var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmpid7akius/local/journal.json; use resume=True
+...................
+----------------------------------------------------------------------
+Ran 93 tests in 0.374s
+
+OK
+{
+  "source_commit_sha": "5f7bd84d4403b5f92b6bedbd31e3984ef00a4572",
+  "source_tree_sha": "84a4e63da7d7cb0ca8ea7e47128174535f0ab40a",
+  "document_count": 55,
+  "model_count": 38,
+  "support_count": 54,
+  "project_count": 50,
+  "unmapped_docs": [],
+  "unmapped_models": [],
+  "unknown_docs": [],
+  "unknown_models": [],
+  "duplicate_docs": [],
+  "duplicate_models": [],
+  "unmapped_method_models": [],
+  "unknown_method_models": [],
+  "duplicate_method_models": [],
+  "misassigned_method_models": [],
+  "unmapped_support": [],
+  "unknown_support": [],
+  "duplicate_support": [],
+  "unmapped_project": [],
+  "unknown_project": [],
+  "duplicate_project": [],
+  "missing_local_guides": [],
+  "missing_implementation_files": [],
+  "missing_card_implementations": []
+}
+{
+  "source_tree_sha": "abc",
+  "document_count": 1,
+  "model_count": 1,
+  "unmapped_docs": [
+    "doc.html"
+  ],
+  "unmapped_models": [],
+  "unknown_docs": [],
+  "unknown_models": [],
+  "duplicate_docs": [],
+  "duplicate_models": []
+}
+{
+  "unmapped_support": [
+    "module.py"
+  ]
+}
+{"status": "stopped", "best_id": "baseline", "steps": 0, "journal": "/var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmpps3t3xu2/0/journal.json"}
+{"status": "stopped", "best_id": "baseline", "steps": 0, "journal": "/var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmpps3t3xu2/1/journal.json"}
+{"status": "stopped", "best_id": "baseline", "steps": 0, "journal": "/var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmpid7akius/local/journal.json"}
+{"status": "stopped", "best_id": "baseline", "steps": 0, "journal": "/var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmpid7akius/local/journal.json"}
+{"status": "needs_data", "best_id": "baseline", "steps": 0, "journal": "/var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmptbexylwt/provider/journal.json"}
+{"status": "completed", "best_id": "baseline", "steps": 0, "journal": "/var/folders/r9/0cv_xgn12rn57sx03l3397jr0000gn/T/tmpy27jmcfe/strict/journal.json"}
