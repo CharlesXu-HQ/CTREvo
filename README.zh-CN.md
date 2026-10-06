@@ -49,23 +49,33 @@ Harness 通过 `third_party/model-evo-harness` Git submodule 引入，保持原�
 ```bash
 git clone --recurse-submodules https://github.com/CharlesXu-HQ/CTREvo.git
 cd CTREvo
-python -m venv .venv
+docker build -f Dockerfile.gpu -t ctrevo-cuda .
+python3.12 -m venv .venv
 .venv/bin/pip install -e . -e third_party/model-evo-harness
 python scripts/download.py /data/criteo
 .venv/bin/ctrevo prepare --raw /data/criteo/train.txt --output /data/criteo/prepared
 
 export CTR_AGENT_API_KEY='...'
 .venv/bin/ctrevo search --data /data/criteo/prepared --output runs/criteo \
-  --image YOUR_CUDA_IMAGE --venv "$PWD/.venv" \
+  --image ctrevo-cuda --venv "$PWD/.venv" \
   --provider-url https://api.deepseek.com --model deepseek-flash --steps 2
 
 .venv/bin/ctrevo finalize --data /data/criteo/prepared --output runs/criteo \
-  --image YOUR_CUDA_IMAGE --venv "$PWD/.venv"
+  --image ctrevo-cuda --venv "$PWD/.venv"
 ```
 
 镜像需要能够运行挂载环境中的 Python 和原生依赖。Provider URL 和 API key 分别通过参数、环境变量配置；不要提交密钥。默认开启 thinking，常规决策使用 high，需要复核时使用 max；实际模型和参数支持以 provider 为准。不支持该扩展的服务可使用 `--thinking omit`。
 
 默认每个候选完整训练一轮，执行 baseline 和两次 Agent 尝试。超时是失败，不会把未完成的部分训练当作结果。`--resume` 只允许在任务、评估协议和 Harness 身份一致时恢复。最终测试也必须使用相同协议参数。
+
+如果 provider 的格式修复耗尽，保留终端错误日志，使用携带最后拒绝提案与错误的恢复入口：
+
+```bash
+python scripts/resume_with_feedback.py --data /data/criteo/prepared --output runs/criteo \
+  --error-log runs/search-terminal.log --image ctrevo-cuda --venv "$PWD/.venv" --steps 2
+```
+
+seed、epoch 上限、batch size 和超时必须与原运行一致。脚本把真实错误与原响应交回 Agent，不改写候选源码、不绕过校验。原始终端输出需要通过 shell 重定向保存。普通中断仍可使用 `search --resume`。
 
 ## 结果与边界
 

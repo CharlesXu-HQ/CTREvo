@@ -49,7 +49,8 @@ Linux with NVIDIA GPU, NVIDIA Container Toolkit, a CUDA-compatible Docker image,
 ```bash
 git clone --recurse-submodules https://github.com/CharlesXu-HQ/CTREvo.git
 cd CTREvo
-python -m venv .venv
+docker build -f Dockerfile.gpu -t ctrevo-cuda .
+python3.12 -m venv .venv
 .venv/bin/pip install -e . -e third_party/model-evo-harness
 python scripts/download.py /data/criteo
 .venv/bin/ctrevo prepare --raw /data/criteo/train.txt --output /data/criteo/prepared
@@ -57,17 +58,26 @@ python scripts/download.py /data/criteo
 # Supply credentials through your environment; never commit them.
 export CTR_AGENT_API_KEY='...'
 .venv/bin/ctrevo search --data /data/criteo/prepared --output runs/criteo \
-  --image YOUR_CUDA_IMAGE --venv "$PWD/.venv" \
+  --image ctrevo-cuda --venv "$PWD/.venv" \
   --provider-url https://api.deepseek.com --model deepseek-flash --steps 2
 
 # Only after search finishes; identical protocol arguments are required.
 .venv/bin/ctrevo finalize --data /data/criteo/prepared --output runs/criteo \
-  --image YOUR_CUDA_IMAGE --venv "$PWD/.venv"
+  --image ctrevo-cuda --venv "$PWD/.venv"
 ```
 
 The Docker image must resolve the mounted venv's Python executable and native dependencies. The tested host environment, when available, is recorded with experiment results. Model availability and supported reasoning settings depend on your provider. Requests use enabled thinking, `high` for normal decisions and `max` for flagged review; `--thinking omit` supports providers without that extension.
 
 `--resume` continues an interrupted search only when its task, protocol and Harness identity match. The default budget is one full training epoch per candidate and two attempted Agent trials, plus the seed baseline. A trial timeout is recorded as failure, never scored as partial training.
+
+If a provider exhausts its format-repair attempts, preserve the terminal log and resume with its rejected response:
+
+```bash
+python scripts/resume_with_feedback.py --data /data/criteo/prepared --output runs/criteo \
+  --error-log runs/search-terminal.log --image ctrevo-cuda --venv "$PWD/.venv" --steps 2
+```
+
+Use the same seed, epoch ceiling, batch size and timeout as the original run. The helper forwards the actual error and previous response to the Agent; it never edits candidate source or bypasses validation. Capture the original terminal output with your shell's redirection. The default `search --resume` remains available for ordinary interruptions.
 
 ## Artifacts and trust boundary
 
