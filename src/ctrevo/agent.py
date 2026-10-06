@@ -11,6 +11,7 @@ from model_evo_harness import (COMPOSITION_INSTRUCTIONS, REFERENCE_INSTRUCTIONS,
 from model_evo_harness.provider import OpenAICompatibleAgent, _PROPOSE_INSTRUCTIONS
 
 from .execution import validate_candidate
+from .reply import decode_reply
 
 
 CONTRACT = """You lead a CTR research task using the supplied ModelEvoHarness. Return JSON only.
@@ -38,6 +39,10 @@ must include an ACTUAL forward/call entry point, e.g. ["CTRModel.forward", "CTRM
 A helper name such as CTRModel.fm_logit alone is insufficient. Also provide instance_path
 as a nonempty string. Keep these invariants in every repair; do not convert strings to objects.
 Return exactly one JSON object without trailing prose or a second JSON object.
+When composition_sources is empty: change_scope="initialize", parent_trial_id=null,
+inheritance=[]. The untracked baseline is a comparison, NOT a registered inheritance source.
+Before drafting code, use read_reference for intended bundled methods and include_composition=true;
+this avoids generating a draft that must be discarded to fetch source. Novel modules are still allowed.
 First tracked design is initialize;
 later local changes name a real prior trial and account for EVERY parent component.
 Anonymous inputs have no known user/item/sequence semantics. Do not invent business segments,
@@ -95,9 +100,14 @@ class CTRAgent(OpenAICompatibleAgent):
         if choice.get('finish_reason') != 'stop':
             raise ValueError('provider response incomplete; return concise complete JSON')
         try:
-            value = json.loads(content)
-        except (ValueError, TypeError):
-            raise ValueError('invalid final JSON; close all braces and escape source newlines') from None
+            value, repaired = decode_reply(content)
+            if repaired and self.logs:
+                with (self.logs / 'framing-repairs.jsonl').open('a') as stream:
+                    stream.write(json.dumps({'call': self.calls, 'terminal_delimiters_only': True}) + '\n')
+        except (ValueError, TypeError) as error:
+            failure = ValueError(f'invalid final JSON: {error}; repair syntax without changing the proposal')
+            failure.raw_response = content
+            raise failure from None
         if not isinstance(value, dict):
             raise ValueError('response must be a JSON object')
         return value
@@ -126,6 +136,8 @@ class CTRAgent(OpenAICompatibleAgent):
             except (ValueError, SyntaxError) as error:
                 if attempt == 2:
                     raise
+                if hasattr(error, 'raw_response'):
+                    current['invalid_response'] = error.raw_response
                 errors.append(str(error)[:2000])
                 current.update(proposal_error=errors[-1], proposal_errors=errors.copy())
                 if answer is not None:
