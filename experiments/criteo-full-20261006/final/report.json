@@ -1,0 +1,153 @@
+{
+  "selected_id": "trial_002",
+  "dataset_digest": "23e3e1a142d56d80f69b0dbd43620d4b53a0b577391061c7807785ef6efa40ea",
+  "baseline": {
+    "rows": 4584062,
+    "logloss": 0.4511949701990824,
+    "auc": 0.8026770356069034,
+    "brier": 0.14618936299200294,
+    "observed_ctr": 0.2592768160640061,
+    "mean_prediction": 0.2689285554470559,
+    "calibration": [
+      {
+        "bin": 0,
+        "rows": 1121341,
+        "predicted": 0.0548872159113993,
+        "observed": 0.04700086771107094
+      },
+      {
+        "bin": 1,
+        "rows": 1062272,
+        "predicted": 0.14765856807820377,
+        "observed": 0.13186076635739247
+      },
+      {
+        "bin": 2,
+        "rows": 776360,
+        "predicted": 0.2471839774583487,
+        "observed": 0.23175846256891133
+      },
+      {
+        "bin": 3,
+        "rows": 538386,
+        "predicted": 0.3466463208856496,
+        "observed": 0.3365280672231447
+      },
+      {
+        "bin": 4,
+        "rows": 369386,
+        "predicted": 0.44726359447621766,
+        "observed": 0.44133237318144164
+      },
+      {
+        "bin": 5,
+        "rows": 280679,
+        "predicted": 0.5477261571065317,
+        "observed": 0.5451316272325325
+      },
+      {
+        "bin": 6,
+        "rows": 201636,
+        "predicted": 0.6468192615180604,
+        "observed": 0.6498889087266163
+      },
+      {
+        "bin": 7,
+        "rows": 134600,
+        "predicted": 0.7463634890167355,
+        "observed": 0.7518870728083209
+      },
+      {
+        "bin": 8,
+        "rows": 76623,
+        "predicted": 0.8430097742867483,
+        "observed": 0.8489617999817287
+      },
+      {
+        "bin": 9,
+        "rows": 22779,
+        "predicted": 0.9406204199036313,
+        "observed": 0.9364326792220905
+      }
+    ]
+  },
+  "selected": {
+    "rows": 4584062,
+    "logloss": 0.4472306609422443,
+    "auc": 0.8067193684151923,
+    "brier": 0.14483643192678197,
+    "observed_ctr": 0.2592768160640061,
+    "mean_prediction": 0.2670303129704322,
+    "calibration": [
+      {
+        "bin": 0,
+        "rows": 1241050,
+        "predicted": 0.052708631783566225,
+        "observed": 0.04895612586116595
+      },
+      {
+        "bin": 1,
+        "rows": 1016527,
+        "predicted": 0.14699424238474737,
+        "observed": 0.13807306643109332
+      },
+      {
+        "bin": 2,
+        "rows": 709752,
+        "predicted": 0.2471071240272989,
+        "observed": 0.23609373414939303
+      },
+      {
+        "bin": 3,
+        "rows": 506834,
+        "predicted": 0.34729867382161933,
+        "observed": 0.33668025428444026
+      },
+      {
+        "bin": 4,
+        "rows": 369424,
+        "predicted": 0.4474798573386022,
+        "observed": 0.4369910996578457
+      },
+      {
+        "bin": 5,
+        "rows": 275157,
+        "predicted": 0.5475797789948593,
+        "observed": 0.53948109624687
+      },
+      {
+        "bin": 6,
+        "rows": 202642,
+        "predicted": 0.6473301435026118,
+        "observed": 0.6407260094156196
+      },
+      {
+        "bin": 7,
+        "rows": 143296,
+        "predicted": 0.7468547445645805,
+        "observed": 0.7421979678427869
+      },
+      {
+        "bin": 8,
+        "rows": 89512,
+        "predicted": 0.8447923889941851,
+        "observed": 0.8417642327285727
+      },
+      {
+        "bin": 9,
+        "rows": 29868,
+        "predicted": 0.938846206144586,
+        "observed": 0.9308624614972546
+      }
+    ]
+  },
+  "paired_logloss": {
+    "mean": -0.003964309256838124,
+    "lower": -0.004056447367717577,
+    "upper": -0.0038721711459586703,
+    "confidence": 0.95,
+    "direction": "candidate minus baseline; negative favors candidate",
+    "method": "paired per-impression normal interval",
+    "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+  }
+}

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/charles/CTREvo/src/ctrevo/cli.py", line 61, in <module>
+    main()
+  File "/home/charles/CTREvo/src/ctrevo/cli.py", line 54, in main
+    state = run_search(task, agent, output=Path(args.output), catalog=load_catalog(),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/engine.py", line 474, in run_search
+    decision = agent.propose(json.loads(_json_bytes(context)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/src/ctrevo/agent.py", line 128, in propose
+    answer['research'] = validate_research(answer, context['task'], context['catalog'],
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/catalog.py", line 478, in validate_research
+    design = validate_model_design(design, snapshot, sources or [])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/composition.py", line 313, in validate_model_design
+    raise ValueError(f"retain mismatch for source_trial_id={repr(pair[0])[:96]}, "
+ValueError: retain mismatch for source_trial_id='trial_001', component_id='field_embedding_table', target_component_id='field_embedding_table': mechanism, code_sections. For retain, copy those source fields exactly; intentional changes require adapt, uncertain reuse requires retest.

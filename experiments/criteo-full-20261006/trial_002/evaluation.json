@@ -1,0 +1,280 @@
+{
+  "score": 0.4414511548414842,
+  "metrics": {
+    "rows": 4584062,
+    "logloss": 0.4414511548414842,
+    "auc": 0.808926176381844,
+    "brier": 0.14276163877565595,
+    "observed_ctr": 0.2537528942671369,
+    "mean_prediction": 0.2632821529658074,
+    "calibration": [
+      {
+        "bin": 0,
+        "rows": 1289492,
+        "predicted": 0.05198022794796837,
+        "observed": 0.047029372807276044
+      },
+      {
+        "bin": 1,
+        "rows": 1005321,
+        "predicted": 0.14686655409444085,
+        "observed": 0.13609682877409304
+      },
+      {
+        "bin": 2,
+        "rows": 697225,
+        "predicted": 0.24708849381721307,
+        "observed": 0.2351450392627918
+      },
+      {
+        "bin": 3,
+        "rows": 498851,
+        "predicted": 0.3473278060774263,
+        "observed": 0.33593397627748567
+      },
+      {
+        "bin": 4,
+        "rows": 365425,
+        "predicted": 0.4475093373273983,
+        "observed": 0.4339221454470822
+      },
+      {
+        "bin": 5,
+        "rows": 272435,
+        "predicted": 0.5474782286331872,
+        "observed": 0.5366821443647108
+      },
+      {
+        "bin": 6,
+        "rows": 200457,
+        "predicted": 0.6473356758019186,
+        "observed": 0.6360416448415371
+      },
+      {
+        "bin": 7,
+        "rows": 140093,
+        "predicted": 0.7465622718722409,
+        "observed": 0.7370603813181243
+      },
+      {
+        "bin": 8,
+        "rows": 85878,
+        "predicted": 0.844651625501157,
+        "observed": 0.8364540394513147
+      },
+      {
+        "bin": 9,
+        "rows": 28885,
+        "predicted": 0.9386552206574788,
+        "observed": 0.9298251687727194
+      }
+    ],
+    "paired_vs_baseline": {
+      "mean": -0.003885199318113414,
+      "lower": -0.003976100401747975,
+      "upper": -0.0037942982344788523,
+      "confidence": 0.95,
+      "direction": "candidate minus baseline; negative favors candidate",
+      "method": "paired per-impression normal interval",
+      "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+    }
+  },
+  "runtime": {
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "torch": "2.14.1+cu130",
+    "rows_seen": 36672493,
+    "steps": 4477,
+    "prediction_rows": 4584062,
+    "last_loss": 0.4476986527442932,
+    "seconds": 20.3568038049998,
+    "peak_cuda_bytes": 624142848,
+    "parameters": 27720055,
+    "config": {
+      "lr": 0.002,
+      "weight_decay": 1e-06,
+      "epochs": 1,
+      "model": {
+        "embedding_dim": 16,
+        "hidden_dims": [
+          128,
+          64
+        ],
+        "dropout": 0.1,
+        "num_cross_layers": 2
+      }
+    },
+    "first_batch_gradient_norms": {
+      "embedding.weight": 0.054613955318927765,
+      "trunk.0.weight": 0.017713584005832672,
+      "trunk.0.bias": 0.009594474919140339,
+      "trunk.3.weight": 0.01799495704472065,
+      "trunk.3.bias": 0.032044779509305954,
+      "cross_layers.0.transform.weight": 0.0379936583340168,
+      "cross_layers.0.transform.bias": 0.008687997236847878,
+      "cross_layers.1.transform.weight": 0.03804163634777069,
+      "cross_layers.1.transform.bias": 0.008602038957178593,
+      "head.weight": 0.3683241307735443,
+      "head.bias": 0.24548979103565216
+    },
+    "modules": [
+      {
+        "path": "",
+        "class": "CTRModel"
+      },
+      {
+        "path": "embedding",
+        "class": "Embedding"
+      },
+      {
+        "path": "trunk",
+        "class": "Sequential"
+      },
+      {
+        "path": "trunk.0",
+        "class": "Linear"
+      },
+      {
+        "path": "trunk.1",
+        "class": "ReLU"
+      },
+      {
+        "path": "trunk.2",
+        "class": "Dropout"
+      },
+      {
+        "path": "trunk.3",
+        "class": "Linear"
+      },
+      {
+        "path": "trunk.4",
+        "class": "ReLU"
+      },
+      {
+        "path": "trunk.5",
+        "class": "Dropout"
+      },
+      {
+        "path": "cross_layers",
+        "class": "ModuleList"
+      },
+      {
+        "path": "cross_layers.0",
+        "class": "CrossLayer"
+      },
+      {
+        "path": "cross_layers.0.transform",
+        "class": "Linear"
+      },
+      {
+        "path": "cross_layers.1",
+        "class": "CrossLayer"
+      },
+      {
+        "path": "cross_layers.1.transform",
+        "class": "Linear"
+      },
+      {
+        "path": "head",
+        "class": "Linear"
+      }
+    ]
+  },
+  "implementation_check": {
+    "status": "unverified",
+    "reason": "Host verified output shape, full row coverage and CUDA; mechanism attribution still needs review"
+  },
+  "change_audit": {
+    "status": "unverified"
+  },
+  "review_required": false,
+  "evidence": [
+    {
+      "id": "trial_002.metrics",
+      "trial_id": "trial_002",
+      "statement": "Independent host validation metrics from complete fixed split",
+      "source": "trial_002/evaluation.json",
+      "status": "observed",
+      "scope": "trial",
+      "value": {
+        "rows": 4584062,
+        "logloss": 0.4414511548414842,
+        "auc": 0.808926176381844,
+        "brier": 0.14276163877565595,
+        "observed_ctr": 0.2537528942671369,
+        "mean_prediction": 0.2632821529658074,
+        "calibration": [
+          {
+            "bin": 0,
+            "rows": 1289492,
+            "predicted": 0.05198022794796837,
+            "observed": 0.047029372807276044
+          },
+          {
+            "bin": 1,
+            "rows": 1005321,
+            "predicted": 0.14686655409444085,
+            "observed": 0.13609682877409304
+          },
+          {
+            "bin": 2,
+            "rows": 697225,
+            "predicted": 0.24708849381721307,
+            "observed": 0.2351450392627918
+          },
+          {
+            "bin": 3,
+            "rows": 498851,
+            "predicted": 0.3473278060774263,
+            "observed": 0.33593397627748567
+          },
+          {
+            "bin": 4,
+            "rows": 365425,
+            "predicted": 0.4475093373273983,
+            "observed": 0.4339221454470822
+          },
+          {
+            "bin": 5,
+            "rows": 272435,
+            "predicted": 0.5474782286331872,
+            "observed": 0.5366821443647108
+          },
+          {
+            "bin": 6,
+            "rows": 200457,
+            "predicted": 0.6473356758019186,
+            "observed": 0.6360416448415371
+          },
+          {
+            "bin": 7,
+            "rows": 140093,
+            "predicted": 0.7465622718722409,
+            "observed": 0.7370603813181243
+          },
+          {
+            "bin": 8,
+            "rows": 85878,
+            "predicted": 0.844651625501157,
+            "observed": 0.8364540394513147
+          },
+          {
+            "bin": 9,
+            "rows": 28885,
+            "predicted": 0.9386552206574788,
+            "observed": 0.9298251687727194
+          }
+        ],
+        "paired_vs_baseline": {
+          "mean": -0.003885199318113414,
+          "lower": -0.003976100401747975,
+          "upper": -0.0037942982344788523,
+          "confidence": 0.95,
+          "direction": "candidate minus baseline; negative favors candidate",
+          "method": "paired per-impression normal interval",
+          "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+        }
+      }
+    }
+  ]
+}

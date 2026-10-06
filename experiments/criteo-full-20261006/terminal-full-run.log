@@ -1,0 +1,30 @@
+prepared 44,500,000/45,840,617 rows
+prepared 44,750,000/45,840,617 rows
+prepared 45,000,000/45,840,617 rows
+prepared 45,250,000/45,840,617 rows
+prepared 45,500,000/45,840,617 rows
+prepared 45,750,000/45,840,617 rows
+prepared 45,840,617/45,840,617 rows
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/charles/CTREvo/src/ctrevo/cli.py", line 61, in <module>
+    main()
+  File "/home/charles/CTREvo/src/ctrevo/cli.py", line 54, in main
+    state = run_search(task, agent, output=Path(args.output), catalog=load_catalog(),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/engine.py", line 474, in run_search
+    decision = agent.propose(json.loads(_json_bytes(context)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/src/ctrevo/agent.py", line 110, in propose
+    answer['research'] = validate_research(answer, context['task'], context['catalog'],
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/catalog.py", line 478, in validate_research
+    design = validate_model_design(design, snapshot, sources or [])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/composition.py", line 246, in validate_model_design
+    result["horizontal_expansion"] = validate_horizontal_expansion(design["horizontal_expansion"], components)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/composition.py", line 88, in validate_horizontal_expansion
+    raise ValueError("horizontal component.code_sections must locate a forward or call entry point")
+ValueError: horizontal component.code_sections must locate a forward or call entry point

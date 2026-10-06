@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/charles/CTREvo/src/ctrevo/cli.py", line 61, in <module>
+    main()
+  File "/home/charles/CTREvo/src/ctrevo/cli.py", line 54, in main
+    state = run_search(task, agent, output=Path(args.output), catalog=load_catalog(),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/third_party/model-evo-harness/src/model_evo_harness/engine.py", line 474, in run_search
+    decision = agent.propose(json.loads(_json_bytes(context)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charles/CTREvo/src/ctrevo/agent.py", line 127, in propose
+    validate_candidate(answer.get('candidate'), max_epochs=context['task']['max_epochs'])
+  File "/home/charles/CTREvo/src/ctrevo/execution.py", line 17, in validate_candidate
+    raise ValueError('candidate needs Python source and optional config')
+ValueError: candidate needs Python source and optional config

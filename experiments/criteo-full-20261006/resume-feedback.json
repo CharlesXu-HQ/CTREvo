@@ -1,0 +1,398 @@
+{
+  "provider_response_file": "call-1791261777169758289-005.json",
+  "feedback": {
+    "proposal_error": "ValueError: retain mismatch for source_trial_id='trial_001', component_id='field_embedding_table', target_component_id='field_embedding_table': mechanism, code_sections. For retain, copy those source fields exactly; intentional changes require adapt, uncertain reuse requires retest.",
+    "resume_instruction": "Repair the rejected response below. Preserve all valid decisions. candidate must be at the root, horizontal_expansion inside research.model_design. For retain, copy source mechanism and code_sections verbatim; intentional changes use adapt or retest.",
+    "rejected_proposal": {
+      "action": "experiment",
+      "candidate": {
+        "source": "import torch\nfrom torch import nn\n\n\nclass CrossLayer(nn.Module):\n    '''One vector cross layer: x_{l+1} = x_l + x0 * (W x_l + b).'''\n\n    def __init__(self, dim):\n        super().__init__()\n        self.transform = nn.Linear(int(dim), int(dim))\n        nn.init.normal_(self.transform.weight, std=0.01)\n        nn.init.zeros_(self.transform.bias)\n\n    def forward(self, x0, x):\n        return x + x0 * self.transform(x)\n\n\nclass CTRModel(nn.Module):\n    def __init__(self, schema, config):\n        super().__init__()\n        count = int(schema['categorical_width'])\n        buckets = int(schema['buckets'])\n        dim = int(config.get('embedding_dim', 16))\n        drop = float(config.get('dropout', 0.1))\n        self.num_cross_layers = max(0, int(config.get('num_cross_layers', 2)))\n        self.field_count = count\n        self.buckets = buckets\n        self.dense_width = int(schema['dense_width'])\n        self.embedding_dim = dim\n        self.dropout_p = drop\n\n        self.embedding = nn.Embedding(count * buckets, dim)\n        nn.init.normal_(self.embedding.weight, std=0.01)\n        self.register_buffer('offsets', torch.arange(count) * buckets)\n\n        self.input_dim = count * dim + self.dense_width\n\n        layers = []\n        width = self.input_dim\n        for hidden in config.get('hidden_dims', [128, 64]):\n            layers.extend([nn.Linear(width, int(hidden)), nn.ReLU(), nn.Dropout(drop)])\n            width = int(hidden)\n        self.trunk = nn.Sequential(*layers)\n        self.trunk_out = width\n\n        self.cross_layers = nn.ModuleList([CrossLayer(self.input_dim) for _ in range(self.num_cross_layers)])\n        self.head = nn.Linear(self.input_dim + self.trunk_out, 1)\n\n    def embed_fields(self, categorical):\n        return self.embedding(categorical + self.offsets)\n\n    def pooled_input(self, dense, vectors):\n        return torch.cat([dense, vectors.flatten(1)], dim=1)\n\n    def deep_representation(self, pooled):\n        return self.trunk(pooled)\n\n    def cross_representation(self, pooled):\n        x = pooled\n        for layer in self.cross_layers:\n            x = layer(pooled, x)\n        return x\n\n    def fuse_logits(self, deep_repr, cross_repr):\n        return self.head(torch.cat([cross_repr, deep_repr], dim=1)).squeeze(-1)\n\n    def forward(self, dense, categorical):\n        vectors = self.embed_fields(categorical)\n        pooled = self.pooled_input(dense, vectors)\n        deep_repr = self.deep_representation(pooled)\n        cross_repr = self.cross_representation(pooled)\n        return self.fuse_logits(deep_repr, cross_repr)\n\n\ndef build_model(schema, config):\n    return CTRModel(schema, config)\n",
+        "config": {
+          "lr": 0.002,
+          "weight_decay": 1e-06,
+          "epochs": 1,
+          "model": {
+            "embedding_dim": 16,
+            "hidden_dims": [
+              128,
+              64
+            ],
+            "dropout": 0.1,
+            "num_cross_layers": 2
+          }
+        }
+      },
+      "research": {
+        "direction": "Replace trial_001's logit-level pairwise scalar with one explicit bounded-degree cross branch computed on the same pooled [dense(26) ; flattened-embedding(416)] vector, and read that branch out through a learned joint head over [cross ; deep] instead of an unweighted scalar addition. This is the repaired version of the rejected draft and keeps its single mechanism; only the JSON nesting of model_design.horizontal_expansion and the response syntax are fixed.",
+        "mechanism": "Parent (trial_001) score function, read from the executed source: E = embedding(categorical + offsets) in [B,26,16]; x0 = concat(dense(26), flatten(E)(416)) in [B,442]; h = Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout in [B,64]; deep_logit = Linear(64,1)(h) in [B]; pairwise = 0.5*((sum_f e_f)^2 - sum_f e_f^2) summed over the 16 coordinates in [B]; logit = deep_logit + pairwise. Candidate score function: the same embedding table, the same offsets buffer and the same trunk hidden layers, but the trunk returns h in [B,64] (its terminal Linear(64,1) is removed) and the interaction term becomes the vector recurrence x_{l+1} = x_l + x0 * (W_l x_l + b_l), l in {0,1}, W_l in R^{442x442}, so logit = w^T [x_L ; h] + b with x_L in [B,442]. The new input-dependent term that actually reaches the metric-driving score is x0 * (W_l x_l + b_l): every coordinate of the raw pooled input multiplicatively gates a learned linear function of the whole pooled state, which forms bounded-degree crosses over concrete pre-decision coordinates, and the recurrence's identity path keeps x0 visible to the head as a direct linear (wide) map of the pooled input that the baseline's ReLU-gated first layer does not supply. The parent's parameterless pairwise scalar and its unweighted addition are removed from the evaluated path. Loss, sampler, optimizer, update count, split, unit and metric are unchanged, and the returned value stays one unbounded logit with no sigmoid.",
+        "why_now": "Observed baseline (baseline.metrics): validation binary logloss 0.4453364, AUC 0.8049365, Brier 0.1440832 over 4,584,062 held-out impressions, mean prediction 0.2646 vs observed CTR 0.2538, with bins 0-2 over-predicted (0.0541 vs 0.0452, 0.1474 vs 0.1304, 0.2472 vs 0.2313). Observed trial_001 (trial_001.metrics): the same-input arm that added a parameterless pairwise scalar directly to the logit scored 0.44840364 with paired candidate-minus-baseline mean +0.003067 and interval [0.002949, 0.003185] (negative favors the candidate), AUC 0.8018535, and its runtime record shows embedding.weight first-batch gradient norm 0.0494 versus 0.00535 for the identical baseline run, i.e. about a 9x larger early gradient into the 99.8%-of-parameters shared table while the trunk's own gradients were essentially unchanged. Scale arithmetic explains that signature: with embedding std 0.01 the parent's pairwise scalar is of order 1e-4, far too small to move a 0.445 logloss directly, so it could only act by perturbing the shared factors - a statement about that specific interaction-plus-fusion form, not evidence that the data lack interaction structure. The baseline also shows single-pass under-fitting (recorded last training loss 0.4543507 above its own validation 0.4453364 over 4,477 steps), which is consistent with the pooled 442x128 first layer being the only place cross-coordinate structure can be formed. Honest limit: no slice-level residual isolating missing higher-order crosses has been measured, so the bottleneck evidence is partial and the comparison below is the test.",
+        "data_rationale": "Inputs are exactly the fields the baseline and trial_001 already consume: I1..I13 (signed-log1p standardized values plus their missing indicators, forming the 26-wide dense block) and C1..C26 (field-specific hash buckets, zero marks missing). The cross layers are deterministic functions of the same pooled vector, so no sequence, target-item, timestamp, propensity, exposure, cost or decision-rule field is required, and the pre-decision boundary and leakage surface are unchanged. No joint pair support is needed because each cross is gated by that row's own x0 coordinates, so no new field coverage is demanded.",
+        "comparison": "Protocol frozen exactly as the host states it (unit = impression, original-order 80/10/10 split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss over 4,584,062 validation impressions). Control 1: the untracked baseline embedding-MLP, baseline.metrics logloss 0.4453364 / AUC 0.8049365. Control 2 (same inputs, same shared table, same budget, nearest arm): trial_001, logloss 0.44840364 / AUC 0.8018535, whose only added term was a pairwise scalar fused additively into the logit; the candidate differs from Control 2 by swapping that branch and fusion for two explicit cross layers plus a joint head. Matched-capacity honesty: the cross path plus head add 2*(442*442+442)+507 = 391,455 parameters on top of the baseline's 27,328,001 (about +1.4%); all of it sits in the new branch and the head, none of it enlarges the embedding table, so this is approximately, not exactly, capacity matched. This is a compound experiment: the interaction branch and the fusion path change together, so a whole-recipe result cannot be assigned to either component. Follow-ups the remaining budget cannot fund are named rather than claimed: num_cross_layers=0 at the fixed head gives a wide-linear-plus-deep control, and a strictly capacity-matched head would isolate the +1.4%.",
+        "expected_result": "If the explicit cross mechanism carries signal beyond the deep trunk, the candidate's validation binary logloss will fall below the baseline 0.4453364 (lower is better) and the arm will also beat Control 2's 0.44840364, with AUC at or above about 0.8049365 and finite [B] CUDA logits for every row. Effect sizes in this family are small, so a few ten-thousandths below baseline is the realistic target; this is an exploratory validation hypothesis only and no improvement is claimed before the host evaluates it. AUC, Brier and the calibration bins are read only after the primary metric.",
+        "falsification": "Reject the cross-branch hypothesis if the candidate's validation logloss is not below the baseline 0.4453364 (equal or worse) under the identical split, batch size, epoch count and optimizer budget; if AUC falls materially below the baseline 0.8049365; or if the cross branch contributes no input-dependent variation, observed as x_L being numerically indistinguishable from x0 row by row (cross transforms at zero), which would mean the new term does not reach the evaluated score with any variation. A result that merely matches the trial_001 arm (0.44840364) is also a failure of the fusion argument. I pre-declare the confound: if the first-batch embedding.weight gradient norm stays near trial_001's ~0.0494 instead of returning toward the baseline's ~0.0054, the cross branch is reproducing the parent's shared-table cross-talk and the sharing decision, not the interaction form, is implicated. Because branch and head move together, any positive result is a compound-candidate result and component attribution stays unverified until the host change audit and the deferred cross-off ablation run.",
+        "input_fields": [
+          "I1",
+          "I2",
+          "I3",
+          "I4",
+          "I5",
+          "I6",
+          "I7",
+          "I8",
+          "I9",
+          "I10",
+          "I11",
+          "I12",
+          "I13",
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "C9",
+          "C10",
+          "C11",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17",
+          "C18",
+          "C19",
+          "C20",
+          "C21",
+          "C22",
+          "C23",
+          "C24",
+          "C25",
+          "C26"
+        ],
+        "evidence_ids": [
+          "baseline.metrics",
+          "trial_001.metrics",
+          "dataset.train"
+        ],
+        "change_factors": [
+          "cross_interaction_branch added to the prediction path (CTRModel.cross_representation; x_{l+1} = x_l + x0*(W_l x_l + b_l), 2 layers, 391,948 parameters)",
+          "joint_head_fusion replacing the trunk's scalar projection (CTRModel.fuse_logits over [x_L ; h])",
+          "fm_second_order_branch removed from the evaluated path (CTRModel.fm_logit)",
+          "additive_logit_fusion removed from the evaluated path"
+        ],
+        "family_id": "feature_interactions",
+        "alternatives": [
+          {
+            "direction": "Re-run the identical parent code with config.model.use_fm=false as the same-code wiring control for trial_001.",
+            "mechanism": "Route only the deep logit, bypassing both the pairwise term and the additive fusion at identical parameter count and identical embedding table.",
+            "reason": "This is the reflection's own recommendation and a genuine wiring control, but the parent's no-FM path is code-equivalent to the untracked baseline recipe (same table, same MLP, same initialization, same seed, batch size and epoch), so its expected result is a reproduction of 0.4453364 and it cannot improve the fixed metric. It only re-confirms attribution for a branch that is being dropped anyway, so with one evaluation left it spends the budget on information the host change audit already covers."
+          },
+          {
+            "direction": "Retry the pairwise term with its own independent embedding table and a bounded (sigmoid-gated) scale instead of sharing the trunk's table.",
+            "mechanism": "Keep pairwise = 0.5*((sum_f e_f)^2 - sum_f e_f^2) but compute it from a second N(0, 0.01) table so its gradient cannot perturb the trunk's factors, and squash the term with a learned bounded scalar before it reaches the logit.",
+            "reason": "It targets exactly the two readings of the trial_001 record (embedding gradient norm 0.0494 vs 0.00535, and an unbounded scalar of order 1e-4 at init). It is weaker now because it compounds two sub-changes in one arm at the same cost as one trial, and a second table roughly doubles the 27.3M embedding parameters on a one-epoch budget. It becomes the right arm only if the cross branch also fails while its identity path shows the shared table was not the problem."
+          },
+          {
+            "direction": "Keep the trunk untouched and instead append NFM-style bi-interaction pooling of the field products to the trunk input.",
+            "mechanism": "Pool sum_{i<j} e_i elementwise-multiplied e_j into a 16-dimensional vector, concatenate it to the 442-dimensional trunk input, and let the existing MLP map it, so the interaction enters as representation rather than as a logit-level scalar.",
+            "reason": "It also fixes the parent's logit-scale problem and is a complementary parameterization, but it changes the trunk's first-layer width (442 to 458), so the retained branch would be adapted rather than kept and the added mechanism would be entangled with the trunk's re-fit; it also caps the interaction at a fixed 16-dimensional pooled vector instead of coordinate-specific multiplicative crosses, so it has strictly less capacity per added parameter."
+          },
+          {
+            "direction": "Change only the optimization trajectory: lr 0.002 to 0.004, or a warmup-cosine schedule over the same 4,477 steps, with the baseline network and loss unchanged.",
+            "mechanism": "Alter the learning-rate path while holding the model, loss, sampler and update count fixed, so the change is confined to the optimizer axis the host owns.",
+            "reason": "This is the cheapest competing hypothesis and learning_rate_schedule is marked ready, and the baseline's single-pass under-fitting (recorded last training loss 0.4543507 vs its own validation 0.4453364) is a weak pointer toward it. It is weaker than the cross branch now because the available training evidence is one last-minibatch loss per run, and a single 8,192-row minibatch carries roughly +/-0.004 sampling noise, so the record cannot distinguish a premature plateau from batch variance; it is also not tied to any measured residual slice and does not test interaction capacity, the only axis the one completed trial actually probed."
+          }
+        ],
+        "model_design": {
+          "estimator_id": "pointwise_logit_v1",
+          "backbone_id": "field_embedding_shared_branch_v1",
+          "estimator": "Pointwise binary logit trained by the host's BCE over impression units; the evaluated score remains the single logit returned at the end of CTRModel.forward, and no sampling, thresholding, calibration map or decision rule is introduced.",
+          "backbone": "One shared field-specific categorical embedding table (26 fields x 65,536 buckets x 16 dims) producing x0 = concat(dense(26), flatten(E)(416)) in [B,442], feeding two parallel branches inside CTRModel: the retained deep trunk (442-128-64, ReLU plus dropout 0.1) and two explicit cross layers on the same x0; one joint Linear head over [x_L(442) ; h(64)] emits the logit. Config keys: embedding_dim, hidden_dims, dropout, num_cross_layers. The parent's parameterless pairwise scalar and its unweighted additive fusion are removed from the evaluated path.",
+          "change_scope": "local",
+          "parent_trial_id": "trial_001",
+          "rationale": "The parent recipe registered the untracked baseline trunk plus one logit-level pairwise term and one additive fusion, and the host measured that whole recipe as worse than baseline (0.44840364 vs 0.4453364). This local edit keeps the parent's identity and its two working pieces (the shared embedding table and the deep trunk's hidden layers) and replaces only the failed readout: explicit degree-bounded crosses that multiplicatively gate x0 instead of one scalar added to the logit, combined through one learned head instead of unweighted addition. Loss, optimizer, schedule, split, unit and metric are untouched, so comparison against both the baseline and the trial_001 arm stays inside one protocol. The interaction form and the fusion path move together, so this is declared a compound experiment and any gain must not be assigned to a single component before the host change audit and the deferred cross-off ablation run.",
+          "data_fit": "Uses only the pre-decision fields already in the schema: I1..I13 with their missing indicators (26-wide dense block) and C1..C26 with field-specific hash buckets where 0 marks missing. The cross layers consume the same pooled vector the parent trunk consumed, need no timestamps, sequences, target items, exposure propensities or per-pair joint support, and introduce no new leakage boundary.",
+          "comparison_plan": "Protocol frozen: unit = impression, original-order 80/10/10 split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss on 4,584,062 validation impressions. Arm A: this candidate (deep trunk + 2 cross layers + joint head). Control 1: the untracked baseline embedding-MLP (0.4453364). Control 2: trial_001, same inputs, same shared table and same budget with a logit-level pairwise scalar instead of the cross branch (0.44840364), which discriminates interaction form and fusion path at equal inputs and budget. Declared follow-ups the remaining budget cannot fund: cross-off ablation (num_cross_layers=0 keeps the identity path x_L = x0 and yields a wide-linear-plus-deep control), a strictly capacity-matched head, and an independent cross-branch table if the shared-table cross-talk reading survives. Whole-recipe results are reported separately from component-level conclusions; component attribution stays unverified until the host audit runs.",
+          "components": [
+            {
+              "id": "field_embedding_table",
+              "mechanism": "Shared field-specific embedding table, row index field_index * 65,536 + bucket, initialized N(0, 0.01), emitting [B,26,16] field vectors that both branches read through the same pooled input (identical to the parent table).",
+              "code_sections": [
+                "CTRModel.forward",
+                "CTRModel.embed_fields"
+              ],
+              "instance_path": "CTRModel.embedding",
+              "output_contract": "float32 [B,26,16], unbounded, no mask",
+              "input_fields": [
+                "C1",
+                "C2",
+                "C3",
+                "C4",
+                "C5",
+                "C6",
+                "C7",
+                "C8",
+                "C9",
+                "C10",
+                "C11",
+                "C12",
+                "C13",
+                "C14",
+                "C15",
+                "C16",
+                "C17",
+                "C18",
+                "C19",
+                "C20",
+                "C21",
+                "C22",
+                "C23",
+                "C24",
+                "C25",
+                "C26"
+              ],
+              "required_capabilities": [
+                "tabular_features"
+              ]
+            },
+            {
+              "id": "deep_pooled_branch",
+              "mechanism": "Retained trunk over the pooled input: Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout emitting h in [B,64]; the parent's terminal Linear(64,1) projection is removed because the joint head now performs the readout. Hidden widths, activations and dropout are unchanged.",
+              "code_sections": [
+                "CTRModel.forward",
+                "CTRModel.deep_representation"
+              ],
+              "instance_path": "CTRModel.trunk",
+              "output_contract": "float32 [B,64], unbounded, no mask",
+              "input_fields": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "I8",
+                "I9",
+                "I10",
+                "I11",
+                "I12",
+                "I13",
+                "C1",
+                "C2",
+                "C3",
+                "C4",
+                "C5",
+                "C6",
+                "C7",
+                "C8",
+                "C9",
+                "C10",
+                "C11",
+                "C12",
+                "C13",
+                "C14",
+                "C15",
+                "C16",
+                "C17",
+                "C18",
+                "C19",
+                "C20",
+                "C21",
+                "C22",
+                "C23",
+                "C24",
+                "C25",
+                "C26"
+              ],
+              "required_capabilities": [
+                "tabular_features",
+                "observed_outcome_labels"
+              ]
+            },
+            {
+              "id": "cross_interaction_branch",
+              "mechanism": "Two explicit cross layers on the same pooled x0: x_{l+1} = x_l + x0 * (W_l x_l + b_l) with W_l in R^{442x442}; every coordinate of x0 multiplicatively gates a learned linear function of the full pooled state, giving degree-bounded crosses while the identity path keeps x0 visible to the head. 2*(442*442+442) = 391,948 parameters, independent of the trunk and of the embedding table.",
+              "code_sections": [
+                "CTRModel.forward",
+                "CTRModel.cross_representation",
+                "CrossLayer.forward"
+              ],
+              "instance_path": "CTRModel.cross_layers",
+              "output_contract": "float32 [B,442], unbounded, no mask",
+              "input_fields": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "I8",
+                "I9",
+                "I10",
+                "I11",
+                "I12",
+                "I13",
+                "C1",
+                "C2",
+                "C3",
+                "C4",
+                "C5",
+                "C6",
+                "C7",
+                "C8",
+                "C9",
+                "C10",
+                "C11",
+                "C12",
+                "C13",
+                "C14",
+                "C15",
+                "C16",
+                "C17",
+                "C18",
+                "C19",
+                "C20",
+                "C21",
+                "C22",
+                "C23",
+                "C24",
+                "C25",
+                "C26"
+              ],
+              "required_capabilities": [
+                "tabular_features",
+                "observed_outcome_labels"
+              ]
+            },
+            {
+              "id": "joint_head_fusion",
+              "mechanism": "Single Linear head over the concatenation [x_L(442) ; h(64)] producing the one logit returned to the host (no sigmoid); it replaces the parent's unweighted scalar addition and learns the relative scale of the cross and deep representations.",
+              "code_sections": [
+                "CTRModel.forward",
+                "CTRModel.fuse_logits"
+              ],
+              "instance_path": "CTRModel.head",
+              "output_contract": "float32 [B], unbounded logit, no mask",
+              "input_fields": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "I8",
+                "I9",
+                "I10",
+                "I11",
+                "I12",
+                "I13",
+                "C1",
+                "C2",
+                "C3",
+                "C4",
+                "C5",
+                "C6",
+                "C7",
+                "C8",
+                "C9",
+                "C10",
+                "C11",
+                "C12",
+                "C13",
+                "C14",
+                "C15",
+                "C16",
+                "C17",
+                "C18",
+                "C19",
+                "C20",
+                "C21",
+                "C22",
+                "C23",
+                "C24",
+                "C25",
+                "C26"
+              ],
+              "required_capabilities": [
+                "tabular_features",
+                "observed_outcome_labels"
+              ]
+            }
+          ],
+          "inheritance": [
+            {
+              "source_trial_id": "trial_001",
+              "component_id": "field_embedding_table",
+              "decision": "retain",
+              "target_component_id": "field_embedding_table",
+              "reason": "Identical table, offsets buffer and initialization; both new branches read it through the same pooled input, and it is 99.8% of the parameter budget, so keeping it holds the embedding-capacity axis fixed and keeps the comparison single-axis.",
+              "compatibility": "Same schema contract (26 fields, 65,536 buckets, 16 dims) and the same [B,26,16] output as the parent and the baseline.",
+              "validation_plan": "Parameter count and embedding.weight first-batch gradient norm are read from the host runtime record; a return toward the baseline's ~0.0054 level instead of trial_001's ~0.0494 would support the shared-table cross-talk reading rather than prove it."
+            },
+            {
+              "source_trial_id": "trial_001",
+              "component_id": "deep_pooled_branch",
+              "decision": "adapt",
+              "target_component_id": "deep_pooled_branch",
+              "reason": "Layers Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout are kept unchanged; only the terminal Linear(64,1) is removed because fusion now happens in the joint head. No hidden width, dropout rate or activation changes, so the retained representation is preserved and the changed factor stays local to the readout path.",
+              "compatibility": "The module now returns h in [B,64] instead of a scalar; the joint head accepts 442+64=506 inputs, and every input row still reaches exactly one logit.",
+              "validation_plan": "Confirm the host implementation check reports one model, full row coverage and finite [B] CUDA logits; a cross-off run (num_cross_layers=0) would restore this branch as a linear-plus-deep control if a later budget allows."
+            },
+            {
+              "source_trial_id": "trial_001",
+              "component_id": "fm_second_order_branch",
+              "decision": "drop",
+              "target_component_id": null,
+              "reason": "The only measured arm containing it scored 0.44840364 versus the baseline 0.4453364, with a paired candidate-minus-baseline mean of +0.003067 and interval [0.002949, 0.003185], and AUC 0.8018535 versus 0.8049365. Its attribution is unverified, so this is a drop to free the readout path, not a claim that the pairwise mechanism is harmful in general.",
+              "compatibility": "Not applicable; the term is removed from the evaluated path entirely rather than rescaled or retrained, and no other component consumed its output.",
+              "validation_plan": "Left as a resumable hypothesis: if the cross branch also fails, the pairwise term can be retested as its own single-mechanism arm with an independent embedding table and a bounded scale."
+            },
+            {
+              "source_trial_id": "trial_001",
+              "component_id": "additive_logit_fusion",
+              "decision": "adapt",
+              "target_component_id": "joint_head_fusion",
+              "reason": "The fusion role (produce the single logit from the branch outputs) is retained, but its form changes from unweighted deep_logit + scalar to a learned Linear head over the concatenated representations, because the parent's unweighted addition had no relative scale and was joint with the failing scalar.",
+              "compatibility": "Inputs become two vectors ([B,442] and [B,64]) instead of two scalars; the output contract is unchanged, a single unbounded [B] logit with no sigmoid.",
+              "validation_plan": "A fusion ablation (cross-off at the fixed head) would separate the head's role from the cross branch's role; it is named as a follow-up because the remaining budget funds one evaluation."
+            }
+          ],
+          "horizontal_expansion": {
+            "decision": "expand",
+            "rationale": "The pooled input supports two genuinely different computations on the same typed fields: an implicit deep trunk that must absorb all cross-coordinate structure inside one 442x128 layer, and an explicit multiplicative cross path that forms degree-bounded crosses gated by the original pooled input. The parent trial registered a parallel group whose second branch was a single pairwise scalar fused additively into the logit and that arm lost to the baseline; this recipe keeps the group structure but replaces the failing branch and its fusion, so the group decision remains expand rather than a silent single-branch fallback. No new input stream, timestamp, sequence, entity or business segment is invented: both branches read exactly the same pooled vector built from I1..I13 and C1..C26, and the numeric/categorical groups are typed views, not semantic entities.",
+            "comparison_plan": "All arms share the frozen host protocol (unit = impression, original-order 80/10/10 split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss). Arm A = this candidate (deep + cross + joint head). Control 1 = untracked baseline pooled deep MLP (0.4453364). Control 2 = trial_001, same inputs, same shared table and same budget with a logit-level pairwise scalar instead of the cross branch (0.44840364), which discriminates interaction form and fusion path at equal inputs. Within-group discrimination: num_cross_layers=0 keeps x_L = x0 and turns the candidate into a wide-linear-plus-deep control that separates the cross recurrences from the joint head, and a strictly capacity-matched head would isolate the +1.4% parameters; both are named follow-ups since only one evaluation remains. Because removing the cross branch and retraining shared embeddings would re-fit the trunk, any branch effect is reported as group-level, not as an isolated causal effect of one branch.",
+            "groups": [
+              {
+                "id": "interaction_group",
+                "branch_ids": [
+                  "deep_pooled_branch",
+                  "cross_interaction_branch"
+                ],
+                "fusion_id": "joint_head_fusion",
+                "parameter_sharing": [
+                  {
+                    "component_ids": [
+                      "deep_pooled_branch",
+                      "cross_interaction_branch"
+                    ],
+                    "code_sections": [
+                      "CTRModel.embedding",
+                      "CTRModel.embed_fields",
+                      "CTRModel.pooled_input"
+                    ],
+                    "rationale": "Both branches read the same field-specific embedding table and the same pooled vector produced by embed_fields, so the cross factors are tied to the factors the trunk uses. The cross matrices (CTRModel.cross_layers) and the trunk's hidden layers (CTRModel.trunk) are separate modules and are explicitly not tied; the only declared sharing is the embedding table reached through the two distinct instance paths. Sharing is declared rather than proven, and whether joint training damages the shared table, as the trial_001 gradient record hints, is exactly what the runtime embedding-gradient norm and, later, an independent-table arm must check."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

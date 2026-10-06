@@ -8,6 +8,10 @@ CTREvo connects [ModelEvoHarness](https://github.com/CharlesXu-HQ/ModelEvoHarnes
 
 The goal is to improve the yield of useful experiments. Metric gains must be measured; they are not guaranteed by using an Agent.
 
+## Measured first run
+
+Full Criteo, RTX 5090, one epoch per candidate: the selected MLP + Cross recipe improved independent test **LogLoss 0.451195 → 0.447231** and **AUC 0.802677 → 0.806719**. The first FM candidate worsened metrics; the next local edit improved them. The run required format fixes and recovery, with 24 provider calls across setup and search. [Full evidence, intervals and limitations](docs/experiments.md).
+
 ## What the Agent can change
 
 | Research surface | Implementation |

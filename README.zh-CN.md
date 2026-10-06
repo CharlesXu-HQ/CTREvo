@@ -8,6 +8,10 @@ CTREvo 将 [ModelEvoHarness](https://github.com/CharlesXu-HQ/ModelEvoHarness) �
 
 项目追求有效实验的产出。是否提升指标，需要实际实验回答。
 
+## 首次实测
+
+Criteo 全量、RTX 5090、每个候选一轮完整训练：最终 MLP + Cross 方案在独立测试集上，**LogLoss 0.451195 → 0.447231，AUC 0.802677 → 0.806719**。首轮 FM 方案变差，下一轮局部结构改动取得改善。本次经历了格式修复与断点恢复，准备和搜索共调用 provider 24 次。[完整证据、置信区间与限制](docs/experiments.md)。
+
 ## Agent 的优化空间
 
 | 方向 | 如何执行 |

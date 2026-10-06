@@ -1,0 +1,229 @@
+{
+  "score": 0.4453363541595976,
+  "metrics": {
+    "rows": 4584062,
+    "logloss": 0.4453363541595976,
+    "auc": 0.8049364964027197,
+    "brier": 0.1440832074333245,
+    "observed_ctr": 0.2537528942671369,
+    "mean_prediction": 0.26459780119391824,
+    "calibration": [
+      {
+        "bin": 0,
+        "rows": 1174887,
+        "predicted": 0.05410827736707471,
+        "observed": 0.045176259504105504
+      },
+      {
+        "bin": 1,
+        "rows": 1052510,
+        "predicted": 0.14744787383840338,
+        "observed": 0.13041016237375416
+      },
+      {
+        "bin": 2,
+        "rows": 761700,
+        "predicted": 0.24721370325781658,
+        "observed": 0.23129578574241827
+      },
+      {
+        "bin": 3,
+        "rows": 528828,
+        "predicted": 0.3466494401096369,
+        "observed": 0.33735165308947335
+      },
+      {
+        "bin": 4,
+        "rows": 366011,
+        "predicted": 0.4473915778974157,
+        "observed": 0.43864528661706886
+      },
+      {
+        "bin": 5,
+        "rows": 277713,
+        "predicted": 0.547748003743379,
+        "observed": 0.5432370828877294
+      },
+      {
+        "bin": 6,
+        "rows": 198199,
+        "predicted": 0.6467574480643323,
+        "observed": 0.6459164778833395
+      },
+      {
+        "bin": 7,
+        "rows": 130616,
+        "predicted": 0.746320776115671,
+        "observed": 0.7484687940221718
+      },
+      {
+        "bin": 8,
+        "rows": 72054,
+        "predicted": 0.843186635871571,
+        "observed": 0.8450606489577261
+      },
+      {
+        "bin": 9,
+        "rows": 21544,
+        "predicted": 0.9404279846674529,
+        "observed": 0.9385443743037505
+      }
+    ]
+  },
+  "runtime": {
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "torch": "2.14.1+cu130",
+    "rows_seen": 36672493,
+    "steps": 4477,
+    "prediction_rows": 4584062,
+    "last_loss": 0.4543507397174835,
+    "seconds": 17.22984555999983,
+    "peak_cuda_bytes": 616296448,
+    "parameters": 27328001,
+    "config": {
+      "lr": 0.002,
+      "weight_decay": 1e-06,
+      "epochs": 1,
+      "model": {}
+    },
+    "first_batch_gradient_norms": {
+      "embedding.weight": 0.005348997190594673,
+      "network.0.weight": 0.0431787334382534,
+      "network.0.bias": 0.022837089374661446,
+      "network.3.weight": 0.049539078027009964,
+      "network.3.bias": 0.0895693451166153,
+      "network.6.weight": 0.08747342973947525,
+      "network.6.bias": 0.2691096365451813
+    },
+    "modules": [
+      {
+        "path": "",
+        "class": "CTRModel"
+      },
+      {
+        "path": "embedding",
+        "class": "Embedding"
+      },
+      {
+        "path": "network",
+        "class": "Sequential"
+      },
+      {
+        "path": "network.0",
+        "class": "Linear"
+      },
+      {
+        "path": "network.1",
+        "class": "ReLU"
+      },
+      {
+        "path": "network.2",
+        "class": "Dropout"
+      },
+      {
+        "path": "network.3",
+        "class": "Linear"
+      },
+      {
+        "path": "network.4",
+        "class": "ReLU"
+      },
+      {
+        "path": "network.5",
+        "class": "Dropout"
+      },
+      {
+        "path": "network.6",
+        "class": "Linear"
+      }
+    ]
+  },
+  "implementation_check": {
+    "status": "unverified",
+    "reason": "Host verified output shape, full row coverage and CUDA; mechanism attribution still needs review"
+  },
+  "change_audit": {
+    "status": "unverified"
+  },
+  "review_required": false,
+  "evidence": [
+    {
+      "id": "baseline.metrics",
+      "statement": "Independent host validation metrics from complete fixed split",
+      "source": "baseline/evaluation.json",
+      "status": "observed",
+      "scope": "task",
+      "value": {
+        "rows": 4584062,
+        "logloss": 0.4453363541595976,
+        "auc": 0.8049364964027197,
+        "brier": 0.1440832074333245,
+        "observed_ctr": 0.2537528942671369,
+        "mean_prediction": 0.26459780119391824,
+        "calibration": [
+          {
+            "bin": 0,
+            "rows": 1174887,
+            "predicted": 0.05410827736707471,
+            "observed": 0.045176259504105504
+          },
+          {
+            "bin": 1,
+            "rows": 1052510,
+            "predicted": 0.14744787383840338,
+            "observed": 0.13041016237375416
+          },
+          {
+            "bin": 2,
+            "rows": 761700,
+            "predicted": 0.24721370325781658,
+            "observed": 0.23129578574241827
+          },
+          {
+            "bin": 3,
+            "rows": 528828,
+            "predicted": 0.3466494401096369,
+            "observed": 0.33735165308947335
+          },
+          {
+            "bin": 4,
+            "rows": 366011,
+            "predicted": 0.4473915778974157,
+            "observed": 0.43864528661706886
+          },
+          {
+            "bin": 5,
+            "rows": 277713,
+            "predicted": 0.547748003743379,
+            "observed": 0.5432370828877294
+          },
+          {
+            "bin": 6,
+            "rows": 198199,
+            "predicted": 0.6467574480643323,
+            "observed": 0.6459164778833395
+          },
+          {
+            "bin": 7,
+            "rows": 130616,
+            "predicted": 0.746320776115671,
+            "observed": 0.7484687940221718
+          },
+          {
+            "bin": 8,
+            "rows": 72054,
+            "predicted": 0.843186635871571,
+            "observed": 0.8450606489577261
+          },
+          {
+            "bin": 9,
+            "rows": 21544,
+            "predicted": 0.9404279846674529,
+            "observed": 0.9385443743037505
+          }
+        ]
+      }
+    }
+  ]
+}

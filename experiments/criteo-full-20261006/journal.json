@@ -1,0 +1,1620 @@
+{
+  "baseline": {
+    "change_audit": {
+      "status": "unverified"
+    },
+    "evidence": [
+      {
+        "id": "baseline.metrics",
+        "scope": "task",
+        "source": "baseline/evaluation.json",
+        "statement": "Independent host validation metrics from complete fixed split",
+        "status": "observed",
+        "value": {
+          "auc": 0.8049364964027197,
+          "brier": 0.1440832074333245,
+          "calibration": [
+            {
+              "bin": 0,
+              "observed": 0.045176259504105504,
+              "predicted": 0.05410827736707471,
+              "rows": 1174887
+            },
+            {
+              "bin": 1,
+              "observed": 0.13041016237375416,
+              "predicted": 0.14744787383840338,
+              "rows": 1052510
+            },
+            {
+              "bin": 2,
+              "observed": 0.23129578574241827,
+              "predicted": 0.24721370325781658,
+              "rows": 761700
+            },
+            {
+              "bin": 3,
+              "observed": 0.33735165308947335,
+              "predicted": 0.3466494401096369,
+              "rows": 528828
+            },
+            {
+              "bin": 4,
+              "observed": 0.43864528661706886,
+              "predicted": 0.4473915778974157,
+              "rows": 366011
+            },
+            {
+              "bin": 5,
+              "observed": 0.5432370828877294,
+              "predicted": 0.547748003743379,
+              "rows": 277713
+            },
+            {
+              "bin": 6,
+              "observed": 0.6459164778833395,
+              "predicted": 0.6467574480643323,
+              "rows": 198199
+            },
+            {
+              "bin": 7,
+              "observed": 0.7484687940221718,
+              "predicted": 0.746320776115671,
+              "rows": 130616
+            },
+            {
+              "bin": 8,
+              "observed": 0.8450606489577261,
+              "predicted": 0.843186635871571,
+              "rows": 72054
+            },
+            {
+              "bin": 9,
+              "observed": 0.9385443743037505,
+              "predicted": 0.9404279846674529,
+              "rows": 21544
+            }
+          ],
+          "logloss": 0.4453363541595976,
+          "mean_prediction": 0.26459780119391824,
+          "observed_ctr": 0.2537528942671369,
+          "rows": 4584062
+        }
+      }
+    ],
+    "implementation_check": {
+      "reason": "Host verified output shape, full row coverage and CUDA; mechanism attribution still needs review",
+      "status": "unverified"
+    },
+    "metrics": {
+      "auc": 0.8049364964027197,
+      "brier": 0.1440832074333245,
+      "calibration": [
+        {
+          "bin": 0,
+          "observed": 0.045176259504105504,
+          "predicted": 0.05410827736707471,
+          "rows": 1174887
+        },
+        {
+          "bin": 1,
+          "observed": 0.13041016237375416,
+          "predicted": 0.14744787383840338,
+          "rows": 1052510
+        },
+        {
+          "bin": 2,
+          "observed": 0.23129578574241827,
+          "predicted": 0.24721370325781658,
+          "rows": 761700
+        },
+        {
+          "bin": 3,
+          "observed": 0.33735165308947335,
+          "predicted": 0.3466494401096369,
+          "rows": 528828
+        },
+        {
+          "bin": 4,
+          "observed": 0.43864528661706886,
+          "predicted": 0.4473915778974157,
+          "rows": 366011
+        },
+        {
+          "bin": 5,
+          "observed": 0.5432370828877294,
+          "predicted": 0.547748003743379,
+          "rows": 277713
+        },
+        {
+          "bin": 6,
+          "observed": 0.6459164778833395,
+          "predicted": 0.6467574480643323,
+          "rows": 198199
+        },
+        {
+          "bin": 7,
+          "observed": 0.7484687940221718,
+          "predicted": 0.746320776115671,
+          "rows": 130616
+        },
+        {
+          "bin": 8,
+          "observed": 0.8450606489577261,
+          "predicted": 0.843186635871571,
+          "rows": 72054
+        },
+        {
+          "bin": 9,
+          "observed": 0.9385443743037505,
+          "predicted": 0.9404279846674529,
+          "rows": 21544
+        }
+      ],
+      "logloss": 0.4453363541595976,
+      "mean_prediction": 0.26459780119391824,
+      "observed_ctr": 0.2537528942671369,
+      "rows": 4584062
+    },
+    "review_required": false,
+    "runtime": {
+      "config": {
+        "epochs": 1,
+        "lr": 0.002,
+        "model": {},
+        "weight_decay": 1e-06
+      },
+      "device": "cuda",
+      "first_batch_gradient_norms": {
+        "embedding.weight": 0.005348997190594673,
+        "network.0.bias": 0.022837089374661446,
+        "network.0.weight": 0.0431787334382534,
+        "network.3.bias": 0.0895693451166153,
+        "network.3.weight": 0.049539078027009964,
+        "network.6.bias": 0.2691096365451813,
+        "network.6.weight": 0.08747342973947525
+      },
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "last_loss": 0.4543507397174835,
+      "modules": [
+        {
+          "class": "CTRModel",
+          "path": ""
+        },
+        {
+          "class": "Embedding",
+          "path": "embedding"
+        },
+        {
+          "class": "Sequential",
+          "path": "network"
+        },
+        {
+          "class": "Linear",
+          "path": "network.0"
+        },
+        {
+          "class": "ReLU",
+          "path": "network.1"
+        },
+        {
+          "class": "Dropout",
+          "path": "network.2"
+        },
+        {
+          "class": "Linear",
+          "path": "network.3"
+        },
+        {
+          "class": "ReLU",
+          "path": "network.4"
+        },
+        {
+          "class": "Dropout",
+          "path": "network.5"
+        },
+        {
+          "class": "Linear",
+          "path": "network.6"
+        }
+      ],
+      "parameters": 27328001,
+      "peak_cuda_bytes": 616296448,
+      "prediction_rows": 4584062,
+      "rows_seen": 36672493,
+      "seconds": 17.22984555999983,
+      "steps": 4477,
+      "torch": "2.14.1+cu130"
+    },
+    "score": 0.4453363541595976
+  },
+  "best_id": "trial_002",
+  "identity": {
+    "catalog_sha256": "37c43d126aecbf1bc0b69012f2942b9bcd225a86df3e5472b4ccb4bf1864cf18",
+    "dataset_digest": "23e3e1a142d56d80f69b0dbd43620d4b53a0b577391061c7807785ef6efa40ea",
+    "evaluation_protocol_sha256": "77cd3a5955c52ecc016c961dee08cb6d96ddd9a3e8fb7a67eb16519201f9987c",
+    "implementation_sha256": "f29f9c1fdc9e47ecfaf4683cbc598c543f4ce6d4356cedb9e65686226850585d",
+    "package_version": "0.2.0",
+    "task_id": "criteo-ctr",
+    "task_sha256": "948baf38ec25fe1ee1609032f1b9f696ec495504eb3f4819e7a72c8fd5784072"
+  },
+  "status": "completed",
+  "steps": [
+    {
+      "evaluation": {
+        "change_audit": {
+          "status": "unverified"
+        },
+        "evidence": [
+          {
+            "id": "trial_001.metrics",
+            "scope": "trial",
+            "source": "trial_001/evaluation.json",
+            "statement": "Independent host validation metrics from complete fixed split",
+            "status": "observed",
+            "trial_id": "trial_001",
+            "value": {
+              "auc": 0.8018534664042649,
+              "brier": 0.145314703130126,
+              "calibration": [
+                {
+                  "bin": 0,
+                  "observed": 0.048465709945157226,
+                  "predicted": 0.05326588665125534,
+                  "rows": 1238814
+                },
+                {
+                  "bin": 1,
+                  "observed": 0.13701215874755684,
+                  "predicted": 0.14698990881411225,
+                  "rows": 1030945
+                },
+                {
+                  "bin": 2,
+                  "observed": 0.23521434055140333,
+                  "predicted": 0.24689482165678892,
+                  "rows": 708592
+                },
+                {
+                  "bin": 3,
+                  "observed": 0.3325214181095885,
+                  "predicted": 0.34722019072575494,
+                  "rows": 498410
+                },
+                {
+                  "bin": 4,
+                  "observed": 0.4273213963137929,
+                  "predicted": 0.44752368131901943,
+                  "rows": 365362
+                },
+                {
+                  "bin": 5,
+                  "observed": 0.5232171503572991,
+                  "predicted": 0.5475805167497222,
+                  "rows": 274280
+                },
+                {
+                  "bin": 6,
+                  "observed": 0.6191291465125635,
+                  "predicted": 0.6474503214298956,
+                  "rows": 203846
+                },
+                {
+                  "bin": 7,
+                  "observed": 0.7167882904670775,
+                  "predicted": 0.7467216354767269,
+                  "rows": 142653
+                },
+                {
+                  "bin": 8,
+                  "observed": 0.8121114671679142,
+                  "predicted": 0.8448253916910909,
+                  "rows": 88313
+                },
+                {
+                  "bin": 9,
+                  "observed": 0.9044966054738637,
+                  "predicted": 0.9394091807711152,
+                  "rows": 32847
+                }
+              ],
+              "logloss": 0.44840364133096877,
+              "mean_prediction": 0.266837001251,
+              "observed_ctr": 0.2537528942671369,
+              "paired_vs_baseline": {
+                "confidence": 0.95,
+                "direction": "candidate minus baseline; negative favors candidate",
+                "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering",
+                "lower": 0.002949497689858644,
+                "mean": 0.003067287171371261,
+                "method": "paired per-impression normal interval",
+                "upper": 0.0031850766528838783
+              },
+              "rows": 4584062
+            }
+          }
+        ],
+        "implementation_check": {
+          "reason": "Host verified output shape, full row coverage and CUDA; mechanism attribution still needs review",
+          "status": "unverified"
+        },
+        "metrics": {
+          "auc": 0.8018534664042649,
+          "brier": 0.145314703130126,
+          "calibration": [
+            {
+              "bin": 0,
+              "observed": 0.048465709945157226,
+              "predicted": 0.05326588665125534,
+              "rows": 1238814
+            },
+            {
+              "bin": 1,
+              "observed": 0.13701215874755684,
+              "predicted": 0.14698990881411225,
+              "rows": 1030945
+            },
+            {
+              "bin": 2,
+              "observed": 0.23521434055140333,
+              "predicted": 0.24689482165678892,
+              "rows": 708592
+            },
+            {
+              "bin": 3,
+              "observed": 0.3325214181095885,
+              "predicted": 0.34722019072575494,
+              "rows": 498410
+            },
+            {
+              "bin": 4,
+              "observed": 0.4273213963137929,
+              "predicted": 0.44752368131901943,
+              "rows": 365362
+            },
+            {
+              "bin": 5,
+              "observed": 0.5232171503572991,
+              "predicted": 0.5475805167497222,
+              "rows": 274280
+            },
+            {
+              "bin": 6,
+              "observed": 0.6191291465125635,
+              "predicted": 0.6474503214298956,
+              "rows": 203846
+            },
+            {
+              "bin": 7,
+              "observed": 0.7167882904670775,
+              "predicted": 0.7467216354767269,
+              "rows": 142653
+            },
+            {
+              "bin": 8,
+              "observed": 0.8121114671679142,
+              "predicted": 0.8448253916910909,
+              "rows": 88313
+            },
+            {
+              "bin": 9,
+              "observed": 0.9044966054738637,
+              "predicted": 0.9394091807711152,
+              "rows": 32847
+            }
+          ],
+          "logloss": 0.44840364133096877,
+          "mean_prediction": 0.266837001251,
+          "observed_ctr": 0.2537528942671369,
+          "paired_vs_baseline": {
+            "confidence": 0.95,
+            "direction": "candidate minus baseline; negative favors candidate",
+            "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering",
+            "lower": 0.002949497689858644,
+            "mean": 0.003067287171371261,
+            "method": "paired per-impression normal interval",
+            "upper": 0.0031850766528838783
+          },
+          "rows": 4584062
+        },
+        "review_required": false,
+        "runtime": {
+          "config": {
+            "epochs": 1,
+            "lr": 0.002,
+            "model": {
+              "dropout": 0.1,
+              "embedding_dim": 16,
+              "hidden_dims": [
+                128,
+                64
+              ],
+              "use_fm": true
+            },
+            "weight_decay": 1e-06
+          },
+          "device": "cuda",
+          "first_batch_gradient_norms": {
+            "embedding.weight": 0.04939556494355202,
+            "network.0.bias": 0.022842371836304665,
+            "network.0.weight": 0.04319218546152115,
+            "network.3.bias": 0.0895865187048912,
+            "network.3.weight": 0.049550626426935196,
+            "network.6.bias": 0.269162654876709,
+            "network.6.weight": 0.08749207109212875
+          },
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "last_loss": 0.45654600858688354,
+          "modules": [
+            {
+              "class": "CTRModel",
+              "path": ""
+            },
+            {
+              "class": "Embedding",
+              "path": "embedding"
+            },
+            {
+              "class": "Sequential",
+              "path": "network"
+            },
+            {
+              "class": "Linear",
+              "path": "network.0"
+            },
+            {
+              "class": "ReLU",
+              "path": "network.1"
+            },
+            {
+              "class": "Dropout",
+              "path": "network.2"
+            },
+            {
+              "class": "Linear",
+              "path": "network.3"
+            },
+            {
+              "class": "ReLU",
+              "path": "network.4"
+            },
+            {
+              "class": "Dropout",
+              "path": "network.5"
+            },
+            {
+              "class": "Linear",
+              "path": "network.6"
+            }
+          ],
+          "parameters": 27328001,
+          "peak_cuda_bytes": 616296448,
+          "prediction_rows": 4584062,
+          "rows_seen": 36672493,
+          "seconds": 17.390009340999768,
+          "steps": 4477,
+          "torch": "2.14.1+cu130"
+        },
+        "score": 0.44840364133096877
+      },
+      "id": "trial_001",
+      "proposal": {
+        "action": "experiment",
+        "candidate": {
+          "config": {
+            "epochs": 1,
+            "lr": 0.002,
+            "model": {
+              "dropout": 0.1,
+              "embedding_dim": 16,
+              "hidden_dims": [
+                128,
+                64
+              ],
+              "use_fm": true
+            },
+            "weight_decay": 1e-06
+          },
+          "source": "\"\"\"Deep pooled-embedding branch plus one explicit pairwise (FM) interaction branch.\n\nControl / ablation: with config.model.use_fm = False this file reproduces the\nuntracked baseline wiring (same field-specific embedding table, same deep MLP\nwidths and dropout, same host optimizer, schedule and metric), so the only\ndifference between the two arms is whether the parameterless pairwise term\nreaches the evaluated logit.\n\"\"\"\n\nimport torch\nfrom torch import nn\n\n\nclass CTRModel(nn.Module):\n    def __init__(self, schema, config):\n        super().__init__()\n        self.field_count = int(schema['categorical_width'])\n        self.buckets = int(schema['buckets'])\n        self.dense_width = int(schema['dense_width'])\n        self.embedding_dim = int(config.get('embedding_dim', 16))\n        self.dropout_p = float(config.get('dropout', 0.1))\n        self.use_fm = bool(config.get('use_fm', True))\n\n        # one shared field-specific table: row = field_index * buckets + bucket\n        self.embedding = nn.Embedding(self.field_count * self.buckets, self.embedding_dim)\n        nn.init.normal_(self.embedding.weight, std=0.01)\n        self.register_buffer('offsets', torch.arange(self.field_count) * self.buckets)\n\n        width = self.field_count * self.embedding_dim + self.dense_width\n        layers = []\n        for hidden in config.get('hidden_dims', [128, 64]):\n            layers.extend([nn.Linear(width, int(hidden)), nn.ReLU(), nn.Dropout(self.dropout_p)])\n            width = int(hidden)\n        layers.append(nn.Linear(width, 1))\n        self.network = nn.Sequential(*layers)\n\n    def embed_fields(self, categorical):\n        # [B, F] int64 ids -> [B, F, D] float vectors (shared by both branches)\n        return self.embedding(categorical + self.offsets)\n\n    def deep_logit(self, dense, vectors):\n        # retained baseline deep path\n        flat = vectors.flatten(1)\n        return self.network(torch.cat([dense, flat], dim=1)).squeeze(-1)\n\n    def fm_logit(self, vectors):\n        # sum_{i<j} <e_i, e_j> via 0.5 * ((sum_f e_f)^2 - sum_f e_f^2)\n        total = vectors.sum(dim=1)\n        pairwise = 0.5 * (total.pow(2) - vectors.pow(2).sum(dim=1))\n        return pairwise.sum(dim=-1)\n\n    def fuse_logits(self, deep_logit, fm_logit):\n        # additive fusion of the two branch logits; no sigmoid\n        return deep_logit + fm_logit\n\n    def forward(self, dense, categorical):\n        vectors = self.embed_fields(categorical)\n        deep_logit = self.deep_logit(dense, vectors)\n        if not self.use_fm:\n            return deep_logit\n        return self.fuse_logits(deep_logit, self.fm_logit(vectors))\n\n\ndef build_model(schema, config):\n    return CTRModel(schema, config)\n"
+        },
+        "reference_reads": {
+          "models/pytorch/composition.py": "2d0004a14e2b698874d27548f70c38490074ec6e509897b8aeaf15f4d3a6b27f",
+          "models/pytorch/training.py": "22cd259ab713f290491be36b363e253d63acf91b39c7739f4157db6171b3acc8"
+        },
+        "research": {
+          "alternatives": [
+            {
+              "direction": "Replace the pairwise term with a DCN-style bounded-degree cross layer over the pooled 442-dim input.",
+              "mechanism": "x_{l+1} = x_l + x_0 * (W_l x_l) + b_l with x_0 the concatenated [dense, flattened embeddings], forming explicit higher-order crosses from the original input.",
+              "reason": "It can express interactions beyond pairwise, but each cross layer adds a 442x442 dense matrix (~195k random-start parameters) evaluated in a single epoch, and stacking it with the FM branch would be a compound change; it is the natural follow-up only if the cheaper pairwise term first shows signal."
+            },
+            {
+              "direction": "Training-time feature dropout on the categorical field vectors inside forward.",
+              "mechanism": "Randomly zero a fraction of the 26 field embeddings (and optionally dense coordinates) during training so the deep branch cannot co-adapt to specific fields.",
+              "reason": "Cheap and targeted at the 442-dim first layer, but it adds no new input-dependent interaction term to the score function and in a single-epoch regime it mainly trades bias for variance; lower expected information than an added pairwise term, and it would need its own mask-rate ablation."
+            },
+            {
+              "direction": "Add a separate dense-only parallel branch (MLP over I1..I13 plus missing indicators) fused additively with the deep branch.",
+              "mechanism": "Independent-parameter MLP on the 26 dense inputs so numeric effects are not forced to share hidden units with the embedding block.",
+              "reason": "The numeric group is 13 anonymous standardized columns with unknown semantics that are already consumed by the deep branch; there is no measured residual isolating numeric from categorical effects, and adding it now would make the trial compound, so it is deferred until a numeric-specific diagnostic exists."
+            },
+            {
+              "direction": "Change the objective to focal loss or class-weighted BCE for the ~25.6% positive rate.",
+              "mechanism": "Downweight well-classified examples (gamma) or reweight positive rows (alpha) in the training loss.",
+              "reason": "The evaluated metric is logloss, a proper scoring rule, and the observed calibration is already within about 0.01 of observed CTR in the populated bins; reshaping the loss mainly risks calibration loss and does not add an interaction mechanism to the score."
+            }
+          ],
+          "change_factors": [
+            "fm_second_order_branch added to the evaluated logit (CTRModel.fm_logit)",
+            "additive logit fusion path (CTRModel.fuse_logits) inside CTRModel.forward",
+            "config switch config.model.use_fm for the same-code no-FM wiring control"
+          ],
+          "comparison": "Control 1: the untracked baseline embedding-MLP, under the identical host protocol (unit = impression, same split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss on the same 4,584,062 validation impressions). Control 2 (same-code, capacity-identical wiring control): config.model.use_fm=false, which removes only the FM term's path to the evaluated logit while keeping the embedding table, deep branch, host optimizer and schedule; because the FM branch is parameterless, both arms have the same parameter count (the baseline's 27.3M), so this is a matched-capacity toggle rather than a larger model. Lower-level branch ablations (independent FM embedding table, FM term without the deep branch) are deferred until the toggle shows a real effect.",
+          "data_rationale": "The candidate uses only pre-decision impression fields already present in the schema: I1..I13 (signed-log1p standardized plus their missing indicators in the 26-wide dense block) and C1..C26 with field-specific hash buckets where 0 marks missing. No sequence, target-item, timestamp, propensity, exposure or decision-rule field is required; the pairwise term is a deterministic function of the same categorical IDs the baseline already consumes, so no new data contract, no post-decision input and no changed leakage boundary is introduced. Sparse pairs are handled by shared embedding factors rather than requiring joint support counts, so no new field coverage is demanded.",
+          "direction": "Add one explicit second-order factorization (pairwise dot-product) branch over the shared categorical field embeddings and fuse it additively with the retained deep pooled MLP branch.",
+          "evidence_ids": [
+            "baseline.metrics",
+            "dataset.train"
+          ],
+          "expected_result": "Candidate validation binary logloss below the baseline 0.4453364 (direction: lower is better) with AUC not materially below 0.8049365; if the mechanism is informative, the largest per-bin logloss/calibration movement should appear in the populated mid/high score region and the low bins should move toward their observed rates. This is an exploratory validation hypothesis only; it is not a confirmed improvement until the host evaluates it, and AUC/calibration are treated as secondary.",
+          "falsification": "Reject if the candidate's validation logloss is not below the baseline 0.4453364 (or is worse) under the identical split, batch size and 1-epoch budget; if AUC drops materially (below roughly the baseline level); or if the use_fm=false arm reproduces the candidate's logloss within run-to-run noise, which would mean the pairwise term does not reach the evaluated score. Secondary reject signals: the FM term collapses to a near-constant across rows (no input-dependent variation) or training loss becomes unstable relative to the baseline run.",
+          "family_id": "feature_interactions",
+          "input_fields": [
+            "I1",
+            "I2",
+            "I3",
+            "I4",
+            "I5",
+            "I6",
+            "I7",
+            "I8",
+            "I9",
+            "I10",
+            "I11",
+            "I12",
+            "I13",
+            "C1",
+            "C2",
+            "C3",
+            "C4",
+            "C5",
+            "C6",
+            "C7",
+            "C8",
+            "C9",
+            "C10",
+            "C11",
+            "C12",
+            "C13",
+            "C14",
+            "C15",
+            "C16",
+            "C17",
+            "C18",
+            "C19",
+            "C20",
+            "C21",
+            "C22",
+            "C23",
+            "C24",
+            "C25",
+            "C26"
+          ],
+          "mechanism": "Each impression already produces 26 field vectors e_f in R^16 from one shared field-specific embedding table. The new branch computes the explicit pairwise term sum_{i<j} <e_i, e_j> = 0.5*((sum_f e_f)^2 - sum_f e_f^2) (summed over the 16 coordinates), a single input-dependent scalar that is added to the deep branch's logit: logit = deep_logit(dense, flatten(E)) + fm_logit(E). The deep branch, embedding table, widths, dropout, optimizer, schedule and metric are unchanged, and the FM branch has no parameters of its own, so the only new term that reaches the evaluated score is the pairwise interaction scalar.",
+          "model_design": {
+            "backbone": "One shared field-specific categorical embedding table (26 fields x 65536 buckets x 16 dims) feeding two parallel branches inside CTRModel: a retained deep MLP over [dense(26) concat flattened embeddings(416)] and a parameterless explicit pairwise factorization branch; additive logit fusion in CTRModel.forward.",
+            "backbone_id": "field_embedding_shared_branch_v1",
+            "change_scope": "initialize",
+            "comparison_plan": "Host protocol held fixed (unit = impression, original split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss). Compare (a) the candidate (deep + FM, additive fusion) against (b) the untracked baseline, and (c) the same-code control with config.model.use_fm=false that removes only the FM term's path to the logit at identical parameter count. If the toggle shows an effect, next ablate parameter sharing (independent FM embedding table) and the deep branch; whole-recipe results are reported separately from any component-level attribution, which stays unverified until the host change audit runs.",
+            "components": [
+              {
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.embed_fields"
+                ],
+                "id": "field_embedding_table",
+                "input_fields": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.embedding",
+                "mechanism": "One shared field-specific embedding table with row index field_index * 65536 + bucket, initialized N(0, 0.01), supplying the [B,26,16] field vectors read by both branches (identical to the baseline table).",
+                "output_contract": "float32 [B,26,16], unbounded, no mask",
+                "required_capabilities": [
+                  "tabular_features"
+                ]
+              },
+              {
+                "code_sections": [
+                  "CTRModel.forward",
+                  "CTRModel.deep_logit"
+                ],
+                "id": "deep_pooled_branch",
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.network",
+                "mechanism": "Retained baseline deep path: concatenate the 26 dense inputs with the flattened 416-dim field embeddings and map through Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout-Linear(64,1) to one logit.",
+                "output_contract": "float32 [B], unbounded logit, no mask",
+                "required_capabilities": [
+                  "tabular_features",
+                  "observed_outcome_labels"
+                ]
+              },
+              {
+                "code_sections": [
+                  "CTRModel.forward",
+                  "CTRModel.fm_logit"
+                ],
+                "id": "fm_second_order_branch",
+                "input_fields": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.fm_logit",
+                "mechanism": "Parameterless explicit pairwise term: 0.5*((sum_f e_f)^2 - sum_f e_f^2) summed over the 16 coordinates equals sum_{i<j} <e_i, e_j>, a single input-dependent scalar computed from the shared field vectors.",
+                "output_contract": "float32 [B], unbounded scalar interaction term, no mask",
+                "required_capabilities": [
+                  "tabular_features"
+                ]
+              },
+              {
+                "code_sections": [
+                  "CTRModel.forward",
+                  "CTRModel.fuse_logits"
+                ],
+                "id": "additive_logit_fusion",
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.fuse_logits",
+                "mechanism": "Sums the deep logit and the pairwise logit into the single logit returned to the host (no sigmoid); config.model.use_fm=false routes only the deep logit, giving the same-code wiring control.",
+                "output_contract": "float32 [B], unbounded summed logit, no mask",
+                "required_capabilities": [
+                  "tabular_features",
+                  "observed_outcome_labels"
+                ]
+              }
+            ],
+            "data_fit": "Only pre-decision impression fields are used: I1..I13 with their missing indicators and C1..C26 with field-specific hash buckets (0 = missing). The pairwise term needs no joint pair support because field vectors are shared across pairs, no sequence or target-item contract is assumed, and no post-decision column is read.",
+            "estimator": "Pointwise binary logit trained by the host's BCE over impression units; the evaluated score is the single returned logit, and no sampling, thresholding or decision rule is changed.",
+            "estimator_id": "pointwise_logit_v1",
+            "horizontal_expansion": {
+              "comparison_plan": "Same host protocol for every arm (unit = impression, fixed split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss). Arms: (a) candidate with both branches fused additively; (b) untracked baseline; (c) same-code control with config.model.use_fm=false, which disables only the branch-to-logit path. If (a) beats (b) and (c) does not, the next test ablates parameter sharing by giving the FM branch its own embedding table, and removes the deep branch, to separate the sharing decision from the added mechanism.",
+              "decision": "expand",
+              "groups": [
+                {
+                  "branch_ids": [
+                    "deep_pooled_branch",
+                    "fm_second_order_branch"
+                  ],
+                  "fusion_id": "additive_logit_fusion",
+                  "id": "interaction_group",
+                  "parameter_sharing": [
+                    {
+                      "code_sections": [
+                        "CTRModel.embedding",
+                        "CTRModel.embed_fields",
+                        "CTRModel.offsets"
+                      ],
+                      "component_ids": [
+                        "deep_pooled_branch",
+                        "fm_second_order_branch"
+                      ],
+                      "rationale": "Both branches read the same per-field embedding table and offsets buffer, so pair parameters are tied to the field vectors used by the deep branch; the pairwise branch itself has no parameters, so the candidate's parameter count equals the baseline's 27.3M and the toggle isolates the added term rather than new capacity."
+                    }
+                  ]
+                }
+              ],
+              "rationale": "The baseline is a single pooled deep MLP over concatenated embeddings, so all field-pair structure must be absorbed by the 442x128 first layer in one pass. Adding one parallel branch that computes an explicit pairwise term from the same typed categorical fields, fused additively at the logit, tests a complementary interaction representation while reusing the same embedding table (zero new parameters) and leaving the deep branch unchanged, which keeps the comparison capacity-matched and single-mechanism."
+            },
+            "inheritance": [],
+            "parent_trial_id": null,
+            "rationale": "This is the first tracked design; it registers the untracked baseline recipe (field embeddings + deep pooled MLP) plus exactly one added mechanism, the explicit pairwise factorization branch, so the comparison against the untracked baseline differs in one term that reaches the evaluated logit."
+          },
+          "why_now": "Host-measured baseline (evidence baseline.metrics): validation binary logloss 0.4453364, AUC 0.8049365, Brier 0.1440832 over 4,584,062 held-out impressions, mean prediction 0.2646 vs observed 0.2538. Bins 0 and 1 are materially over-predicted (0.0541 vs 0.0452 and 0.1474 vs 0.1304) while the top bin is slightly under-predicted (0.9404 vs 0.9385). The host runtime record for the same baseline shows 4,477 optimizer steps for a single pass over 36,672,493 training rows with 9,393,678 positives (evidence dataset.train), and a recorded last training loss (0.4544) above the validation logloss, i.e. the deep branch is still under-fitting rather than over-fitting. In a single-pass regime the pooled MLP must estimate the whole 442x128 first-layer weight matrix (all cross-coordinate interactions) from scratch, whereas an explicit factored pairwise term estimates each field-pair effect from the same 16-dimensional field vectors with far fewer effective degrees of freedom and therefore can add signal the pooled path cannot absorb in one epoch."
+        }
+      },
+      "reflection": {
+        "business_experience": {
+          "reason": "Anonymous CTR features have no observable business semantics",
+          "status": "not_observable"
+        },
+        "technical_experience": {
+          "attribution": "unverified",
+          "component_assessments": [
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Field-specific hash buckets with zero as missing; no sequence semantics. The table is shared across deep and FM paths, so pairwise and deep gradients can alter the same factors. Sixteen dimensions may be capacity-limited for one-epoch interaction learning.",
+              "component_id": "field_embedding_table",
+              "evidence": "Shared 26-field x 65,536-bucket x 16-dim embedding table used by both branches. Runtime shows 27,328,001 parameters, identical to baseline, and embedding.weight gradient norm 0.0494. The baseline recipe using this table reached logloss 0.44533635, while the candidate with the FM branch reached 0.44840364, but this table is common to both arms and was not isolated.",
+              "next_test": "Hold this table fixed and toggle config.model.use_fm=false; then test an independent FM embedding table to separate sharing effects from the added pairwise mechanism.",
+              "outcome": "inconclusive"
+            },
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Consumes concatenated dense inputs and flattened field embeddings; all pairwise structure must pass through the first dense layer. One-epoch underfitting is suggested by last_loss 0.4565 being above validation logloss 0.4484.",
+              "component_id": "deep_pooled_branch",
+              "evidence": "Retained baseline MLP: Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout-Linear(64,1). Runtime shows gradients for network.0 0.0432, network.3 0.0495, network.6 0.0875. The candidate's whole-model logloss 0.44840364 is worse than baseline 0.44533635, but this branch was not the changed factor and no isolated ablation was run.",
+              "next_test": "Compare against an FM-only or deep-ablated arm under the same protocol; first run the use_fm=false control to verify the no-FM wiring.",
+              "outcome": "inconclusive"
+            },
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "The pairwise scalar is unbounded and added directly to the deep logit, so scale mismatch with the learned deep branch is possible. It shares the embedding table with the deep branch. Anonymous fields prevent semantic validation of which pairs are useful.",
+              "component_id": "fm_second_order_branch",
+              "evidence": "Parameterless pairwise term 0.5*((sum_f e_f)^2 - sum_f e_f^2) over the shared 26x16 field vectors. Candidate with use_fm=true scored 0.44840364 vs baseline 0.44533635, paired difference +0.003067 [0.002949, 0.003185] candidate minus baseline, so the candidate was worse. There is no evaluated same-code use_fm=false arm, and the parameterless branch has no direct gradient. Because the trial failed, this does not establish the branch as harmful.",
+              "next_test": "Run use_fm=false under the identical protocol to test whether the FM path changes the evaluated score; then test a scaled FM term or an independent FM embedding table to separate scale from representation-sharing effects.",
+              "outcome": "inconclusive"
+            },
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Unweighted addition assumes deep and FM logits share compatible scale and units; there is no learned gate or normalization. It cannot be isolated from the FM branch in the executed trial because use_fm=false bypasses both the FM branch and the fusion path.",
+              "component_id": "additive_logit_fusion",
+              "evidence": "Fuses by returning deep_logit + fm_logit when use_fm=true, and returns only deep_logit when use_fm=false. The executed candidate was worse than baseline (0.44840364 vs 0.44533635), and calibration bin 9 was 0.9394 predicted vs 0.9045 observed, whereas baseline bin 9 was 0.9404 vs 0.9385. The additive fusion was not independently ablated and is joint with the FM branch.",
+              "next_test": "Compare unweighted additive fusion against a learned scalar or gate on the FM term, or a concatenation-based fusion, while keeping the FM branch fixed. Pair this with fm_logit distribution logging to diagnose scale.",
+              "outcome": "inconclusive"
+            }
+          ],
+          "evidence": "Observed baseline metrics: logloss 0.4453363541595976, AUC 0.8049364964027197, Brier 0.1440832074333245 on 4,584,062 validation impressions. Observed trial_001 metrics: logloss 0.44840364133096877, AUC 0.8018534664042649, Brier 0.145314703130126 on the same validation rows; paired difference is positive and excludes zero, indicating the candidate is worse. Runtime: CUDA on NVIDIA GeForce RTX 5090, 1 epoch, 4477 steps, 36,672,493 training rows seen, prediction_rows 4,584,062, seconds 17.390, parameters 27,328,001 (same as baseline), last_loss 0.456546. Gradients were present for embedding.weight 0.0494 and network layers, but the FM branch is parameterless and has no direct gradient. Calibration shifted: trial_001 bin 9 predicted 0.9394 vs observed 0.9045, while baseline bin 9 predicted 0.9404 vs observed 0.9385. The executed proposal listed the use_fm=false same-code control but no such evaluation appears in the trial evidence; change_audit status is unverified.",
+          "implementation_status": "unverified",
+          "lesson": "The executed trial_001 tested a parameterless explicit pairwise FM branch fused additively with the retained deep pooled MLP. It did not improve over the baseline: validation logloss was 0.44840364 vs baseline 0.44533635, with paired candidate-minus-baseline difference +0.003067 (95% interval [0.002949, 0.003185], negative favors candidate), AUC 0.801853 vs 0.804936, and Brier 0.145315 vs 0.144083. The same-code use_fm=false control proposed in the design was not executed, so the failed trial cannot establish that the FM branch or additive fusion is harmful; component attribution remains unverified.",
+          "next_test": "Run the same-code control with config.model.use_fm=false under the identical seed, split, batch size, epoch count, optimizer and metric; confirm whether it reproduces the baseline logloss near 0.445336 and whether the FM term's path to the logit is the source of the observed degradation. If one discriminating step remains, prioritize that toggle and log fm_logit variance/correlation with the label. If the toggle reproduces baseline and the FM-with-scaling arm still fails, drop or retest the FM branch; if a small learned or fixed scale on fm_logit improves over the unweighted additive fusion, the fusion scale is implicated and should be adapted rather than discarding the pairwise representation.",
+          "uncertainty": "The comparison is against an untracked baseline and the only changed path is the FM branch plus its additive fusion into the evaluated logit. Because the FM term shares the same embedding table as the deep branch, joint training can alter embedding geometry, so the effect cannot be isolated to one component. No use_fm=false run was evaluated, no independent FM embedding table was tested, and no scale/gating ablation was run. Single epoch, single seed, anonymous fields, and unknown semantics limit interpretation. CUDA execution, full row coverage, and parameter-count equivalence do not prove that the pairwise mechanism caused the degradation."
+        }
+      },
+      "status": "evaluated"
+    },
+    {
+      "evaluation": {
+        "change_audit": {
+          "status": "unverified"
+        },
+        "evidence": [
+          {
+            "id": "trial_002.metrics",
+            "scope": "trial",
+            "source": "trial_002/evaluation.json",
+            "statement": "Independent host validation metrics from complete fixed split",
+            "status": "observed",
+            "trial_id": "trial_002",
+            "value": {
+              "auc": 0.808926176381844,
+              "brier": 0.14276163877565595,
+              "calibration": [
+                {
+                  "bin": 0,
+                  "observed": 0.047029372807276044,
+                  "predicted": 0.05198022794796837,
+                  "rows": 1289492
+                },
+                {
+                  "bin": 1,
+                  "observed": 0.13609682877409304,
+                  "predicted": 0.14686655409444085,
+                  "rows": 1005321
+                },
+                {
+                  "bin": 2,
+                  "observed": 0.2351450392627918,
+                  "predicted": 0.24708849381721307,
+                  "rows": 697225
+                },
+                {
+                  "bin": 3,
+                  "observed": 0.33593397627748567,
+                  "predicted": 0.3473278060774263,
+                  "rows": 498851
+                },
+                {
+                  "bin": 4,
+                  "observed": 0.4339221454470822,
+                  "predicted": 0.4475093373273983,
+                  "rows": 365425
+                },
+                {
+                  "bin": 5,
+                  "observed": 0.5366821443647108,
+                  "predicted": 0.5474782286331872,
+                  "rows": 272435
+                },
+                {
+                  "bin": 6,
+                  "observed": 0.6360416448415371,
+                  "predicted": 0.6473356758019186,
+                  "rows": 200457
+                },
+                {
+                  "bin": 7,
+                  "observed": 0.7370603813181243,
+                  "predicted": 0.7465622718722409,
+                  "rows": 140093
+                },
+                {
+                  "bin": 8,
+                  "observed": 0.8364540394513147,
+                  "predicted": 0.844651625501157,
+                  "rows": 85878
+                },
+                {
+                  "bin": 9,
+                  "observed": 0.9298251687727194,
+                  "predicted": 0.9386552206574788,
+                  "rows": 28885
+                }
+              ],
+              "logloss": 0.4414511548414842,
+              "mean_prediction": 0.2632821529658074,
+              "observed_ctr": 0.2537528942671369,
+              "paired_vs_baseline": {
+                "confidence": 0.95,
+                "direction": "candidate minus baseline; negative favors candidate",
+                "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering",
+                "lower": -0.003976100401747975,
+                "mean": -0.003885199318113414,
+                "method": "paired per-impression normal interval",
+                "upper": -0.0037942982344788523
+              },
+              "rows": 4584062
+            }
+          }
+        ],
+        "implementation_check": {
+          "reason": "Host verified output shape, full row coverage and CUDA; mechanism attribution still needs review",
+          "status": "unverified"
+        },
+        "metrics": {
+          "auc": 0.808926176381844,
+          "brier": 0.14276163877565595,
+          "calibration": [
+            {
+              "bin": 0,
+              "observed": 0.047029372807276044,
+              "predicted": 0.05198022794796837,
+              "rows": 1289492
+            },
+            {
+              "bin": 1,
+              "observed": 0.13609682877409304,
+              "predicted": 0.14686655409444085,
+              "rows": 1005321
+            },
+            {
+              "bin": 2,
+              "observed": 0.2351450392627918,
+              "predicted": 0.24708849381721307,
+              "rows": 697225
+            },
+            {
+              "bin": 3,
+              "observed": 0.33593397627748567,
+              "predicted": 0.3473278060774263,
+              "rows": 498851
+            },
+            {
+              "bin": 4,
+              "observed": 0.4339221454470822,
+              "predicted": 0.4475093373273983,
+              "rows": 365425
+            },
+            {
+              "bin": 5,
+              "observed": 0.5366821443647108,
+              "predicted": 0.5474782286331872,
+              "rows": 272435
+            },
+            {
+              "bin": 6,
+              "observed": 0.6360416448415371,
+              "predicted": 0.6473356758019186,
+              "rows": 200457
+            },
+            {
+              "bin": 7,
+              "observed": 0.7370603813181243,
+              "predicted": 0.7465622718722409,
+              "rows": 140093
+            },
+            {
+              "bin": 8,
+              "observed": 0.8364540394513147,
+              "predicted": 0.844651625501157,
+              "rows": 85878
+            },
+            {
+              "bin": 9,
+              "observed": 0.9298251687727194,
+              "predicted": 0.9386552206574788,
+              "rows": 28885
+            }
+          ],
+          "logloss": 0.4414511548414842,
+          "mean_prediction": 0.2632821529658074,
+          "observed_ctr": 0.2537528942671369,
+          "paired_vs_baseline": {
+            "confidence": 0.95,
+            "direction": "candidate minus baseline; negative favors candidate",
+            "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering",
+            "lower": -0.003976100401747975,
+            "mean": -0.003885199318113414,
+            "method": "paired per-impression normal interval",
+            "upper": -0.0037942982344788523
+          },
+          "rows": 4584062
+        },
+        "review_required": false,
+        "runtime": {
+          "config": {
+            "epochs": 1,
+            "lr": 0.002,
+            "model": {
+              "dropout": 0.1,
+              "embedding_dim": 16,
+              "hidden_dims": [
+                128,
+                64
+              ],
+              "num_cross_layers": 2
+            },
+            "weight_decay": 1e-06
+          },
+          "device": "cuda",
+          "first_batch_gradient_norms": {
+            "cross_layers.0.transform.bias": 0.008687997236847878,
+            "cross_layers.0.transform.weight": 0.0379936583340168,
+            "cross_layers.1.transform.bias": 0.008602038957178593,
+            "cross_layers.1.transform.weight": 0.03804163634777069,
+            "embedding.weight": 0.054613955318927765,
+            "head.bias": 0.24548979103565216,
+            "head.weight": 0.3683241307735443,
+            "trunk.0.bias": 0.009594474919140339,
+            "trunk.0.weight": 0.017713584005832672,
+            "trunk.3.bias": 0.032044779509305954,
+            "trunk.3.weight": 0.01799495704472065
+          },
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "last_loss": 0.4476986527442932,
+          "modules": [
+            {
+              "class": "CTRModel",
+              "path": ""
+            },
+            {
+              "class": "Embedding",
+              "path": "embedding"
+            },
+            {
+              "class": "Sequential",
+              "path": "trunk"
+            },
+            {
+              "class": "Linear",
+              "path": "trunk.0"
+            },
+            {
+              "class": "ReLU",
+              "path": "trunk.1"
+            },
+            {
+              "class": "Dropout",
+              "path": "trunk.2"
+            },
+            {
+              "class": "Linear",
+              "path": "trunk.3"
+            },
+            {
+              "class": "ReLU",
+              "path": "trunk.4"
+            },
+            {
+              "class": "Dropout",
+              "path": "trunk.5"
+            },
+            {
+              "class": "ModuleList",
+              "path": "cross_layers"
+            },
+            {
+              "class": "CrossLayer",
+              "path": "cross_layers.0"
+            },
+            {
+              "class": "Linear",
+              "path": "cross_layers.0.transform"
+            },
+            {
+              "class": "CrossLayer",
+              "path": "cross_layers.1"
+            },
+            {
+              "class": "Linear",
+              "path": "cross_layers.1.transform"
+            },
+            {
+              "class": "Linear",
+              "path": "head"
+            }
+          ],
+          "parameters": 27720055,
+          "peak_cuda_bytes": 624142848,
+          "prediction_rows": 4584062,
+          "rows_seen": 36672493,
+          "seconds": 20.3568038049998,
+          "steps": 4477,
+          "torch": "2.14.1+cu130"
+        },
+        "score": 0.4414511548414842
+      },
+      "id": "trial_002",
+      "proposal": {
+        "action": "experiment",
+        "candidate": {
+          "config": {
+            "epochs": 1,
+            "lr": 0.002,
+            "model": {
+              "dropout": 0.1,
+              "embedding_dim": 16,
+              "hidden_dims": [
+                128,
+                64
+              ],
+              "num_cross_layers": 2
+            },
+            "weight_decay": 1e-06
+          },
+          "source": "\"\"\"Two parallel branches on one pooled field-embedding input: a retained deep\ntrunk and an explicit bounded-degree cross branch, read out by one joint head.\n\nParent recipe: trial_001 (shared field-specific embedding table + deep pooled\nMLP + a parameterless pairwise scalar fused additively into the logit).\nLocal edit: the shared table and the trunk's hidden layers are kept; the failed\nlogit-level scalar and the unweighted addition are replaced by two vector cross\nlayers over the same pooled vector and a single learned head over [cross ; deep].\n\nControl / ablation: num_cross_layers = 0 keeps x_L = x0, turning this file into\na wide-linear-plus-deep arm at the same head, so the cross recurrences can be\ntoggled without touching the embedding table, trunk, optimizer or metric.\n\"\"\"\n\nimport torch\nfrom torch import nn\n\n\nclass CrossLayer(nn.Module):\n    \"\"\"One vector cross layer: x_{l+1} = x_l + x0 * (W x_l + b).\"\"\"\n\n    def __init__(self, dim):\n        super().__init__()\n        self.transform = nn.Linear(int(dim), int(dim))\n        nn.init.normal_(self.transform.weight, std=0.01)\n        nn.init.zeros_(self.transform.bias)\n\n    def forward(self, x0, x):\n        return x + x0 * self.transform(x)\n\n\nclass CTRModel(nn.Module):\n    def __init__(self, schema, config):\n        super().__init__()\n        count = int(schema['categorical_width'])\n        buckets = int(schema['buckets'])\n        dim = int(config.get('embedding_dim', 16))\n        drop = float(config.get('dropout', 0.1))\n        self.num_cross_layers = max(0, int(config.get('num_cross_layers', 2)))\n        self.field_count = count\n        self.buckets = buckets\n        self.dense_width = int(schema['dense_width'])\n        self.embedding_dim = dim\n        self.dropout_p = drop\n\n        # retained shared field-specific table (row = field * buckets + bucket)\n        self.embedding = nn.Embedding(count * buckets, dim)\n        nn.init.normal_(self.embedding.weight, std=0.01)\n        self.register_buffer('offsets', torch.arange(count) * buckets)\n\n        self.input_dim = count * dim + self.dense_width\n\n        # retained trunk hidden layers; its terminal scalar projection is gone\n        layers = []\n        width = self.input_dim\n        for hidden in config.get('hidden_dims', [128, 64]):\n            layers.extend([nn.Linear(width, int(hidden)), nn.ReLU(), nn.Dropout(drop)])\n            width = int(hidden)\n        self.trunk = nn.Sequential(*layers)\n        self.trunk_out = width\n\n        self.cross_layers = nn.ModuleList(\n            [CrossLayer(self.input_dim) for _ in range(self.num_cross_layers)])\n        self.head = nn.Linear(self.input_dim + self.trunk_out, 1)\n\n    def embed_fields(self, categorical):\n        # [B, F] int64 ids -> [B, F, D] float vectors (shared by both branches)\n        return self.embedding(categorical + self.offsets)\n\n    def pooled_input(self, dense, vectors):\n        return torch.cat([dense, vectors.flatten(1)], dim=1)\n\n    def deep_representation(self, pooled):\n        return self.trunk(pooled)\n\n    def cross_representation(self, pooled):\n        x = pooled\n        for layer in self.cross_layers:\n            x = layer(pooled, x)\n        return x\n\n    def fuse_logits(self, deep_repr, cross_repr):\n        return self.head(torch.cat([cross_repr, deep_repr], dim=1)).squeeze(-1)\n\n    def forward(self, dense, categorical):\n        vectors = self.embed_fields(categorical)\n        pooled = self.pooled_input(dense, vectors)\n        deep_repr = self.deep_representation(pooled)\n        cross_repr = self.cross_representation(pooled)\n        return self.fuse_logits(deep_repr, cross_repr)\n\n\ndef build_model(schema, config):\n    return CTRModel(schema, config)\n"
+        },
+        "reference_reads": {
+          "models/pytorch/composition.py": "2d0004a14e2b698874d27548f70c38490074ec6e509897b8aeaf15f4d3a6b27f",
+          "models/pytorch/training.py": "22cd259ab713f290491be36b363e253d63acf91b39c7739f4157db6171b3acc8"
+        },
+        "research": {
+          "alternatives": [
+            {
+              "direction": "Re-run the identical parent code with config.model.use_fm=false as the same-code wiring control for trial_001.",
+              "mechanism": "Route only the deep logit, bypassing both the pairwise term and the additive fusion at identical parameter count and identical embedding table.",
+              "reason": "This is the reflection's own recommendation and a genuine wiring control, but the parent's no-FM path is code-equivalent to the untracked baseline recipe (same table, same MLP, same initialization, same seed, batch size and epoch), so its expected result is a reproduction of 0.4453364 and it cannot improve the fixed metric. It only re-confirms attribution for a branch that is being dropped anyway, so with one evaluation left it spends the budget on information the host change audit already covers."
+            },
+            {
+              "direction": "Retry the pairwise term with its own independent embedding table and a bounded (sigmoid-gated) scale instead of sharing the trunk's table.",
+              "mechanism": "Keep pairwise = 0.5*((sum_f e_f)^2 - sum_f e_f^2) but compute it from a second N(0, 0.01) table so its gradient cannot perturb the trunk's factors, and squash the term with a learned bounded scalar before it reaches the logit.",
+              "reason": "It targets exactly the two readings of the trial_001 record (embedding gradient norm 0.0494 vs 0.00535, and an unbounded scalar of order 1e-4 at init). It is weaker now because it compounds two sub-changes in one arm at the same cost as one trial, and a second table roughly doubles the 27.3M embedding parameters on a one-epoch budget. It becomes the right arm only if the cross branch also fails while its identity path shows the shared table was not the problem."
+            },
+            {
+              "direction": "Keep the trunk untouched and instead append NFM-style bi-interaction pooling of the field products to the trunk input.",
+              "mechanism": "Pool sum_{i<j} e_i elementwise-multiplied e_j into a 16-dimensional vector, concatenate it to the 442-dimensional trunk input, and let the existing MLP map it, so the interaction enters as representation rather than as a logit-level scalar.",
+              "reason": "It also fixes the parent's logit-scale problem and is a complementary parameterization, but it changes the trunk's first-layer width (442 to 458), so the retained branch would be adapted rather than kept and the added mechanism would be entangled with the trunk's re-fit; it also caps the interaction at a fixed 16-dimensional pooled vector instead of coordinate-specific multiplicative crosses, so it has strictly less capacity per added parameter."
+            },
+            {
+              "direction": "Change only the optimization trajectory: lr 0.002 to 0.004, or a warmup-cosine schedule over the same 4,477 steps, with the baseline network and loss unchanged.",
+              "mechanism": "Alter the learning-rate path while holding the model, loss, sampler and update count fixed, so the change is confined to the optimizer axis the host owns.",
+              "reason": "This is the cheapest competing hypothesis and learning_rate_schedule is marked ready, and the baseline's single-pass under-fitting (recorded last training loss 0.4543507 vs its own validation 0.4453364) is a weak pointer toward it. It is weaker than the cross branch now because the available training evidence is one last-minibatch loss per run, and a single 8,192-row minibatch carries roughly +/-0.004 sampling noise, so the record cannot distinguish a premature plateau from batch variance; it is also not tied to any measured residual slice and does not test interaction capacity, the only axis the one completed trial actually probed."
+            }
+          ],
+          "change_factors": [
+            "cross_interaction_branch added to the prediction path (CTRModel.cross_representation; x_{l+1} = x_l + x0*(W_l x_l + b_l), 2 layers, 391,612 parameters)",
+            "joint_head_fusion replacing the trunk's scalar projection (CTRModel.fuse_logits over [x_L ; h])",
+            "fm_second_order_branch removed from the evaluated path (CTRModel.fm_logit)",
+            "additive_logit_fusion removed from the evaluated path"
+          ],
+          "comparison": "Protocol frozen exactly as the host states it (unit = impression, original-order 80/10/10 split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss over 4,584,062 validation impressions). Control 1: the untracked baseline embedding-MLP, baseline.metrics logloss 0.4453364 / AUC 0.8049365. Control 2 (same inputs, same shared table, same budget, nearest arm): trial_001, logloss 0.44840364 / AUC 0.8018535, whose only added term was a pairwise scalar fused additively into the logit; the candidate differs from Control 2 by swapping that branch and fusion for two explicit cross layers plus a joint head. Matched-capacity honesty: the cross path plus head add 2*(442*442+442) + 507 = 392,119 parameters minus the removed 65-parameter trunk projection (net about +392,054, roughly +1.4% over the baseline's 27,328,001); all of it sits in the new branch and the head, none of it enlarges the embedding table, so this is approximately, not exactly, capacity matched. This is a compound experiment: the interaction branch and the fusion path change together, so a whole-recipe result cannot be assigned to either component. Follow-ups the remaining budget cannot fund are named rather than claimed: num_cross_layers=0 at the fixed head gives a wide-linear-plus-deep control, and a strictly capacity-matched head would isolate the +1.4%.",
+          "data_rationale": "Inputs are exactly the fields the baseline and trial_001 already consume: I1..I13 (signed-log1p standardized values plus their missing indicators, forming the 26-wide dense block) and C1..C26 (field-specific hash buckets, zero marks missing). The cross layers are deterministic functions of the same pooled vector, so no sequence, target-item, timestamp, propensity, exposure, cost or decision-rule field is required, and the pre-decision boundary and leakage surface are unchanged. No joint pair support is needed because each cross is gated by that row's own x0 coordinates, so no new field coverage is demanded.",
+          "direction": "Replace trial_001's logit-level pairwise scalar with one explicit bounded-degree cross branch on the same pooled [dense(26) ; flattened-embedding(416)] vector, and read that branch out through a learned joint head over [cross ; deep] instead of an unweighted scalar addition. This is the repaired version of the rejected draft and keeps its single mechanism; only the retain bookkeeping and the response syntax are fixed.",
+          "evidence_ids": [
+            "baseline.metrics",
+            "trial_001.metrics",
+            "dataset.train"
+          ],
+          "expected_result": "If the explicit cross mechanism carries signal beyond the deep trunk, the candidate's validation binary logloss will fall below the baseline 0.4453364 (lower is better) and the arm will also beat Control 2's 0.44840364, with AUC at or above about 0.8049365 and finite [B] CUDA logits for every row. Effect sizes in this family are small, so a few ten-thousandths below baseline is the realistic target; this is an exploratory validation hypothesis only and no improvement is claimed before the host evaluates it. AUC, Brier and the calibration bins are read only after the primary metric.",
+          "falsification": "Reject the cross-branch hypothesis if the candidate's validation logloss is not below the baseline 0.4453364 (equal or worse) under the identical split, batch size, epoch count and optimizer budget; if AUC falls materially below the baseline 0.8049365; or if the cross branch contributes no input-dependent variation, observed as x_L being numerically indistinguishable from x0 row by row (cross transforms at zero), which would mean the new term does not reach the evaluated score with any variation. A result that merely matches the trial_001 arm (0.44840364) is also a failure of the fusion argument. I pre-declare the confound: if the first-batch embedding.weight gradient norm stays near trial_001's ~0.0494 instead of returning toward the baseline's ~0.0054, the cross branch is reproducing the parent's shared-table cross-talk and the sharing decision, not the interaction form, is implicated. Because branch and head move together, any positive result is a compound-candidate result and component attribution stays unverified until the host change audit and the deferred cross-off ablation run.",
+          "family_id": "feature_interactions",
+          "input_fields": [
+            "I1",
+            "I2",
+            "I3",
+            "I4",
+            "I5",
+            "I6",
+            "I7",
+            "I8",
+            "I9",
+            "I10",
+            "I11",
+            "I12",
+            "I13",
+            "C1",
+            "C2",
+            "C3",
+            "C4",
+            "C5",
+            "C6",
+            "C7",
+            "C8",
+            "C9",
+            "C10",
+            "C11",
+            "C12",
+            "C13",
+            "C14",
+            "C15",
+            "C16",
+            "C17",
+            "C18",
+            "C19",
+            "C20",
+            "C21",
+            "C22",
+            "C23",
+            "C24",
+            "C25",
+            "C26"
+          ],
+          "mechanism": "Parent (trial_001) score function, read from the executed source: E = embedding(categorical + offsets) in [B,26,16]; x0 = concat(dense(26), flatten(E)(416)) in [B,442]; h = Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout in [B,64]; deep_logit = Linear(64,1)(h) in [B]; pairwise = 0.5*((sum_f e_f)^2 - sum_f e_f^2) summed over the 16 coordinates in [B]; logit = deep_logit + pairwise. Candidate score function: the same embedding table, the same offsets buffer and the same trunk hidden layers, but the trunk returns h in [B,64] (its terminal Linear(64,1) is removed) and the interaction term becomes the vector recurrence x_{l+1} = x_l + x0 * (W_l x_l + b_l), l in {0,1}, W_l in R^{442x442}, so logit = w^T [x_L ; h] + b with x_L in [B,442]. The new input-dependent term that actually reaches the metric-driving score is x0 * (W_l x_l + b_l): every coordinate of the raw pooled input multiplicatively gates a learned linear function of the whole pooled state, forming bounded-degree crosses over concrete pre-decision coordinates, and the recurrence's identity path keeps x0 visible to the head as a direct linear (wide) map of the pooled input that the baseline's ReLU-gated first layer does not supply. The parent's parameterless pairwise scalar and its unweighted addition are removed from the evaluated path. Loss, sampler, optimizer, update count, split, unit and metric are unchanged, and the returned value stays one unbounded logit with no sigmoid.",
+          "model_design": {
+            "backbone": "One shared field-specific categorical embedding table (26 fields x 65,536 buckets x 16 dims) producing x0 = concat(dense(26), flatten(E)(416)) in [B,442], feeding two parallel branches inside CTRModel: the retained deep trunk (442-128-64, ReLU plus dropout 0.1) and two explicit cross layers on the same x0; one joint Linear head over [x_L(442) ; h(64)] emits the logit. Config keys: embedding_dim, hidden_dims, dropout, num_cross_layers. The parent's parameterless pairwise scalar and its unweighted additive fusion are removed from the evaluated path.",
+            "backbone_id": "field_embedding_shared_branch_v1",
+            "change_scope": "local",
+            "comparison_plan": "Protocol frozen: unit = impression, original-order 80/10/10 split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss on 4,584,062 validation impressions. Arm A: this candidate (deep trunk + 2 cross layers + joint head). Control 1: the untracked baseline embedding-MLP (0.4453364). Control 2: trial_001, same inputs, same shared table and same budget with a logit-level pairwise scalar instead of the cross branch (0.44840364), which discriminates interaction form and fusion path at equal inputs and budget. Declared follow-ups the remaining budget cannot fund: cross-off ablation (num_cross_layers=0 keeps the identity path x_L = x0 and yields a wide-linear-plus-deep control), a strictly capacity-matched head, and an independent cross-branch table if the shared-table cross-talk reading survives. Whole-recipe results are reported separately from component-level conclusions; component attribution stays unverified until the host audit runs.",
+            "components": [
+              {
+                "code_sections": [
+                  "CTRModel.__init__",
+                  "CTRModel.embed_fields"
+                ],
+                "id": "field_embedding_table",
+                "input_fields": [
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.embedding",
+                "mechanism": "One shared field-specific embedding table with row index field_index * 65536 + bucket, initialized N(0, 0.01), supplying the [B,26,16] field vectors read by both branches (identical to the baseline table).",
+                "output_contract": "float32 [B,26,16], unbounded, no mask",
+                "required_capabilities": [
+                  "tabular_features"
+                ]
+              },
+              {
+                "code_sections": [
+                  "CTRModel.forward",
+                  "CTRModel.deep_representation"
+                ],
+                "id": "deep_pooled_branch",
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.trunk",
+                "mechanism": "Retained trunk over the pooled input: Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout emitting h in [B,64]; the parent's terminal Linear(64,1) projection is removed because the joint head now performs the readout. Hidden widths, activations and dropout are unchanged.",
+                "output_contract": "float32 [B,64], unbounded, no mask",
+                "required_capabilities": [
+                  "tabular_features",
+                  "observed_outcome_labels"
+                ]
+              },
+              {
+                "code_sections": [
+                  "CTRModel.forward",
+                  "CTRModel.cross_representation",
+                  "CrossLayer.forward"
+                ],
+                "id": "cross_interaction_branch",
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.cross_layers",
+                "mechanism": "Two explicit cross layers on the same pooled x0: x_{l+1} = x_l + x0 * (W_l x_l + b_l) with W_l in R^{442x442}; every coordinate of x0 multiplicatively gates a learned linear function of the full pooled state, giving degree-bounded crosses while the identity path keeps x0 visible to the head. 2*(442*442+442) = 391,612 parameters, independent of the trunk and of the embedding table.",
+                "output_contract": "float32 [B,442], unbounded, no mask",
+                "required_capabilities": [
+                  "tabular_features",
+                  "observed_outcome_labels"
+                ]
+              },
+              {
+                "code_sections": [
+                  "CTRModel.forward",
+                  "CTRModel.fuse_logits"
+                ],
+                "id": "joint_head_fusion",
+                "input_fields": [
+                  "I1",
+                  "I2",
+                  "I3",
+                  "I4",
+                  "I5",
+                  "I6",
+                  "I7",
+                  "I8",
+                  "I9",
+                  "I10",
+                  "I11",
+                  "I12",
+                  "I13",
+                  "C1",
+                  "C2",
+                  "C3",
+                  "C4",
+                  "C5",
+                  "C6",
+                  "C7",
+                  "C8",
+                  "C9",
+                  "C10",
+                  "C11",
+                  "C12",
+                  "C13",
+                  "C14",
+                  "C15",
+                  "C16",
+                  "C17",
+                  "C18",
+                  "C19",
+                  "C20",
+                  "C21",
+                  "C22",
+                  "C23",
+                  "C24",
+                  "C25",
+                  "C26"
+                ],
+                "instance_path": "CTRModel.head",
+                "mechanism": "Single Linear head over the concatenation [x_L(442) ; h(64)] producing the one logit returned to the host (no sigmoid); it replaces the parent's unweighted scalar addition and learns the relative scale of the cross and deep representations.",
+                "output_contract": "float32 [B], unbounded logit, no mask",
+                "required_capabilities": [
+                  "tabular_features",
+                  "observed_outcome_labels"
+                ]
+              }
+            ],
+            "data_fit": "Uses only the pre-decision fields already in the schema: I1..I13 with their missing indicators (26-wide dense block) and C1..C26 with field-specific hash buckets where 0 marks missing. The cross layers consume the same pooled vector the parent trunk consumed, need no timestamps, sequences, target items, exposure propensities or per-pair joint support, and introduce no new leakage boundary.",
+            "estimator": "Pointwise binary logit trained by the host's BCE over impression units; the evaluated score remains the single logit returned at the end of CTRModel.forward, and no sampling, thresholding, calibration map or decision rule is introduced.",
+            "estimator_id": "pointwise_logit_v1",
+            "horizontal_expansion": {
+              "comparison_plan": "All arms share the frozen host protocol (unit = impression, original-order 80/10/10 split, batch 8192, 1 epoch, lr 2e-3, weight_decay 1e-6, metric binary logloss). Arm A = this candidate (deep + cross + joint head). Control 1 = untracked baseline pooled deep MLP (0.4453364). Control 2 = trial_001, same inputs, same shared table and same budget with a logit-level pairwise scalar instead of the cross branch (0.44840364), which discriminates interaction form and fusion path at equal inputs. Within-group discrimination: num_cross_layers=0 keeps x_L = x0 and turns the candidate into a wide-linear-plus-deep control that separates the cross recurrences from the joint head, and a strictly capacity-matched head would isolate the +1.4% parameters; both are named follow-ups since only one evaluation remains. Because removing the cross branch and retraining shared embeddings would re-fit the trunk, any branch effect is reported as group-level, not as an isolated causal effect of one branch.",
+              "decision": "expand",
+              "groups": [
+                {
+                  "branch_ids": [
+                    "deep_pooled_branch",
+                    "cross_interaction_branch"
+                  ],
+                  "fusion_id": "joint_head_fusion",
+                  "id": "interaction_group",
+                  "parameter_sharing": [
+                    {
+                      "code_sections": [
+                        "CTRModel.embedding",
+                        "CTRModel.embed_fields",
+                        "CTRModel.pooled_input"
+                      ],
+                      "component_ids": [
+                        "deep_pooled_branch",
+                        "cross_interaction_branch"
+                      ],
+                      "rationale": "Both branches read the same field-specific embedding table and the same pooled vector produced by embed_fields, so the cross factors are tied to the factors the trunk uses. The cross matrices (CTRModel.cross_layers) and the trunk's hidden layers (CTRModel.trunk) are separate modules and are explicitly not tied; the only declared sharing is the embedding table reached through the two distinct instance paths. Sharing is declared rather than proven, and whether joint training damages the shared table, as the trial_001 gradient record hints, is exactly what the runtime embedding-gradient norm and, later, an independent-table arm must check."
+                    }
+                  ]
+                }
+              ],
+              "rationale": "The pooled input supports two genuinely different computations on the same typed fields: an implicit deep trunk that must absorb all cross-coordinate structure inside one 442x128 layer, and an explicit multiplicative cross path that forms degree-bounded crosses gated by the original pooled input. The parent trial registered a parallel group whose second branch was a single pairwise scalar fused additively into the logit and that arm lost to the baseline; this recipe keeps the group structure but replaces the failing branch and its fusion, so the group decision remains expand rather than a silent single-branch fallback. No new input stream, timestamp, sequence, entity or business segment is invented: both branches read exactly the same pooled vector built from I1..I13 and C1..C26, and the numeric/categorical groups are typed views, not semantic entities."
+            },
+            "inheritance": [
+              {
+                "compatibility": "Same schema contract (26 fields, 65,536 buckets, 16 dims) and the same [B,26,16] output as the parent and the baseline; CTRModel.__init__ and CTRModel.embed_fields keep their roles.",
+                "component_id": "field_embedding_table",
+                "decision": "retain",
+                "reason": "Identical table, offsets buffer and initialization; both new branches read it through the same pooled input, and it is 99.8% of the parameter budget, so keeping it holds the embedding-capacity axis fixed and keeps the comparison single-axis.",
+                "source_trial_id": "trial_001",
+                "target_component_id": "field_embedding_table",
+                "validation_plan": "Parameter count and embedding.weight first-batch gradient norm are read from the host runtime record; a return toward the baseline's ~0.0054 level instead of trial_001's ~0.0494 would support the shared-table cross-talk reading rather than prove it."
+              },
+              {
+                "compatibility": "The module now returns h in [B,64] instead of a scalar; the joint head accepts 442+64=506 inputs, and every input row still reaches exactly one logit.",
+                "component_id": "deep_pooled_branch",
+                "decision": "adapt",
+                "reason": "Layers Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout are kept unchanged; only the terminal Linear(64,1) is removed because fusion now happens in the joint head. No hidden width, dropout rate or activation changes, so the retained representation is preserved and the changed factor stays local to the readout path.",
+                "source_trial_id": "trial_001",
+                "target_component_id": "deep_pooled_branch",
+                "validation_plan": "Confirm the host implementation check reports one model, full row coverage and finite [B] CUDA logits; a cross-off run (num_cross_layers=0) would restore this branch as a linear-plus-deep control if a later budget allows."
+              },
+              {
+                "compatibility": "Not applicable; the term is removed from the evaluated path entirely rather than rescaled or retrained, and no other component consumed its output.",
+                "component_id": "fm_second_order_branch",
+                "decision": "drop",
+                "reason": "The only measured arm containing it scored 0.44840364 versus the baseline 0.4453364, with a paired candidate-minus-baseline mean of +0.003067 and interval [0.002949, 0.003185], and AUC 0.8018535 versus 0.8049365. Its attribution is unverified, so this is a drop to free the readout path, not a claim that the pairwise mechanism is harmful in general.",
+                "source_trial_id": "trial_001",
+                "validation_plan": "Left as a resumable hypothesis: if the cross branch also fails, the pairwise term can be retested as its own single-mechanism arm with an independent embedding table and a bounded scale."
+              },
+              {
+                "compatibility": "Inputs become two vectors ([B,442] and [B,64]) instead of two scalars; the output contract is unchanged, a single unbounded [B] logit with no sigmoid.",
+                "component_id": "additive_logit_fusion",
+                "decision": "adapt",
+                "reason": "The fusion role (produce the single logit from the branch outputs) is retained, but its form changes from unweighted deep_logit + scalar to a learned Linear head over the concatenated representations, because the parent's unweighted addition had no relative scale and was joint with the failing scalar.",
+                "source_trial_id": "trial_001",
+                "target_component_id": "joint_head_fusion",
+                "validation_plan": "A fusion ablation (cross-off at the fixed head) would separate the head's role from the cross branch's role; it is named as a follow-up because the remaining budget funds one evaluation."
+              }
+            ],
+            "parent_trial_id": "trial_001",
+            "rationale": "The parent recipe registered the untracked baseline trunk plus one logit-level pairwise term and one additive fusion, and the host measured that whole recipe as worse than baseline (0.44840364 vs 0.4453364). This local edit keeps the parent's identity and its two working pieces (the shared embedding table and the deep trunk's hidden layers) and replaces only the failed readout: explicit degree-bounded crosses that multiplicatively gate x0 instead of one scalar added to the logit, combined through one learned head instead of unweighted addition. Loss, optimizer, schedule, split, unit and metric are untouched, so comparison against both the baseline and the trial_001 arm stays inside one protocol. The interaction form and the fusion path move together, so this is declared a compound experiment and any gain must not be assigned to a single component before the host change audit and the deferred cross-off ablation run."
+          },
+          "why_now": "Observed baseline (baseline.metrics): validation binary logloss 0.4453364, AUC 0.8049365, Brier 0.1440832 over 4,584,062 held-out impressions, mean prediction 0.2646 vs observed CTR 0.2538, with bins 0-2 over-predicted (0.0541 vs 0.0452, 0.1474 vs 0.1304, 0.2472 vs 0.2313). Observed trial_001 (trial_001.metrics): the same-input arm that added a parameterless pairwise scalar directly to the logit scored 0.44840364 with paired candidate-minus-baseline mean +0.003067 and interval [0.002949, 0.003185] (negative favors the candidate), AUC 0.8018535, and its runtime record shows embedding.weight first-batch gradient norm 0.0494 versus 0.00535 for the identical baseline run, i.e. about a 9x larger early gradient into the 99.8%-of-parameters shared table while the trunk's own gradients were essentially unchanged. Scale arithmetic explains that signature: with embedding std 0.01 the parent's pairwise scalar is of order 1e-4, far too small to move a 0.445 logloss directly, so it could only act by perturbing the shared factors - a statement about that specific interaction-plus-fusion form, not evidence that the data lack interaction structure. The baseline also shows single-pass under-fitting (recorded last training loss 0.4543507 above its own validation 0.4453364 over 4,477 steps), consistent with the pooled 442x128 first layer being the only place cross-coordinate structure can be formed. Honest limit: no slice-level residual isolating missing higher-order crosses has been measured, so the bottleneck evidence is partial and the comparison below is the test."
+        }
+      },
+      "reflection": {
+        "business_experience": {
+          "reason": "Anonymous CTR features have no observable business semantics",
+          "status": "not_observable"
+        },
+        "technical_experience": {
+          "attribution": "unverified",
+          "component_assessments": [
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Field-specific hash buckets with zero as missing and no sequence semantics. The table is shared by two branches, so joint training can change the same factors that both branches read; 16 dimensions may be capacity-limited for one-epoch interaction learning. The executed run provides no independent-table control.",
+              "component_id": "field_embedding_table",
+              "evidence": "Retained shared field-specific embedding table: 26 fields x 65,536 buckets x 16 dims, row index field_index*buckets+bucket, N(0,0.01), feeding both the retained trunk and the new cross branch. Runtime parameter count is 27,720,055 and embedding.weight first-batch gradient norm is 0.054613955318927765. The whole trial_002 recipe improved over baseline, but this table is unchanged from the parent and is shared by both branches, so no isolated effect of the table was measured. The change audit is unverified.",
+              "next_test": "Hold the protocol fixed and compare the shared table against an independent cross-branch embedding table, or run an embedding-dimension ablation, while logging embedding.weight gradient norms and row coverage to test whether sharing or capacity is the limiting factor.",
+              "outcome": "inconclusive"
+            },
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Consumes the pooled [dense(26);flattened embeddings(416)] vector; all cross-coordinate structure must still pass through the deep layers or the new cross path. Single-epoch under-fitting is plausible, and there is no deep-ablated or cross-off control in the executed evidence.",
+              "component_id": "deep_pooled_branch",
+              "evidence": "Retained trunk hidden layers Linear(442,128)-ReLU-Dropout-Linear(128,64)-ReLU-Dropout now emit h in [B,64]; the parent terminal Linear(64,1) was removed because the joint head performs readout. Runtime shows trunk.0.weight gradient norm 0.017713584005832672, trunk.3.weight 0.01799495704472065, and 27,720,055 total parameters. The candidate improved over baseline, but this branch was adapted and was not isolated from the cross branch or joint head, so the whole-model gain does not establish its contribution.",
+              "next_test": "Compare num_cross_layers=0 (trunk plus identity path and joint head) against the full candidate under the same protocol, and optionally run a deep-ablated arm at the fixed head to separate the trunk's contribution from the cross branch.",
+              "outcome": "inconclusive"
+            },
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Each cross layer adds a 442x442 matrix (~195k parameters per layer); x0 multiplication is unbounded and may have scale/preconditioning issues. It shares the embedding table with the trunk and consumes anonymous fields, so semantic validation of which crosses matter is not possible. No cross-off ablation or independent-table test was executed.",
+              "component_id": "cross_interaction_branch",
+              "evidence": "New branch: two cross layers x_{l+1} = x_l + x0 * (W_l x_l + b_l), W_l in R^{442x442}; runtime gradients are cross_layers.0.transform.weight 0.0379936583340168 and cross_layers.1.transform.weight 0.03804163634777069. The candidate containing this branch scored logloss 0.4414511548414842 vs baseline 0.4453363541595976, paired candidate-minus-baseline mean -0.003885199318113414 with 95% interval [-0.003976100401747975, -0.0037942982344788523], and AUC 0.808926176381844 vs 0.8049364964027197. This is exploratory and joint with the new joint head and the removal of the FM/additive path, so the gain is not isolated to this branch.",
+              "next_test": "Run num_cross_layers=0 at the fixed joint head under the identical protocol; if cross-off degrades, run a capacity-matched cross/head arm and an independent cross-branch embedding table. Log x_L vs x0 and per-layer transform output norms to verify input-dependent variation.",
+              "outcome": "promising"
+            },
+            {
+              "attribution": "unverified",
+              "compatibility_limits": "Concatenation fusion assumes the cross representation and deep representation are compatible in scale/units; there is no gate or normalization. It cannot be isolated from the cross branch in the executed trial, and the removed additive path is confounded with the removed FM scalar.",
+              "component_id": "joint_head_fusion",
+              "evidence": "Single learned Linear head over the concatenation [x_L(442);h(64)] returns one unbounded logit, replacing trial_001's unweighted deep_logit + pairwise fusion. Runtime gradients are head.weight 0.3683241307735443 and head.bias 0.24548979103565216. The whole recipe improved relative to baseline and trial_001, but the joint head and the cross branch changed together, no fusion ablation was run, and the change audit is unverified. The parent's additive logit fusion failed, but that does not establish this learned head as the cause of the improvement.",
+              "next_test": "Compare the joint head against cross-only and deep-only readouts at fixed branch outputs, and against a capacity-matched fusion head, under the same seed, split, batch size, epoch, optimizer and metric. Log relative contribution of x_L and h to the head pre-activation.",
+              "outcome": "inconclusive"
+            }
+          ],
+          "evidence": "Observed host evidence: baseline.metrics on 4,584,062 validation impressions: logloss 0.4453363541595976, AUC 0.8049364964027197, Brier 0.1440832074333245, mean prediction 0.26459780119391824 vs observed CTR 0.2537528942671369. trial_002.metrics: logloss 0.4414511548414842, AUC 0.808926176381844, Brier 0.14276163877565595, mean prediction 0.2632821529658074 vs observed CTR 0.2537528942671369; paired_vs_baseline mean -0.003885199318113414, CI [-0.003976100401747975, -0.0037942982344788523]. Runtime: device cuda NVIDIA GeForce RTX 5090, 1 epoch, 4477 steps, rows_seen 36,672,493, prediction_rows 4,584,062, seconds 20.3568, parameters 27,720,055, peak_cuda_bytes 624,142,848, last_loss 0.4476986527442932. First-batch gradient norms: embedding.weight 0.054613955318927765, cross_layers.0.transform.weight 0.0379936583340168, cross_layers.1.transform.weight 0.03804163634777069, trunk.0.weight 0.017713584005832672, trunk.3.weight 0.01799495704472065, head.weight 0.3683241307735443, head.bias 0.24548979103565216. Calibration for trial_002: bin0 predicted 0.05198022794796837 vs observed 0.047029372807276044; bin9 predicted 0.9386552206574788 vs observed 0.9298251687727194. Baseline calibration: bin0 predicted 0.05410827736707471 vs observed 0.045176259504105504; bin9 predicted 0.9404279846674529 vs observed 0.9385443743037505. The executed candidate is a compound of: cross_interaction_branch added, joint_head_fusion added, fm_second_order_branch removed, additive_logit_fusion removed, and deep_pooled_branch adapted by deleting its terminal Linear(64,1). change_audit status is unverified.",
+          "implementation_status": "unverified",
+          "lesson": "trial_002 is a local edit of trial_001: the parameterless pairwise scalar and unweighted additive logit fusion were removed, and two explicit cross layers over the same pooled [dense(26);flattened field embeddings(416)] vector plus a learned joint head over [cross;deep] were added. The whole recipe improved over the baseline: validation binary logloss 0.4414511548414842 vs baseline 0.4453363541595976, paired candidate-minus-baseline mean -0.003885199318113414 (95% interval [-0.003976100401747975, -0.0037942982344788523], negative favors candidate), AUC 0.808926176381844 vs 0.8049364964027197, and Brier 0.14276163877565595 vs 0.1440832074333245. It also beat the parent trial_001 arm at 0.44840364133096877. However, the cross branch and the joint head changed together, and trial_001's FM branch and additive fusion were also removed, so the executed result supports the whole candidate only and does not establish that the cross mechanism caused the gain. CUDA execution, full row coverage, finite gradients and the small parameter increase do not prove the proposed interaction mechanism. trial_001's failure cannot itself make the FM branch or additive fusion harmful; it only justified replacing that readout form.",
+          "next_test": "Run the pre-declared discriminating ablation num_cross_layers=0 with the same joint head, seed, split, batch size, epoch count, optimizer and metric. If cross-off reproduces or beats 0.4414511548414842, the cross recurrences are not supported as the gain source; if cross-off degrades toward the baseline or trial_001, the cross branch is implicated and the next step is a strictly capacity-matched cross/head arm plus an independent cross-branch embedding table to separate sharing from mechanism. Also log x_L vs x0 and the cross transform outputs to verify input-dependent variation rather than near-identity behavior.",
+          "uncertainty": "The executed trial is a joint local edit, so component-level attribution is unverified. The only frozen control for the new arm is the untracked baseline; the same-code cross-off control (num_cross_layers=0 at the fixed head) and a strictly capacity-matched head control were pre-declared but not run. The shared embedding table means gradients from the trunk and the cross branch can alter the same field factors, so branch effects are entangled with representation sharing. The parameter count increased by about 392,054 (~1.4% over baseline), so this is approximately, not exactly, capacity matched. Single epoch, single seed, original-order 80/10/10 split not verified chronological, anonymous field semantics, and one last-minibatch training loss per run further limit interpretation. The prior trial_001 failure with the FM scalar cannot establish that the FM mechanism is generally harmful."
+        },
+        "type": "json_object"
+      },
+      "status": "evaluated"
+    }
+  ]
+}
