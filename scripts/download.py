@@ -17,7 +17,9 @@ def main():
     args = parser.parse_args()
     args.directory.mkdir(parents=True, exist_ok=True)
     archive = args.directory.resolve() / 'dac.tar.gz'
-    if shutil.which('aria2c'):
+    if archive.exists() and archive.stat().st_size == SIZE and not archive.with_suffix('.gz.aria2').exists():
+        pass  # Reuse only after the checksum verification below.
+    elif shutil.which('aria2c'):
         subprocess.run(['aria2c', '-x', '16', '-s', '16', '-k', '4M', '--file-allocation=none',
             '--continue=true', '-d', str(archive.parent), '-o', archive.name, URL], check=True)
     else:
