@@ -64,3 +64,19 @@ class AdapterTests(unittest.TestCase):
             task.batch_size = 1
             with self.assertRaisesRegex(ValueError, 'protocol'):
                 task.finalize(root / 'run')
+
+    def test_repair_preserves_prior_errors_and_last_parseable_proposal(self):
+        class Agent(CTRAgent):
+            def _complete(self, instructions, context, effort):
+                self.seen.append(copy.deepcopy(context))
+                if len(self.seen) == 1:
+                    return {'action': 'experiment', 'candidate': {'source': 'bad'}}
+                if len(self.seen) == 2:
+                    raise ValueError('invalid final JSON')
+                return {'action': 'stop', 'reason': 'Interface test'}
+        agent = Agent('https://example.test', 'private', 'model')
+        agent.seen = []
+        agent.propose({'task': {'framework': 'pytorch', 'max_epochs': 1},
+                       'catalog': load_catalog(), 'steps': [], 'composition_sources': []})
+        self.assertEqual(len(agent.seen[2]['proposal_errors']), 2)
+        self.assertEqual(agent.seen[2]['rejected_proposal']['candidate']['source'], 'bad')

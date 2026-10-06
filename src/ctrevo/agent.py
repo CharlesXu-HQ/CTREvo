@@ -31,7 +31,14 @@ not merely select a named model. Prefer one informative change with a viable bud
 Research requires nonempty direction, mechanism, why_now, data_rationale, comparison, expected_result,
 falsification; input_fields uses ORIGINAL I1..I13/C1..C26 names; alternatives is nonempty list of
 {direction,mechanism,reason}; cite observed evidence_ids and list change_factors. Include model_design
-and horizontal_expansion per the composition instructions. First tracked design is initialize;
+and horizontal_expansion per the composition instructions. Exact formatting matters:
+EVERY component.output_contract must be a STRING, e.g. "float32 [B,16], unbounded, no mask".
+For EVERY branch and fusion listed in horizontal_expansion.groups, component.code_sections
+must include an ACTUAL forward/call entry point, e.g. ["CTRModel.forward", "CTRModel.fm_logit"].
+A helper name such as CTRModel.fm_logit alone is insufficient. Also provide instance_path
+as a nonempty string. Keep these invariants in every repair; do not convert strings to objects.
+Return exactly one JSON object without trailing prose or a second JSON object.
+First tracked design is initialize;
 later local changes name a real prior trial and account for EVERY parent component.
 Anonymous inputs have no known user/item/sequence semantics. Do not invent business segments,
 timestamps or a reason to apply DIN. Numeric/categorical groups are typed views, not business entities.
@@ -98,6 +105,7 @@ class CTRAgent(OpenAICompatibleAgent):
     def propose(self, context):
         current = dict(context)
         ledger = {}
+        errors = []
         for attempt in range(3):
             answer = None
             try:
@@ -118,7 +126,14 @@ class CTRAgent(OpenAICompatibleAgent):
             except (ValueError, SyntaxError) as error:
                 if attempt == 2:
                     raise
-                current.update(proposal_error=str(error)[:2000], rejected_proposal=answer)
+                errors.append(str(error)[:2000])
+                current.update(proposal_error=errors[-1], proposal_errors=errors.copy())
+                if answer is not None:
+                    current['rejected_proposal'] = answer
+                if self.logs:
+                    self.logs.mkdir(parents=True, exist_ok=True)
+                    with (self.logs / 'validation-errors.jsonl').open('a') as stream:
+                        stream.write(json.dumps({'attempt': attempt + 1, 'error': errors[-1]}) + '\n')
 
     def reflect(self, observation):
         current = dict(observation)
