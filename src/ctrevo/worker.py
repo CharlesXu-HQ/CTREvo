@@ -1,6 +1,7 @@
 """Trusted GPU training protocol. Evaluation labels are never mounted here."""
 
 import importlib.util
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -8,6 +9,8 @@ from pathlib import Path
 import numpy as np
 import torch
 from torch import nn
+
+from .audit import ComponentProbe
 
 
 def batches(folder, size, *, rng=None, labels=False):
@@ -52,6 +55,7 @@ def main():
     start = time.monotonic()
     rows_seen, steps, last_loss = 0, 0, None
     gradient_norms = {}
+    probe = None if job['checkpoint'] else ComponentProbe(model, job.get('components', []), candidate=candidate)
     if job['checkpoint']:
         model.load_state_dict(torch.load('/checkpoint/weights.pt', map_location='cuda', weights_only=True))
     else:
@@ -75,6 +79,10 @@ def main():
                         raise ValueError('model has no nonzero gradient')
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 10.0, error_if_nonfinite=True)
                 optimizer.step()
+                if steps < 3:
+                    probe.after_step()
+                    if steps == 2:
+                        probe.close()
                 rows_seen += len(x)
                 steps += 1
                 last_loss = float(loss.detach())
@@ -82,6 +90,7 @@ def main():
                     print(json.dumps({'epoch': epoch + 1, 'rows_seen': rows_seen,
                                       'loss': last_loss, 'seconds': time.monotonic() - start}), flush=True)
         torch.save(model.state_dict(), '/output/weights.pt')
+        probe.close()
     model.eval()
     rows = len(np.load('/target/dense.npy', mmap_mode='r'))
     prediction = np.lib.format.open_memmap('/output/prediction.npy', mode='w+', dtype='float32', shape=(rows,))
@@ -94,6 +103,9 @@ def main():
         'seconds': time.monotonic() - start, 'peak_cuda_bytes': torch.cuda.max_memory_allocated(),
         'parameters': sum(p.numel() for p in model.parameters()), 'config': job['config'],
         'first_batch_gradient_norms': gradient_norms,
+        'implementation_probe': ({**probe.result(),
+            'source_sha256': hashlib.sha256(Path('/input/candidate.py').read_bytes()).hexdigest(),
+            'training_loss': getattr(loss_fn, '__name__', type(loss_fn).__name__)} if probe else {}),
         'modules': [{'path': name, 'class': type(module).__name__} for name, module in model.named_modules()]}
     Path('/output/runtime.json').write_text(json.dumps(runtime, indent=2, allow_nan=False))
 

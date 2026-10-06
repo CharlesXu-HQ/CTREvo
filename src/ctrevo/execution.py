@@ -66,7 +66,7 @@ def docker_command(*, image, task_dir, trial, source, models, venv, split, check
 
 
 def execute(candidate, data, trial, *, image, venv, max_epochs, batch_size, seed,
-            timeout=3600, split='validation', checkpoint=None):
+            timeout=3600, split='validation', checkpoint=None, components=None):
     from .data import load_manifest
     config = validate_candidate(candidate, max_epochs=max_epochs)
     trial, data = Path(trial).resolve(), Path(data).resolve()
@@ -79,7 +79,9 @@ def execute(candidate, data, trial, *, image, venv, max_epochs, batch_size, seed
     (trial / 'input/job.json').write_text(json.dumps({'schema': {
         k: manifest[k] for k in ('dense_width', 'categorical_width', 'buckets')},
         'config': config, 'batch_size': batch_size, 'seed': seed,
-        'checkpoint': checkpoint is not None}))
+        'checkpoint': checkpoint is not None,
+        'components': [{key: item.get(key) for key in ('id', 'instance_path')}
+                       for item in (components or [])]}))
     root = Path(__file__).resolve().parents[2]
     with tempfile.TemporaryDirectory(prefix='ctrevo-models-') as temporary:
         models = Path(temporary)

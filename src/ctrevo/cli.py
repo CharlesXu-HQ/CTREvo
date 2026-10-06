@@ -25,6 +25,8 @@ def main():
         item.add_argument('--epochs', type=int, default=1)
         item.add_argument('--batch-size', type=int, default=8192)
         item.add_argument('--trial-timeout', type=int, default=3600)
+        item.add_argument('--require-verified-implementation', action=argparse.BooleanOptionalAction,
+                          default=True, help='Require observed component execution before promotion (default: enabled)')
         if name == 'search':
             item.add_argument('--provider-url', default='https://api.deepseek.com')
             item.add_argument('--model', default='deepseek-flash')
@@ -42,7 +44,8 @@ def main():
     from .task import CTRTask
     image = subprocess.check_output(['docker', 'image', 'inspect', '--format', '{{.Id}}', args.image], text=True).strip()
     task = CTRTask(args.data, image=image, venv=args.venv, seed=args.seed,
-        max_epochs=args.epochs, batch_size=args.batch_size, timeout=args.trial_timeout)
+        max_epochs=args.epochs, batch_size=args.batch_size, timeout=args.trial_timeout,
+        require_verified_implementation=args.require_verified_implementation)
     if args.command == 'finalize':
         print(json.dumps(task.finalize(args.output), indent=2))
         return
@@ -52,7 +55,8 @@ def main():
         thinking=args.thinking, iteration_effort='high', review_effort='max', timeout=600,
         logs=Path(args.output) / 'provider')
     state = run_search(task, agent, output=Path(args.output), catalog=load_catalog(),
-                       max_steps=args.steps, resume=args.resume)
+                       max_steps=args.steps, resume=args.resume,
+                       require_verified_implementation=task.require_verified_implementation)
     print(json.dumps({'status': state['status'], 'best_id': state['best_id'],
                       'attempts': len(state['steps'])}))
 

@@ -38,7 +38,54 @@ class AdapterTests(unittest.TestCase):
             self.assertEqual(len(snapshot['fields']), 39)
             self.assertNotIn('event_sequence', snapshot['capabilities'])
             self.assertTrue(snapshot['horizontal_expansion_required'])
+            self.assertTrue(task.require_verified_implementation)
+            self.assertTrue(snapshot['evaluation_protocol']['require_verified_implementation'])
             self.assertNotIn('test_ctr', str(snapshot))
+
+    def test_host_uses_declared_bindings_and_keeps_attribution_separate(self):
+        import hashlib
+        import numpy as np
+        from unittest.mock import patch
+        from ctrevo.data import prepare
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            raw = root / 'rows.tsv'
+            raw.write_text(('\t'.join(['0'] + ['1'] * 39) + '\n') * 20)
+            prepare(raw, root / 'data', expected_rows=20, buckets=8)
+            task = CTRTask(root / 'data', image='image', venv='/venv')
+            candidate = task.seed_candidate
+            components = [{'id': 'embedding', 'instance_path': 'CTRModel.embedding'}]
+            runtime = {'device': 'cuda', 'rows_seen': 16, 'prediction_rows': 2,
+                'implementation_probe': {'batches': 1,
+                    'optimizer_parameter_set_stable': True,
+                    'source_sha256': hashlib.sha256(candidate['source'].encode()).hexdigest(),
+                    'components': [{**components[0], 'status': 'verified'}]}}
+            with patch('ctrevo.task.execute', return_value=(np.array([.1, .1]), runtime)) as execute:
+                trial = root / 'trial_001'
+                trial.mkdir()
+                result = task.evaluate({'candidate': candidate,
+                    'research': {'model_design': {'components': components}}}, trial)
+            self.assertEqual(execute.call_args.kwargs['components'], components)
+            self.assertEqual(result['implementation_check']['status'], 'verified')
+            self.assertEqual(result['change_audit']['status'], 'unverified')
+
+    def test_finalization_refuses_unverified_selection_in_strict_mode(self):
+        import numpy as np
+        from unittest.mock import patch
+        from ctrevo.data import prepare
+        from model_evo_harness import run_search
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            raw = root / 'rows.tsv'
+            raw.write_text(('\t'.join(['0'] + ['1'] * 39) + '\n') * 20)
+            prepare(raw, root / 'data', expected_rows=20, buckets=8)
+            task = CTRTask(root / 'data', image='image', venv='/venv')
+            with patch('ctrevo.task.execute', return_value=(np.array([.1, .1]), {'device': 'cuda'})):
+                run_search(task, object(), output=root / 'run', catalog=load_catalog(), max_steps=0)
+            with patch('ctrevo.task.execute', side_effect=AssertionError('must reject before GPU work')):
+                with self.assertRaisesRegex(ValueError, 'verified implementation'):
+                    task.finalize(root / 'run')
+            self.assertFalse((root / 'run/final').exists())
 
     def test_engine_accepts_baseline_evidence_and_finalization_rejects_protocol_change(self):
         import json

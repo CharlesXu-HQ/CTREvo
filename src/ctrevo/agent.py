@@ -1,4 +1,4 @@
-"""CTR-specific provider adapter; the Harness itself remains unmodified."""
+"""CTR-specific provider adapter using the shared Harness contracts."""
 
 import json
 import time
@@ -38,6 +38,15 @@ For EVERY branch and fusion listed in horizontal_expansion.groups, component.cod
 must include an ACTUAL forward/call entry point, e.g. ["CTRModel.forward", "CTRModel.fm_logit"].
 A helper name such as CTRModel.fm_logit alone is insufficient. Also provide instance_path
 as a nonempty string. Keep these invariants in every repair; do not convert strings to objects.
+instance_path must resolve on the built model: e.g. CTRModel.embedding, CTRModel.cross_layers,
+or CTRModel.fm_logit for a bound method; use candidate.training_loss for a custom loss component.
+Register all trainable parameters in __init__, before the host constructs its optimizer.
+Host probes the first three real training batches:
+each declared component must execute and its tensor output receive finite nonzero loss gradient;
+trainable module parameters must receive finite gradients. ModuleList/ModuleDict children are
+checked individually. Unobserved paths remain unverified and cannot be promoted in strict mode.
+This verifies bounded component execution, NOT named-model mathematical equivalence, declared
+parameter sharing, exact fusion topology, or gain attribution.
 Return exactly one JSON object without trailing prose or a second JSON object.
 When composition_sources is empty: change_scope="initialize", parent_trial_id=null,
 inheritance=[]. The untracked baseline is a comparison, NOT a registered inheritance source.
@@ -60,6 +69,8 @@ business_experience:{status:'not_observable',reason:'Anonymous CTR features have
 Assess every current model_design component exactly once, including branches and fusion.
 Use actual metrics/code/runtime. CUDA execution and gradient presence do not prove a proposed mechanism
 caused improvement. Joint changes, shared-weight retraining and adaptive selection limit attribution.
+implementation_check is only a bounded execution check. Even when verified, change_audit and
+component benefit attribution remain unverified until an appropriate comparison is executed.
 Failed trials cannot establish promising/harmful component outcomes. Explain the next discriminating
 experiment within current data and budget. Preserve uncertainty and dataset-specific applicability.
 """

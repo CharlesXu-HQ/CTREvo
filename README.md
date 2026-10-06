@@ -44,7 +44,15 @@ fixed task + prior observations + Harness guidance
     → compare with hypothesis → component-level experience → next decision
 ```
 
-ModelEvoHarness is an **unmodified Git submodule** at `third_party/model-evo-harness`. Its recorded commit makes runs reproducible. Updating that dependency is an explicit project maintenance action.
+ModelEvoHarness is a Git submodule at `third_party/model-evo-harness`. Its recorded upstream commit makes runs reproducible. Updating that dependency is an explicit project maintenance action.
+
+### Implementation checks before promotion
+
+CTREvo defaults to strict promotion: a better score becomes the selected candidate only after the host verifies **bounded component execution**. The first three real training batches observe declared modules, container children, bound methods and custom `candidate.training_loss` functions. The host records output gradients and module parameter gradients, checks that the model parameter set still matches optimizer construction, and independently enforces full-data CUDA coverage. Missing paths are contradicted; unobserved paths remain unverified and available for diagnosis.
+
+This does not prove a named architecture's mathematics, declared parameter sharing, exact fusion topology, or an individual component's benefit. `change_audit` and benefit attribution remain unverified until appropriate comparisons are run. `--no-require-verified-implementation` enables exploratory score selection; use the same setting for search, resume and finalize. Policy/code changes require a new run.
+
+[Full-data GPU replay and verification coverage](docs/implementation-verification.md): the saved FM candidate remains rejected, the saved Cross candidate passes strict promotion, and the original validation scores are reproduced.
 
 ## Run
 
@@ -85,9 +93,9 @@ Use the same seed, epoch ceiling, batch size and timeout as the original run. Th
 
 ## Artifacts and trust boundary
 
-`journal.json` records proposals, reference hashes, metrics, reflections and the selected candidate. Each trial retains source, checkpoint, predictions, execution logs and GPU metadata. `final/report.json` is written by the separate final evaluation. Provider logs contain final responses and usage, not API credentials or reasoning text.
+`journal.json` records proposals, host-observed source-read/delivery events, metrics, reflections, promotion decisions and the selected candidate. Agent-supplied reference hashes cannot become official read records. Delivery means source was supplied to the completion callback, not proof of model understanding or correct reuse. Each trial retains source, checkpoint, predictions, execution logs, bounded implementation checks and GPU metadata. `final/report.json` is written by the separate final evaluation. Provider logs contain final responses and usage, not API credentials or reasoning text.
 
-Candidate containers have no network, provider key or held-out labels. They receive read-only train arrays and target **features**; scoring happens on the host. Docker isolation and source import checks reduce accidental leakage, but this is not a hardened execution service for adversarial code. Output checks and gradient diagnostics do not independently verify mechanism attribution; the current adapter marks it **unverified**.
+Candidate containers have no network, provider key or held-out labels. They receive read-only train arrays and target **features**; scoring happens on the host. Docker isolation and source import checks reduce accidental leakage, but this is not a hardened execution service for adversarial code. The scoped implementation check and the separate **unverified** benefit attribution are both exposed to the Agent. Strict finalization refuses an unverified selection before running holdout evaluation.
 
 Unit-test fixtures check contracts only. They are never benchmark results. See [experiment status](docs/experiments.md) for measured runs and remaining work.
 

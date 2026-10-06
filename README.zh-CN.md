@@ -44,7 +44,15 @@ Criteo 全量、RTX 5090、每个候选一轮完整训练：最终 MLP + Cross �
   → 对照指标与假设 → 总结组件经验 → 下一次决策
 ```
 
-Harness 通过 `third_party/model-evo-harness` Git submodule 引入，保持原仓库不变，记录具体提交用于复现。更新依赖需要单独进行。
+Harness 通过 `third_party/model-evo-harness` Git submodule 引入，记录上游具体提交用于复现。更新依赖需要单独进行。
+
+### 晋级前的实现核验
+
+CTREvo 默认启用严格晋级：候选指标更好，而且通过宿主的**有限范围组件执行核验**后，才能成为选中候选。探针观察前三个真实训练 batch，支持声明的模块、容器子模块、绑定方法和 `candidate.training_loss` 自定义损失，记录输出与模块参数的梯度，检查模型参数集合是否仍与构造优化器时一致。宿主另行确认完整训练行数和 CUDA 执行。路径不存在会被判为 contradicted；未观察到连接的组件保持 unverified，可继续诊断。
+
+这些检查不证明命名网络的数学等价性、声明的参数共享方式、精确融合拓扑或某个组件带来了收益。`change_audit` 和收益归因仍保持 unverified，直到实际完成相关对照实验。可用 `--no-require-verified-implementation` 开启探索性分数选择；search、resume、finalize 必须使用同一设置。策略或代码变化需要开启新运行。
+
+[全量 GPU 复验与核验范围](docs/implementation-verification.md)：已保存的 FM 候选仍因指标变差被拒绝，Cross 候选通过严格晋级，三组验证指标与原记录一致。
 
 ## 运行
 
@@ -83,9 +91,9 @@ seed、epoch 上限、batch size 和超时必须与原运行一致。脚本把�
 
 ## 结果与边界
 
-`journal.json` 保存提案、参考源码哈希、指标、反思和最优候选。每个 trial 保留实际源码、checkpoint、预测、运行日志和 GPU 元数据。最终测试写入 `final/report.json`。Provider 日志不记录密钥和思考文本。
+`journal.json` 保存提案、宿主观察到的源码读取/交付事件、指标、反思、晋级原因和选中候选。Agent 自报的哈希不能成为可信读取记录。交付只表示源码已传给 completion 回调，不证明模型理解或正确复用了代码。每个 trial 保留实际源码、checkpoint、预测、运行日志、有限范围实现核验与 GPU 元数据。最终测试写入 `final/report.json`。Provider 日志不记录密钥和思考文本。
 
-候选容器无网络、无 API key、无验证/测试标签。训练数据与目标集特征只读挂载，宿主独立计算指标。容器和导入检查用于减少泄漏，不等于面向恶意代码的安全执行平台。梯度和输出检查无法证明机制归因，因此目前明确标记归因为 unverified。
+候选容器无网络、无 API key、无验证/测试标签。训练数据与目标集特征只读挂载，宿主独立计算指标。容器和导入检查用于减少泄漏，不等于面向恶意代码的安全执行平台。实现核验状态与仍为 unverified 的收益归因会分别提供给 Agent。严格模式的 finalize 会在测试集评估前拒绝未核验的选中候选。
 
 测试中的小数据仅用于校验接口，不能作为数据集效果。实际进展见[实验记录](docs/experiments.md)。
 

@@ -7,15 +7,18 @@ from pathlib import Path
 import numpy as np
 
 from .data import FIELDS, load_manifest, sha256
-from .execution import execute
+from .audit import audit_execution
+from .execution import execute, validate_candidate
 from .metrics import evaluate, paired_logloss
 
 
 class CTRTask:
-    def __init__(self, data, *, image, venv, seed=42, max_epochs=1, batch_size=8192, timeout=3600):
+    def __init__(self, data, *, image, venv, seed=42, max_epochs=1, batch_size=8192, timeout=3600,
+                 require_verified_implementation=True):
         self.data = Path(data).resolve()
         self.manifest = load_manifest(self.data, verify=True)
         self.seed, self.max_epochs, self.batch_size = seed, max_epochs, batch_size
+        self.require_verified_implementation = require_verified_implementation
         self.settings = dict(image=image, venv=venv, seed=seed, max_epochs=max_epochs,
                              batch_size=batch_size, timeout=timeout)
         self.seed_candidate = {'source': Path(__file__).with_name('seed.py').read_text(), 'config': {}}
@@ -33,6 +36,8 @@ class CTRTask:
             'evaluation_protocol': {'unit': 'impression', 'split': self.manifest['split'],
                 'metric': 'binary_logloss', 'host_code_sha256': code.hexdigest(),
                 'seed': self.seed, 'max_epochs': self.max_epochs, 'batch_size': self.batch_size,
+                'implementation_audit': 'declared_component_execution_v1',
+                'require_verified_implementation': self.require_verified_implementation,
                 'image': self.settings['image'], 'timeout': self.settings['timeout']},
             'max_epochs': self.max_epochs, 'baseline_candidate': self.seed_candidate,
             'feature_schema': {'dense_fields': FIELDS[:13], 'categorical_fields': FIELDS[13:],
@@ -49,23 +54,28 @@ class CTRTask:
                           'positives': self.manifest['positives']['train'], 'original_fields': 39}}]}
 
     def baseline(self, path):
-        return self._evaluate(self.seed_candidate, Path(path))
+        return self._evaluate(self.seed_candidate, Path(path),
+                              components=[{'id': 'seed_model', 'instance_path': 'CTRModel'}])
 
     def evaluate(self, proposal, path):
-        return self._evaluate(proposal['candidate'], Path(path))
+        components = proposal.get('research', {}).get('model_design', {}).get('components', [])
+        return self._evaluate(proposal['candidate'], Path(path), components=components)
 
-    def _evaluate(self, candidate, path):
-        prediction, runtime = execute(candidate, self.data, path, **self.settings)
+    def _evaluate(self, candidate, path, *, components):
+        prediction, runtime = execute(candidate, self.data, path, components=components, **self.settings)
         labels = np.load(self.data / 'validation/labels.npy', mmap_mode='r')
         metrics = evaluate(labels, prediction)
         baseline_file = path.parent / 'baseline/output/prediction.npy'
         if path.name != 'baseline' and baseline_file.is_file():
             metrics['paired_vs_baseline'] = paired_logloss(labels, np.load(baseline_file), prediction)
+        config = validate_candidate(candidate, max_epochs=self.max_epochs)
+        check = audit_execution(candidate['source'], components, runtime,
+            train_rows=self.manifest['split_rows']['train'] * config['epochs'],
+            prediction_rows=len(labels))
         result = {'score': metrics['logloss'], 'metrics': metrics, 'runtime': runtime,
-            'implementation_check': {'status': 'unverified',
-                'reason': 'Host verified output shape, full row coverage and CUDA; mechanism attribution still needs review'},
+            'implementation_check': check,
             'change_audit': {'status': 'unverified'},
-            'review_required': abs(metrics['mean_prediction'] - metrics['observed_ctr']) > .05,
+            'review_required': check['status'] != 'verified' or abs(metrics['mean_prediction'] - metrics['observed_ctr']) > .05,
             'evidence': [{'id': f'{path.name}.metrics', **({} if path.name == 'baseline' else {'trial_id': path.name}),
                 'statement': 'Independent host validation metrics from complete fixed split',
                 'source': f'{path.name}/evaluation.json', 'status': 'observed', 'scope': 'task' if path.name == 'baseline' else 'trial',
@@ -86,9 +96,14 @@ class CTRTask:
             raise ValueError('task or evaluation protocol differs from search')
         if any('reflection' not in step for step in state['steps']):
             raise ValueError('finish pending reflection before final evaluation')
+        best = state['best_id']
+        selected = state['baseline'] if best == 'baseline' else next(
+            s['evaluation'] for s in state['steps'] if s['id'] == best)
+        if (self.require_verified_implementation and
+                selected.get('implementation_check', {}).get('status') != 'verified'):
+            raise ValueError('final evaluation requires a verified implementation for the selection')
         final = run / 'final'
         final.mkdir()  # One final evaluation; failures retain artifacts for inspection.
-        best = state['best_id']
         candidate = self.seed_candidate if best == 'baseline' else next(
             s['proposal']['candidate'] for s in state['steps'] if s['id'] == best)
         predictions = {}

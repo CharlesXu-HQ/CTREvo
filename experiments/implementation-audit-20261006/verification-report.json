@@ -1,0 +1,606 @@
+{
+  "kind": "saved_candidate_replay_not_new_agent_search",
+  "status": "completed",
+  "dataset_digest": "23e3e1a142d56d80f69b0dbd43620d4b53a0b577391061c7807785ef6efa40ea",
+  "split_rows": {
+    "train": 36672493,
+    "validation": 4584062,
+    "test": 4584062
+  },
+  "identity": {
+    "task_id": "criteo-ctr",
+    "dataset_digest": "23e3e1a142d56d80f69b0dbd43620d4b53a0b577391061c7807785ef6efa40ea",
+    "task_sha256": "9b8b1b120fe23631fc38f0de43f90bc973a9213ba44b4d39a96757a76e852efb",
+    "catalog_sha256": "37c43d126aecbf1bc0b69012f2942b9bcd225a86df3e5472b4ccb4bf1864cf18",
+    "package_version": "0.2.0",
+    "implementation_sha256": "9cb7aa14f20bc7973abaf919cb43f5af5d954a07cc2a5f09487332c6e2440ecd",
+    "promotion_policy": {
+      "require_verified_implementation": true
+    },
+    "evaluation_protocol_sha256": "efa44c8809d78cb1e7dc3bfe058b02b9f279069cc95a4bc0bea8c25fe6925fb1"
+  },
+  "best_id": "trial_002",
+  "baseline": {
+    "metrics": {
+      "rows": 4584062,
+      "logloss": 0.4453363541595976,
+      "auc": 0.8049364964027197,
+      "brier": 0.1440832074333245,
+      "observed_ctr": 0.2537528942671369,
+      "mean_prediction": 0.26459780119391824,
+      "calibration": [
+        {
+          "bin": 0,
+          "rows": 1174887,
+          "predicted": 0.05410827736707471,
+          "observed": 0.045176259504105504
+        },
+        {
+          "bin": 1,
+          "rows": 1052510,
+          "predicted": 0.14744787383840338,
+          "observed": 0.13041016237375416
+        },
+        {
+          "bin": 2,
+          "rows": 761700,
+          "predicted": 0.24721370325781658,
+          "observed": 0.23129578574241827
+        },
+        {
+          "bin": 3,
+          "rows": 528828,
+          "predicted": 0.3466494401096369,
+          "observed": 0.33735165308947335
+        },
+        {
+          "bin": 4,
+          "rows": 366011,
+          "predicted": 0.4473915778974157,
+          "observed": 0.43864528661706886
+        },
+        {
+          "bin": 5,
+          "rows": 277713,
+          "predicted": 0.547748003743379,
+          "observed": 0.5432370828877294
+        },
+        {
+          "bin": 6,
+          "rows": 198199,
+          "predicted": 0.6467574480643323,
+          "observed": 0.6459164778833395
+        },
+        {
+          "bin": 7,
+          "rows": 130616,
+          "predicted": 0.746320776115671,
+          "observed": 0.7484687940221718
+        },
+        {
+          "bin": 8,
+          "rows": 72054,
+          "predicted": 0.843186635871571,
+          "observed": 0.8450606489577261
+        },
+        {
+          "bin": 9,
+          "rows": 21544,
+          "predicted": 0.9404279846674529,
+          "observed": 0.9385443743037505
+        }
+      ]
+    },
+    "implementation_check": {
+      "status": "verified",
+      "scope": "declared_component_execution_v1",
+      "findings": [],
+      "components": [
+        {
+          "id": "seed_model",
+          "instance_path": "CTRModel",
+          "targets": [
+            {
+              "path": "CTRModel",
+              "calls": 3,
+              "nonzero_output_gradient": true,
+              "trainable_parameters": [
+                "embedding.weight",
+                "network.0.weight",
+                "network.0.bias",
+                "network.3.weight",
+                "network.3.bias",
+                "network.6.weight",
+                "network.6.bias"
+              ],
+              "output_shapes": [
+                [
+                  8192
+                ]
+              ],
+              "parameters_with_gradient": [
+                "embedding.weight",
+                "network.0.weight",
+                "network.0.bias",
+                "network.3.weight",
+                "network.3.bias",
+                "network.6.weight",
+                "network.6.bias"
+              ],
+              "status": "verified"
+            }
+          ],
+          "status": "verified"
+        }
+      ],
+      "probe_batches": 3,
+      "limitations": "Bounded execution/gradient observations do not prove mathematical equivalence to a named method, declared parameter sharing, exact fusion topology, all input paths, or gain attribution."
+    }
+  },
+  "trials": [
+    {
+      "id": "trial_001",
+      "status": "evaluated",
+      "promotion": {
+        "eligible": true,
+        "promoted": false,
+        "reason": "no_gain",
+        "previous_best_id": "baseline"
+      },
+      "metrics": {
+        "rows": 4584062,
+        "logloss": 0.44840364133096877,
+        "auc": 0.8018534664042649,
+        "brier": 0.145314703130126,
+        "observed_ctr": 0.2537528942671369,
+        "mean_prediction": 0.266837001251,
+        "calibration": [
+          {
+            "bin": 0,
+            "rows": 1238814,
+            "predicted": 0.05326588665125534,
+            "observed": 0.048465709945157226
+          },
+          {
+            "bin": 1,
+            "rows": 1030945,
+            "predicted": 0.14698990881411225,
+            "observed": 0.13701215874755684
+          },
+          {
+            "bin": 2,
+            "rows": 708592,
+            "predicted": 0.24689482165678892,
+            "observed": 0.23521434055140333
+          },
+          {
+            "bin": 3,
+            "rows": 498410,
+            "predicted": 0.34722019072575494,
+            "observed": 0.3325214181095885
+          },
+          {
+            "bin": 4,
+            "rows": 365362,
+            "predicted": 0.44752368131901943,
+            "observed": 0.4273213963137929
+          },
+          {
+            "bin": 5,
+            "rows": 274280,
+            "predicted": 0.5475805167497222,
+            "observed": 0.5232171503572991
+          },
+          {
+            "bin": 6,
+            "rows": 203846,
+            "predicted": 0.6474503214298956,
+            "observed": 0.6191291465125635
+          },
+          {
+            "bin": 7,
+            "rows": 142653,
+            "predicted": 0.7467216354767269,
+            "observed": 0.7167882904670775
+          },
+          {
+            "bin": 8,
+            "rows": 88313,
+            "predicted": 0.8448253916910909,
+            "observed": 0.8121114671679142
+          },
+          {
+            "bin": 9,
+            "rows": 32847,
+            "predicted": 0.9394091807711152,
+            "observed": 0.9044966054738637
+          }
+        ],
+        "paired_vs_baseline": {
+          "mean": 0.003067287171371261,
+          "lower": 0.002949497689858644,
+          "upper": 0.0031850766528838783,
+          "confidence": 0.95,
+          "direction": "candidate minus baseline; negative favors candidate",
+          "method": "paired per-impression normal interval",
+          "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+        }
+      },
+      "implementation_check": {
+        "status": "verified",
+        "scope": "declared_component_execution_v1",
+        "findings": [],
+        "components": [
+          {
+            "id": "field_embedding_table",
+            "instance_path": "CTRModel.embedding",
+            "targets": [
+              {
+                "path": "CTRModel.embedding",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "embedding.weight"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    26,
+                    16
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "embedding.weight"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          },
+          {
+            "id": "deep_pooled_branch",
+            "instance_path": "CTRModel.network",
+            "targets": [
+              {
+                "path": "CTRModel.network",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "network.0.weight",
+                  "network.0.bias",
+                  "network.3.weight",
+                  "network.3.bias",
+                  "network.6.weight",
+                  "network.6.bias"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    1
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "network.0.weight",
+                  "network.0.bias",
+                  "network.3.weight",
+                  "network.3.bias",
+                  "network.6.weight",
+                  "network.6.bias"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          },
+          {
+            "id": "fm_second_order_branch",
+            "instance_path": "CTRModel.fm_logit",
+            "targets": [
+              {
+                "path": "CTRModel.fm_logit",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [],
+                "output_shapes": [
+                  [
+                    8192
+                  ]
+                ],
+                "parameters_with_gradient": [],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          },
+          {
+            "id": "additive_logit_fusion",
+            "instance_path": "CTRModel.fuse_logits",
+            "targets": [
+              {
+                "path": "CTRModel.fuse_logits",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [],
+                "output_shapes": [
+                  [
+                    8192
+                  ]
+                ],
+                "parameters_with_gradient": [],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          }
+        ],
+        "probe_batches": 3,
+        "limitations": "Bounded execution/gradient observations do not prove mathematical equivalence to a named method, declared parameter sharing, exact fusion topology, all input paths, or gain attribution."
+      },
+      "change_audit": {
+        "status": "unverified"
+      },
+      "rows_seen": 36672493,
+      "reference_events": [
+        {
+          "event": "read",
+          "files": {
+            "models/pytorch/training.py": "22cd259ab713f290491be36b363e253d63acf91b39c7739f4157db6171b3acc8"
+          }
+        },
+        {
+          "event": "delivered",
+          "files": {
+            "models/pytorch/training.py": "22cd259ab713f290491be36b363e253d63acf91b39c7739f4157db6171b3acc8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "trial_002",
+      "status": "evaluated",
+      "promotion": {
+        "eligible": true,
+        "promoted": true,
+        "reason": "promoted",
+        "previous_best_id": "baseline"
+      },
+      "metrics": {
+        "rows": 4584062,
+        "logloss": 0.4414511548414842,
+        "auc": 0.808926176381844,
+        "brier": 0.14276163877565595,
+        "observed_ctr": 0.2537528942671369,
+        "mean_prediction": 0.2632821529658074,
+        "calibration": [
+          {
+            "bin": 0,
+            "rows": 1289492,
+            "predicted": 0.05198022794796837,
+            "observed": 0.047029372807276044
+          },
+          {
+            "bin": 1,
+            "rows": 1005321,
+            "predicted": 0.14686655409444085,
+            "observed": 0.13609682877409304
+          },
+          {
+            "bin": 2,
+            "rows": 697225,
+            "predicted": 0.24708849381721307,
+            "observed": 0.2351450392627918
+          },
+          {
+            "bin": 3,
+            "rows": 498851,
+            "predicted": 0.3473278060774263,
+            "observed": 0.33593397627748567
+          },
+          {
+            "bin": 4,
+            "rows": 365425,
+            "predicted": 0.4475093373273983,
+            "observed": 0.4339221454470822
+          },
+          {
+            "bin": 5,
+            "rows": 272435,
+            "predicted": 0.5474782286331872,
+            "observed": 0.5366821443647108
+          },
+          {
+            "bin": 6,
+            "rows": 200457,
+            "predicted": 0.6473356758019186,
+            "observed": 0.6360416448415371
+          },
+          {
+            "bin": 7,
+            "rows": 140093,
+            "predicted": 0.7465622718722409,
+            "observed": 0.7370603813181243
+          },
+          {
+            "bin": 8,
+            "rows": 85878,
+            "predicted": 0.844651625501157,
+            "observed": 0.8364540394513147
+          },
+          {
+            "bin": 9,
+            "rows": 28885,
+            "predicted": 0.9386552206574788,
+            "observed": 0.9298251687727194
+          }
+        ],
+        "paired_vs_baseline": {
+          "mean": -0.003885199318113414,
+          "lower": -0.003976100401747975,
+          "upper": -0.0037942982344788523,
+          "confidence": 0.95,
+          "direction": "candidate minus baseline; negative favors candidate",
+          "method": "paired per-impression normal interval",
+          "limitations": "exploratory; no adaptive-selection correction; anonymous rows prevent user clustering"
+        }
+      },
+      "implementation_check": {
+        "status": "verified",
+        "scope": "declared_component_execution_v1",
+        "findings": [],
+        "components": [
+          {
+            "id": "field_embedding_table",
+            "instance_path": "CTRModel.embedding",
+            "targets": [
+              {
+                "path": "CTRModel.embedding",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "embedding.weight"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    26,
+                    16
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "embedding.weight"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          },
+          {
+            "id": "deep_pooled_branch",
+            "instance_path": "CTRModel.trunk",
+            "targets": [
+              {
+                "path": "CTRModel.trunk",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "trunk.0.weight",
+                  "trunk.0.bias",
+                  "trunk.3.weight",
+                  "trunk.3.bias"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    64
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "trunk.0.weight",
+                  "trunk.0.bias",
+                  "trunk.3.weight",
+                  "trunk.3.bias"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          },
+          {
+            "id": "cross_interaction_branch",
+            "instance_path": "CTRModel.cross_layers",
+            "targets": [
+              {
+                "path": "CTRModel.cross_layers.0",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "cross_layers.0.transform.weight",
+                  "cross_layers.0.transform.bias"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    442
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "cross_layers.0.transform.weight",
+                  "cross_layers.0.transform.bias"
+                ],
+                "status": "verified"
+              },
+              {
+                "path": "CTRModel.cross_layers.1",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "cross_layers.1.transform.weight",
+                  "cross_layers.1.transform.bias"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    442
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "cross_layers.1.transform.weight",
+                  "cross_layers.1.transform.bias"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          },
+          {
+            "id": "joint_head_fusion",
+            "instance_path": "CTRModel.head",
+            "targets": [
+              {
+                "path": "CTRModel.head",
+                "calls": 3,
+                "nonzero_output_gradient": true,
+                "trainable_parameters": [
+                  "head.weight",
+                  "head.bias"
+                ],
+                "output_shapes": [
+                  [
+                    8192,
+                    1
+                  ]
+                ],
+                "parameters_with_gradient": [
+                  "head.weight",
+                  "head.bias"
+                ],
+                "status": "verified"
+              }
+            ],
+            "status": "verified"
+          }
+        ],
+        "probe_batches": 3,
+        "limitations": "Bounded execution/gradient observations do not prove mathematical equivalence to a named method, declared parameter sharing, exact fusion topology, all input paths, or gain attribution."
+      },
+      "change_audit": {
+        "status": "unverified"
+      },
+      "rows_seen": 36672493,
+      "reference_events": [
+        {
+          "event": "read",
+          "files": {
+            "models/pytorch/training.py": "22cd259ab713f290491be36b363e253d63acf91b39c7739f4157db6171b3acc8"
+          }
+        },
+        {
+          "event": "delivered",
+          "files": {
+            "models/pytorch/training.py": "22cd259ab713f290491be36b363e253d63acf91b39c7739f4157db6171b3acc8"
+          }
+        }
+      ]
+    }
+  ]
+}

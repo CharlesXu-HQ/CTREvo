@@ -1,0 +1,113 @@
+{
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "torch": "2.14.1+cu130",
+  "rows_seen": 36672493,
+  "steps": 4477,
+  "prediction_rows": 4584062,
+  "last_loss": 0.4543507397174835,
+  "seconds": 16.942251903000397,
+  "peak_cuda_bytes": 697824256,
+  "parameters": 27328001,
+  "config": {
+    "lr": 0.002,
+    "weight_decay": 1e-06,
+    "epochs": 1,
+    "model": {}
+  },
+  "first_batch_gradient_norms": {
+    "embedding.weight": 0.005348997190594673,
+    "network.0.weight": 0.0431787334382534,
+    "network.0.bias": 0.022837089374661446,
+    "network.3.weight": 0.049539078027009964,
+    "network.3.bias": 0.0895693451166153,
+    "network.6.weight": 0.08747342973947525,
+    "network.6.bias": 0.2691096365451813
+  },
+  "implementation_probe": {
+    "batches": 3,
+    "components": [
+      {
+        "id": "seed_model",
+        "instance_path": "CTRModel",
+        "targets": [
+          {
+            "path": "CTRModel",
+            "calls": 3,
+            "nonzero_output_gradient": true,
+            "trainable_parameters": [
+              "embedding.weight",
+              "network.0.weight",
+              "network.0.bias",
+              "network.3.weight",
+              "network.3.bias",
+              "network.6.weight",
+              "network.6.bias"
+            ],
+            "output_shapes": [
+              [
+                8192
+              ]
+            ],
+            "parameters_with_gradient": [
+              "embedding.weight",
+              "network.0.weight",
+              "network.0.bias",
+              "network.3.weight",
+              "network.3.bias",
+              "network.6.weight",
+              "network.6.bias"
+            ],
+            "status": "verified"
+          }
+        ],
+        "status": "verified"
+      }
+    ],
+    "optimizer_parameter_set_stable": true,
+    "source_sha256": "e729fa840614923b376def4817deb6ed7e548753b3de7d05ad2e0ab500304196",
+    "training_loss": "binary_cross_entropy_with_logits"
+  },
+  "modules": [
+    {
+      "path": "",
+      "class": "CTRModel"
+    },
+    {
+      "path": "embedding",
+      "class": "Embedding"
+    },
+    {
+      "path": "network",
+      "class": "Sequential"
+    },
+    {
+      "path": "network.0",
+      "class": "Linear"
+    },
+    {
+      "path": "network.1",
+      "class": "ReLU"
+    },
+    {
+      "path": "network.2",
+      "class": "Dropout"
+    },
+    {
+      "path": "network.3",
+      "class": "Linear"
+    },
+    {
+      "path": "network.4",
+      "class": "ReLU"
+    },
+    {
+      "path": "network.5",
+      "class": "Dropout"
+    },
+    {
+      "path": "network.6",
+      "class": "Linear"
+    }
+  ]
+}

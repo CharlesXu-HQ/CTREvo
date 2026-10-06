@@ -1,0 +1,47 @@
+test_engine_accepts_baseline_evidence_and_finalization_rejects_protocol_change (test_adapter.AdapterTests.test_engine_accepts_baseline_evidence_and_finalization_rejects_protocol_change) ... prepared 20/20 rows
+ok
+test_finalization_refuses_unverified_selection_in_strict_mode (test_adapter.AdapterTests.test_finalization_refuses_unverified_selection_in_strict_mode) ... prepared 20/20 rows
+ok
+test_host_uses_declared_bindings_and_keeps_attribution_separate (test_adapter.AdapterTests.test_host_uses_declared_bindings_and_keeps_attribution_separate) ... prepared 20/20 rows
+ok
+test_proposal_retry_supplies_concrete_feedback (test_adapter.AdapterTests.test_proposal_retry_supplies_concrete_feedback) ... ok
+test_repair_preserves_prior_errors_and_last_parseable_proposal (test_adapter.AdapterTests.test_repair_preserves_prior_errors_and_last_parseable_proposal) ... ok
+test_task_uses_actual_manifest_and_gpu_contract (test_adapter.AdapterTests.test_task_uses_actual_manifest_and_gpu_contract) ... prepared 20/20 rows
+ok
+test_actual_execution_can_be_verified_without_attributing_a_gain (test_audit.AuditTests.test_actual_execution_can_be_verified_without_attributing_a_gain) ... ok
+test_changed_optimizer_parameter_set_blocks_verification (test_audit.AuditTests.test_changed_optimizer_parameter_set_blocks_verification) ... ok
+test_component_status_is_preserved (test_audit.AuditTests.test_component_status_is_preserved) ... ok
+test_missing_or_incomplete_observation_is_not_verified (test_audit.AuditTests.test_missing_or_incomplete_observation_is_not_verified) ... ok
+test_stale_source_or_component_binding_is_not_verified (test_audit.AuditTests.test_stale_source_or_component_binding_is_not_verified) ... ok
+test_called_but_disconnected_branch_cannot_pass (test_audit.ComponentProbeTests.test_called_but_disconnected_branch_cannot_pass) ... ok
+test_closed_probe_stops_observing_cached_loss_callable (test_audit.ComponentProbeTests.test_closed_probe_stops_observing_cached_loss_callable) ... ok
+test_connected_module_and_parameterless_method_are_observed (test_audit.ComponentProbeTests.test_connected_module_and_parameterless_method_are_observed) ... ok
+test_missing_declared_path_is_contradicted (test_audit.ComponentProbeTests.test_missing_declared_path_is_contradicted) ... ok
+test_modulelist_children_must_all_be_connected (test_audit.ComponentProbeTests.test_modulelist_children_must_all_be_connected) ... ok
+test_parameters_created_after_optimizer_construction_are_flagged (test_audit.ComponentProbeTests.test_parameters_created_after_optimizer_construction_are_flagged) ... ok
+test_probe_preserves_forward_and_parameter_updates (test_audit.ComponentProbeTests.test_probe_preserves_forward_and_parameter_updates) ... ok
+test_top_level_training_loss_can_be_verified (test_audit.ComponentProbeTests.test_top_level_training_loss_can_be_verified) ... ok
+test_complete_input_split_and_train_only_normalization (test_data_metrics.DataTests.test_complete_input_split_and_train_only_normalization) ... prepared 3/20 rows
+prepared 6/20 rows
+prepared 9/20 rows
+prepared 12/20 rows
+prepared 15/20 rows
+prepared 18/20 rows
+prepared 20/20 rows
+ok
+test_complete_release_size_and_labels_are_checked (test_data_metrics.DataTests.test_complete_release_size_and_labels_are_checked) ... prepared 1/100 rows
+ok
+test_hashing_is_stable_and_missing_is_distinct (test_data_metrics.DataTests.test_hashing_is_stable_and_missing_is_distinct) ... ok
+test_bad_predictions_never_score (test_data_metrics.MetricsTests.test_bad_predictions_never_score) ... ok
+test_metrics_and_paired_comparison (test_data_metrics.MetricsTests.test_metrics_and_paired_comparison) ... ok
+test_mounts_do_not_expose_holdout_labels_or_credentials (test_execution.ExecutionTests.test_mounts_do_not_expose_holdout_labels_or_credentials) ... ok
+test_native_code_contract_and_training_budget (test_execution.ExecutionTests.test_native_code_contract_and_training_budget) ... ok
+test_seed_backward_and_logits (test_execution.GpuTests.test_seed_backward_and_logits) ... ok
+test_ambiguous_or_incomplete_content_is_not_repaired (test_reply.ReplyTests.test_ambiguous_or_incomplete_content_is_not_repaired) ... ok
+test_framing_repairs_preserve_every_value_and_code_character (test_reply.ReplyTests.test_framing_repairs_preserve_every_value_and_code_character) ... ok
+test_feedback_is_carried_once_without_editing_task_or_source (test_resume.ResumeTests.test_feedback_is_carried_once_without_editing_task_or_source) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.468s
+
+OK

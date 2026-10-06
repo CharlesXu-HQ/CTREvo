@@ -32,6 +32,7 @@ def main():
     parser.add_argument('--error-log', required=True, type=Path)
     parser.add_argument('--image', required=True)
     parser.add_argument('--venv', required=True)
+    parser.add_argument('--require-verified-implementation', action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument('--provider-url', default='https://api.deepseek.com')
     parser.add_argument('--model', default='deepseek-flash')
     parser.add_argument('--steps', type=int, default=2)
@@ -57,11 +58,13 @@ def main():
         'provider_response_file': last.name, 'feedback': feedback}, indent=2))
     image = subprocess.check_output(['docker', 'image', 'inspect', '--format', '{{.Id}}', args.image], text=True).strip()
     task = CTRTask(args.data, image=image, venv=args.venv, seed=args.seed, max_epochs=args.epochs,
-                   batch_size=args.batch_size, timeout=args.trial_timeout)
+                   batch_size=args.batch_size, timeout=args.trial_timeout,
+                   require_verified_implementation=args.require_verified_implementation)
     agent = FeedbackAgent(args.provider_url, os.environ['CTR_AGENT_API_KEY'], args.model,
         thinking='enabled', iteration_effort='high', review_effort='max', timeout=600, logs=logs)
     agent.feedback = feedback
-    state = run_search(task, agent, output=args.output, catalog=load_catalog(), max_steps=args.steps, resume=True)
+    state = run_search(task, agent, output=args.output, catalog=load_catalog(), max_steps=args.steps, resume=True,
+                       require_verified_implementation=task.require_verified_implementation)
     print(json.dumps({'status': state['status'], 'best_id': state['best_id']}))
 
 
